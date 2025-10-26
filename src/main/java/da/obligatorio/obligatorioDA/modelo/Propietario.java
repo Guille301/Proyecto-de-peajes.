@@ -2,7 +2,7 @@ package da.obligatorio.obligatorioDA.modelo;
 
 import java.util.List;
 
-public class Propietario {
+public class Propietario extends Usuario {
     private int id;
     private String nombreCompleto;
     private double saldo;
@@ -29,6 +29,12 @@ public class Propietario {
         this.listaNotificaciones = listaNotificaciones;
         this.listVehiculos = listVehiculos;
         this.listBonificaciones = listBonificaciones;
+    }
+
+    public Propietario(int id, String nombreCompleto, String cedula, String contrasena) {
+        super(cedula, contrasena);
+        this.id = id;
+        this.nombreCompleto = nombreCompleto;
     }
 
     public int getId() {

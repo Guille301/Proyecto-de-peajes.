@@ -1,6 +1,6 @@
 package da.obligatorio.obligatorioDA.modelo;
 
-public class Usuario {
+public abstract class Usuario {
     private int id;
     private String cedula;
     private String contrasena;
@@ -10,6 +10,11 @@ public class Usuario {
 
     public Usuario(int id, String cedula, String contrasena) {
         this.id = id;
+        this.cedula = cedula;
+        this.contrasena = contrasena;
+    }
+
+     public Usuario(String cedula, String contrasena) {
         this.cedula = cedula;
         this.contrasena = contrasena;
     }

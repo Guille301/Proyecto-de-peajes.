@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - administrador</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="vistaWeb.js"></script>
+</head>
+<body>
+    <script src="utilesVista.js"></script>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form id="formLogin" action="/acceso/loginAdmin" method="post" onsubmit="acceder(event);">
+            <div class="form-group">
+                <label for="nombre">Cedula:</label>
+                <input type="text" id="Cedula" name="Cedula" required>
+            </div>
+            <div class="form-group">
+                <label for="contrasenia">Contraseña:</label>
+                <input type="password" id="contrasenia" name="password" required>
+            </div>
+            <button type="submit" class="btn-acceder">Acceder</button>
+        </form>
+    </div>
+</body>
+
+<script>
+    function acceder(event) {
+        event.preventDefault(); // Evita el envío tradicional del formulario
+        submit("acceso/loginAdmin", serializarFormulario("formLogin"));
+    }
+
+    function mostrar_loginExitoso(urlDestino){
+         window.location.href = urlDestino;
+    }
+
+     async function excepcionDeAplicacion(text){
+            await mostrarMensaje(text);
+      }
+
+   
+   
+
+</script>
+
+</html>

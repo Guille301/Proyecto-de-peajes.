@@ -2,9 +2,12 @@ package da.obligatorio.obligatorioDA.servicios;
 
 import java.util.List;
 
+import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
+import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
+import da.obligatorio.obligatorioDA.modelo.Sesion;
 import da.obligatorio.obligatorioDA.modelo.Usuario;
 
 public class Fachada {
@@ -27,27 +30,24 @@ public class Fachada {
         return instancia;
     }
 
-    // Usuarios
-    public void agregarUsuario(Usuario u) {
-        sistemaUsuarios.agregarUsuario(u);
+  
+    //Agregar propietario y admin
+    public void agregar(Propietario usuario) {
+        sistemaUsuarios.agregar(usuario);
     }
 
-    public boolean eliminarUsuario(Usuario u) {
-        return sistemaUsuarios.eliminarUsuario(u);
+    public void agregar(Administrador usuario) {
+        sistemaUsuarios.agregar(usuario);
     }
 
-    public List<Usuario> getUsuarios() {
-        return sistemaUsuarios.getUsuarios();
+
+    //Login
+   public Propietario loginUsuarioPropietario(String nombre, String contrasenia) throws ObligatorioException {
+        return sistemaUsuarios.loginPropietario(nombre, contrasenia);
     }
 
-    public Usuario obtenerUsuarioPorCedula(String cedula) {
-        return sistemaUsuarios.obtenerUsuarioPorCedula(cedula);
-    }
-
-    public Usuario login(String cedula, String contrasena) throws da.obligatorio.obligatorioDA.excepciones.ObligatorioException {
-        Usuario u = sistemaUsuarios.login(cedula, contrasena);
-        if (u != null && u.getContrasena() != null && u.getContrasena().equals(contrasena)) return u;
-        return null;
+    public Administrador loginAdmin(String nombre, String contrasenia) throws ObligatorioException {
+        return sistemaUsuarios.loginAdmin(nombre, contrasenia);
     }
 
     // Puestos
