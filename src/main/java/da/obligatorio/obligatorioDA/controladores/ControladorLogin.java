@@ -20,8 +20,8 @@ public class ControladorLogin {
 
  //Administrador
     @PostMapping("/loginAdmin")
-    public List<Respuesta> loginAdmin(HttpSession sesionHttp, @RequestParam String nombre, @RequestParam String contrasenia) throws ObligatorioException {
-        Administrador usuarioAdmin  = Fachada.getInstancia().loginAdmin(nombre, contrasenia);
+    public List<Respuesta> loginAdmin(HttpSession sesionHttp, @RequestParam String Cedula, @RequestParam String contrasenia) throws ObligatorioException {
+        Administrador usuarioAdmin  = Fachada.getInstancia().loginAdmin(Cedula, contrasenia);
         sesionHttp.setAttribute("usuarioAdmin",usuarioAdmin);
         return Respuesta.lista(new Respuesta("loginExitoso", "menuAdmin.html"));
     }
@@ -29,9 +29,9 @@ public class ControladorLogin {
  
 // Propietario
     @PostMapping("/loginPropietario")
-       public List<Respuesta> loginPropietario(HttpSession sesionHttp, @RequestParam String userName, @RequestParam String password) throws ObligatorioException {
+       public List<Respuesta> loginPropietario(HttpSession sesionHttp, @RequestParam String Cedula, @RequestParam String contrasenia) throws ObligatorioException {
            
-           Usuario unUsuario = Fachada.getInstancia().loginUsuarioPropietario(userName, password);
+           Usuario unUsuario = Fachada.getInstancia().loginUsuarioPropietario(Cedula, contrasenia);
            sesionHttp.setAttribute("usuarioLogueado", unUsuario);
            return Respuesta.lista(new Respuesta("loginExitoso","menuPropietario.html"));
            
