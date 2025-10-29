@@ -1,1 +1,31 @@
-<h1>Llego</h1>
+<!DOCTYPE html>
+	<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Propietario - Principal</title>
+		<link rel="stylesheet" href="style.css">
+		<script src='vistaWeb.js'></script>
+	</head>
+	<body>
+		<div class="sidebar">
+			<label id="nombreCompleto"> </label>
+			<button onclick="logout()">Salir</button>
+		</div>
+		
+		<script>
+
+			//urlIniciarVista="/acceso/loginAdmin";
+			
+			function logout() {
+				submit("/acceso/logoutPropietario", null);
+           } 
+			
+		   function mostrar_usuarioNoAutenticado(urlDestino){
+				window.location.href = urlDestino;
+			}
+			
+			
+		</script>
+	</body>
+	</html>	

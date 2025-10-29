@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import da.obligatorio.obligatorioDA.modelo.Administrador;
+import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Usuario;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,15 @@ public class ControladorLogin {
         return Respuesta.lista(new Respuesta("loginExitoso", "menuAdmin.html"));
     }
 
+    @PostMapping("/logoutAdmin")
+    public List<Respuesta> logoutAdmin(HttpSession sesionHttp) {
+        Administrador usuario = (Administrador) sesionHttp.getAttribute("usuarioAdmin");
+        if (usuario != null) {
+            sesionHttp.removeAttribute("usuarioAdmin");
+            sesionHttp.invalidate();
+        }
+        return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "index.html"));
+    }
  
 // Propietario
     @PostMapping("/loginPropietario")
@@ -36,6 +46,16 @@ public class ControladorLogin {
            return Respuesta.lista(new Respuesta("loginExitoso","menuPropietario.html"));
            
        
+    }
+
+      @PostMapping("/logoutPropietario")
+    public List<Respuesta> logout(HttpSession sesionHttp) {
+        Propietario usuario = (Propietario) sesionHttp.getAttribute("usuarioPropietario");
+        if (usuario != null) {
+            sesionHttp.removeAttribute("usuarioPropietario");
+            
+        }
+        return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "index.html"));
     }
 
 

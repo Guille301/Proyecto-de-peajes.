@@ -53,7 +53,7 @@ public class SistemaUsuarios {
         Usuario usuario;
         for (Object o: lista) {
             usuario = (Usuario)o;
-            if (usuario.getCedula().equals(cedula) && usuario.getContrasena().equals(contrasena)) {
+            if (usuario.getCedula().equals(cedula) && usuario.getContrasenia().equals(contrasena)) {
                 return usuario;
             }
         }

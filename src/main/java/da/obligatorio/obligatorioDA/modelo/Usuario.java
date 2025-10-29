@@ -3,20 +3,20 @@ package da.obligatorio.obligatorioDA.modelo;
 public abstract class Usuario {
     private int id;
     private String cedula;
-    private String contrasena;
+    private String contrasenia;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String cedula, String contrasena) {
+    public Usuario(int id, String cedula, String contrasenia) {
         this.id = id;
         this.cedula = cedula;
-        this.contrasena = contrasena;
+        this.contrasenia = contrasenia;
     }
 
-     public Usuario(String cedula, String contrasena) {
+     public Usuario(String cedula, String contrasenia) {
         this.cedula = cedula;
-        this.contrasena = contrasena;
+        this.contrasenia = contrasenia;
     }
 
     public int getId() {
@@ -35,11 +35,11 @@ public abstract class Usuario {
         this.cedula = cedula;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 }
