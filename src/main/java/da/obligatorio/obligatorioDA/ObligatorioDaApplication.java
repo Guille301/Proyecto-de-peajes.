@@ -49,7 +49,7 @@ public class ObligatorioDaApplication {
 
         Propietario p2 = new Propietario();
         p2.setId(2);
-        p1.setContrasenia("123456");
+        p2.setContrasenia("123456");
         p2.setNombreCompleto("María Gomez");
         p2.setCedula("2002");
         p2.setSaldo(200.0);
@@ -58,7 +58,7 @@ public class ObligatorioDaApplication {
 
         Propietario p3 = new Propietario();
         p3.setId(3);
-        p1.setContrasenia("123456");
+        p3.setContrasenia("123456");
         p3.setNombreCompleto("Carlos Ruiz");
         p3.setCedula("2003");
         p3.setSaldo(50.0);
@@ -67,7 +67,7 @@ public class ObligatorioDaApplication {
 
         Propietario p4 = new Propietario();
         p4.setId(4); 
-        p1.setContrasenia("123456");
+        p4.setContrasenia("123456");
         p4.setNombreCompleto("Lucía Fernández");
         p4.setCedula("2004");
         p4.setSaldo(300.0);
@@ -76,7 +76,7 @@ public class ObligatorioDaApplication {
 
         Propietario p5 = new Propietario();
         p5.setId(5);
-        p1.setContrasenia("123456");
+        p5.setContrasenia("123456");
         p5.setNombreCompleto("Diego López");
         p5.setCedula("2005");
         p5.setSaldo(75.0);
@@ -94,6 +94,8 @@ public class ObligatorioDaApplication {
         f.agregar(p2);
         f.agregar(p3);
         f.agregar(p4);
+        f.agregar(p5);
+
 
         //Administrador
         Administrador admin = new Administrador(1, "Juan", "a",  "a");

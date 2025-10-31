@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero de propietario</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="vistaWeb.js"></script>
+</head>
+<body>
+    
+<main>
+
+    <section>
+        <h2>Resumen del propietario</h2>
+        <div>
+            <p>Nombre completo</p>
+            <label id="nombreCompleto"> </label>
+        </div>
+
+        <div>
+            <p>Estado</p>
+            <label id="estadoPropietario"> </label>
+        </div>
+
+        <div>
+            <p>Saldo</p>
+            <label id="saldoPropietario"> </label>
+        </div>
+
+
+    </section>
+
+
+</main>
+
+            
+			
+
+
+
+<script>
+		urlIniciarVista="/tablero/resumenDelPropietario";
+
+    	const spnNombreCompleto = document.getElementById("nombreCompleto");
+        const spnEstado = document.getElementById("estadoPropietario");
+        const spnSaldo = document.getElementById("saldoPropietario");
+		
+        function cargarContenido(pagina) {
+			document.getElementById('contenidoFrame').src = pagina;
+		}
+			
+		function mostrar_usuarioNoAutenticado(urlDestino){
+			window.location.href = urlDestino;
+		}
+			
+	    function mostrar_nombreCompleto(nombreCompleto){
+			spnNombreCompleto.innerHTML = nombreCompleto.toUpperCase();
+		}
+
+        function mostrar_estadoPropietario(estadoPropietario){
+            spnEstado.innerHTML = estadoPropietario.toUpperCase();
+		}
+
+        function mostrar_saldoPropietario(saldoPropietario){
+            spnSaldo.innerHTML = saldoPropietario.toUpperCase();
+		}
+        //Debe tener los mismos nombres en el controlador, en el nombre de la funcion y parametrosy todo.
+			
+		</script>
+</body>
+</html>

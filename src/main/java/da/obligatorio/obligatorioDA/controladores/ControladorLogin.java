@@ -42,7 +42,7 @@ public class ControladorLogin {
        public List<Respuesta> loginPropietario(HttpSession sesionHttp, @RequestParam String Cedula, @RequestParam String contrasenia) throws ObligatorioException {
            
            Usuario unUsuario = Fachada.getInstancia().loginUsuarioPropietario(Cedula, contrasenia);
-           sesionHttp.setAttribute("usuarioLogueado", unUsuario);
+           sesionHttp.setAttribute("usuarioPropietario", unUsuario);
            return Respuesta.lista(new Respuesta("loginExitoso","menuPropietario.html"));
            
        
