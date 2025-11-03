@@ -8,7 +8,8 @@
     <script src="vistaWeb.js"></script>
 </head>
 <body>
-    
+    <script src="utilesVista.js"></script>
+
 <main>
 
     <section>
@@ -31,6 +32,15 @@
 
     </section>
 
+    <section>
+        <h2>Bonificaciones asignadas</h2>
+        <div id="bonificacionesPropietario" ></div>  
+    </section>
+
+    <section>
+        <h2>Vehiculos registrados</h2>
+        <div id="vehiculosConTransito" ></div>  
+    </section>
 
 </main>
 
@@ -45,6 +55,8 @@
     	const spnNombreCompleto = document.getElementById("nombreCompleto");
         const spnEstado = document.getElementById("estadoPropietario");
         const spnSaldo = document.getElementById("saldoPropietario");
+        const divVehiculosConTransito = document.getElementById("vehiculosConTransito");
+        const divbonificacionesPropietario = document.getElementById("bonificacionesPropietario");        
 		
         function cargarContenido(pagina) {
 			document.getElementById('contenidoFrame').src = pagina;
@@ -66,7 +78,15 @@
             spnSaldo.innerHTML = saldoPropietario.toUpperCase();
 		}
         //Debe tener los mismos nombres en el controlador, en el nombre de la funcion y parametrosy todo.
-			
+		
+        function mostrar_vehiculosConTransito(vehiculosConTransito){
+            divVehiculosConTransito.innerHTML = crearTablaDesdeJson(vehiculosConTransito);
+        }
+
+        function mostrar_bonificacionesPropietario(bonificacionesPropietario){
+            divbonificacionesPropietario.innerHTML = crearTablaDesdeJson(bonificacionesPropietario);
+        }
+        
 		</script>
 </body>
 </html>

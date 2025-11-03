@@ -9,6 +9,7 @@ import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Sesion;
 import da.obligatorio.obligatorioDA.modelo.Usuario;
+import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 
 public class Fachada {
     private static Fachada instancia;
@@ -42,8 +43,10 @@ public class Fachada {
 
 
     //Login
-   public Propietario loginUsuarioPropietario(String nombre, String contrasenia) throws ObligatorioException {
-        return sistemaUsuarios.loginPropietario(nombre, contrasenia);
+    public Propietario loginUsuarioPropietario(String nombre, String contrasenia) throws ObligatorioException {
+        Propietario p = sistemaUsuarios.loginPropietario(nombre, contrasenia);   
+        sistemaPropietario.setPropietarioActual(p);
+        return p;
     }
 
     public Administrador loginAdmin(String nombre, String contrasenia) throws ObligatorioException {
@@ -103,5 +106,15 @@ public class Fachada {
 
     public Propietario obtenerPropietarioPorId(int id) {
         return sistemaPropietario.obtenerPropietarioPorId(id);
+    }
+
+    //Traer vehiculos con transitos
+    public List<Vehiculo> obtenerVehiculosDePropietariosConTransitos(){
+        return sistemaPropietario.obtenerVehiculosDePropietariosConTransitos();
+    }
+
+    //Bonificaciones
+    public List<Bonificacion> obtenerBonificacionesDePropietarioActual(){
+        return sistemaPropietario.obtenerBonificacionesDePropietarioActual();
     }
 }

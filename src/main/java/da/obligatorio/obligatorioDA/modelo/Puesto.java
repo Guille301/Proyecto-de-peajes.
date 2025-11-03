@@ -64,16 +64,16 @@ public class Puesto {
         return listTransito;
     }
 
-    public void setListTransito(List<Transito> listTransito) {
-        this.listTransito = listTransito;
+    public void setListTransito(Transito nuevTransito) {
+        this.listTransito.add(nuevTransito);
     }
 
     public List<Bonificacion> getListBonificacion() {
         return listBonificacion;
     }
 
-    public void setListBonificacion(List<Bonificacion> listBonificacion) {
-        this.listBonificacion = listBonificacion;
+    public void setListBonificacion(Bonificacion nuevaBonificacion) {
+        this.listBonificacion.add(nuevaBonificacion);
     }
 
     public List<Cobro> getListaCobro() {

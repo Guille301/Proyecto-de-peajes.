@@ -2,6 +2,8 @@ package da.obligatorio.obligatorioDA;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
@@ -110,11 +112,11 @@ public class ObligatorioDaApplication {
         Vehiculo v5 = new Vehiculo(5, "EFG-505", "Pulsar", "Negro", catMoto, p5, null);
 
         // asignar vehiculos a sus propietarios (listas simples)
-        p1.setListVehiculos(Arrays.asList(v1));
-        p2.setListVehiculos(Arrays.asList(v2));
-        p3.setListVehiculos(Arrays.asList(v3));
-        p4.setListVehiculos(Arrays.asList(v4));
-        p5.setListVehiculos(Arrays.asList(v5));
+        p1.setListVehiculos(v1);
+        p2.setListVehiculos(v2);
+        p3.setListVehiculos(v3);
+        p4.setListVehiculos(v4);
+        p5.setListVehiculos(v5);
 
         // -- Puestos (3) --
         Puesto puesto1 = new Puesto(1, "Puesto Centro", "Av. Principal 100", null, null, null, null);
@@ -130,12 +132,13 @@ public class ObligatorioDaApplication {
         Tarifa t2 = new Tarifa(2, 30.0, catMoto);
 
         // -- Bonificaciones y Cobros simples --
-        Bonificacion b1 = new Bonificacion(1, p1, "Fidelidad", puesto1);
-        Bonificacion b2 = new Bonificacion(2, p2, "Promoción", puesto2);
+        Bonificacion b1 = new Bonificacion(1, p1, "Fidelidad", puesto1, LocalDate.of(2024, 1, 15) );
+        Bonificacion b2 = new Bonificacion(2, p2, "Promoción", puesto2,LocalDate.of(2024, 1, 10));
         f.agregarBonificacion(b1);
         f.agregarBonificacion(b2);
-        p1.setListBonificaciones(Arrays.asList(b1));
-        p2.setListBonificaciones(Arrays.asList(b2));
+        p1.setListBonificaciones(b1);
+        p1.setListBonificaciones(b2);
+        p2.setListBonificaciones(b2);
 
         Cobro cob1 = new Cobro(1, 50.0, puesto1);
         Cobro cob2 = new Cobro(2, 30.0, puesto2);
@@ -150,20 +153,18 @@ public class ObligatorioDaApplication {
         Transito tr5 = new Transito(5, puesto2, v5, new Date());
 
         // asignar transitos a vehiculos y puestos
-        v1.setListaTransito(Arrays.asList(tr1));
-        v2.setListaTransito(Arrays.asList(tr2));
-        v3.setListaTransito(Arrays.asList(tr3));
-        v4.setListaTransito(Arrays.asList(tr4));
-        v5.setListaTransito(Arrays.asList(tr5));
+        v1.setListaTransito(tr1);
+        v2.setListaTransito(tr2);
+        v3.setListaTransito(tr3);
+        v4.setListaTransito(tr4);
+        v5.setListaTransito(tr5);
 
-        puesto1.setListTransito(Arrays.asList(tr1, tr2));
-        puesto2.setListTransito(Arrays.asList(tr3, tr5));
-        puesto3.setListTransito(Arrays.asList(tr4));
+        puesto1.setListTransito(tr1);
+        puesto1.setListTransito(tr2);
+        puesto2.setListTransito(tr3);
+        puesto2.setListTransito(tr5);
+        puesto3.setListTransito(tr4);
 
-        // Administrador (ejemplo)
-
-        // Datos cargados
-
-	}
+        }
 
 }

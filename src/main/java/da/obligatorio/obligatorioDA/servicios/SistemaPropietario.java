@@ -3,10 +3,14 @@ package da.obligatorio.obligatorioDA.servicios;
 import java.util.ArrayList;
 import java.util.List;
 
+import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
+import da.obligatorio.obligatorioDA.modelo.Vehiculo;
+
 
 public class SistemaPropietario {
     private List<Propietario> propietarios;
+    private Propietario propietarioActual;
 
     public SistemaPropietario() {
         this.propietarios = new ArrayList<>();
@@ -48,4 +52,25 @@ public class SistemaPropietario {
         }
         return null;
     }
+
+    //Traer vehiculos con transitos
+       public Propietario getPropietarioActual() {
+        return propietarioActual;
+    }
+
+    public void setPropietarioActual(Propietario propietarioActual) {
+        this.propietarioActual = propietarioActual;
+    }
+
+    public List<Vehiculo> obtenerVehiculosDePropietariosConTransitos(){
+       return propietarioActual.traerVehiculosConTransito();
+    }
+
+    //Bonificaciones
+    public List<Bonificacion> obtenerBonificacionesDePropietarioActual(){
+        return propietarioActual.getListBonificaciones();
+    }
+
+ 
+
 }

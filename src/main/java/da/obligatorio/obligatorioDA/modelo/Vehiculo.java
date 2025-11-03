@@ -78,7 +78,7 @@ public class Vehiculo {
         return listaTransito;
     }
 
-    public void setListaTransito(List<Transito> listaTransito) {
-        this.listaTransito = listaTransito;
+    public void setListaTransito(Transito nuevoTransito) {
+        this.listaTransito.add(nuevoTransito);
     }
 }

@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Transito {
     private int id;
-    private Puesto puesto;         // <-- singular
-    private Vehiculo vehiculo;     // <-- CAMBIO: Vehiculo singular
+    private Puesto puesto;         
+    private Vehiculo vehiculo;     
     private Date fechaYHora;
 
     public Transito() {

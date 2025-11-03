@@ -6,7 +6,6 @@ public class Propietario extends Usuario {
     private int id;
     private String nombreCompleto;
     private double saldo;
-    private Bonificacion bonificacion;
     private String cedula;
     private EstadoPropietario estadoPropietario;
     private List<Notificacion> listaNotificaciones;
@@ -14,6 +13,9 @@ public class Propietario extends Usuario {
     private List<Bonificacion> listBonificaciones;
 
     public Propietario() {
+        this.listaNotificaciones = new java.util.ArrayList<>();
+        this.listVehiculos = new java.util.ArrayList<>();
+        this.listBonificaciones = new java.util.ArrayList<>();
     }
 
     public Propietario(int id, String nombreCompleto, double saldo, Bonificacion bonificacion,
@@ -23,7 +25,6 @@ public class Propietario extends Usuario {
         this.id = id;
         this.nombreCompleto = nombreCompleto;
         this.saldo = saldo;
-        this.bonificacion = bonificacion;
         this.cedula = cedula;
         this.estadoPropietario = estadoPropietario;
         this.listaNotificaciones = listaNotificaciones;
@@ -61,13 +62,7 @@ public class Propietario extends Usuario {
         this.saldo = saldo;
     }
 
-    public Bonificacion getBonificacion() {
-        return bonificacion;
-    }
-
-    public void setBonificacion(Bonificacion bonificacion) {
-        this.bonificacion = bonificacion;
-    }
+  
 
     public String getCedula() {
         return cedula;
@@ -97,15 +92,31 @@ public class Propietario extends Usuario {
         return listVehiculos;
     }
 
-    public void setListVehiculos(List<Vehiculo> listVehiculos) {
-        this.listVehiculos = listVehiculos;
+    public void setListVehiculos(Vehiculo nuevoVehiculo) {
+        this.listVehiculos.add(nuevoVehiculo);
     }
 
     public List<Bonificacion> getListBonificaciones() {
         return listBonificaciones;
     }
 
-    public void setListBonificaciones(List<Bonificacion> listBonificaciones) {
-        this.listBonificaciones = listBonificaciones;
+    public void setListBonificaciones(Bonificacion nuevBonificacion) {
+        this.listBonificaciones.add(nuevBonificacion);
     }
+
+    //Traer los vehiculos que tuvieron un transito
+    public List<Vehiculo> traerVehiculosConTransito() {
+        List<Vehiculo> vehiculosConTransito = new java.util.ArrayList<>();
+        if (this.listVehiculos != null ) {
+            for (Vehiculo v : this.listVehiculos) {
+                if (v.getListaTransito() != null && !v.getListaTransito().isEmpty()) {
+                    vehiculosConTransito.add(v);
+                }
+            }
+        }
+       
+        return vehiculosConTransito;
+    }
+
+
 }
