@@ -9,6 +9,8 @@ import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Sesion;
 import da.obligatorio.obligatorioDA.modelo.Usuario;
+import da.obligatorio.obligatorioDA.modelo.Vehiculo;
+
 
 public class Fachada {
     private static Fachada instancia;
@@ -17,12 +19,15 @@ public class Fachada {
     private SistemaPuestos sistemaPuestos;
     private SistemaBonificaciones sistemaBonificaciones;
     private SistemaPropietario sistemaPropietario;
+  
+    
 
     private Fachada() {
         sistemaUsuarios = new SistemaUsuarios();
         sistemaPuestos = new SistemaPuestos();
         sistemaBonificaciones = new SistemaBonificaciones();
         sistemaPropietario = new SistemaPropietario();
+       
     }
 
     public static Fachada getInstancia() {
@@ -104,4 +109,17 @@ public class Fachada {
     public Propietario obtenerPropietarioPorId(int id) {
         return sistemaPropietario.obtenerPropietarioPorId(id);
     }
+
+
+    public Vehiculo obtenerVehiculoPorMatricula(String matricula) {
+    return sistemaPropietario.obtenerVehiculoPorMatricula(matricula);
+}
+
+public Propietario obtenerPropietarioPorVehiculo(Vehiculo v) {
+    return sistemaPropietario.obtenerPropietarioPorVehiculo(v);
+}
+
+
+
+  
 }

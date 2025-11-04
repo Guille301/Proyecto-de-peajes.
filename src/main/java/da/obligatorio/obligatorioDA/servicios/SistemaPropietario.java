@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import da.obligatorio.obligatorioDA.modelo.Propietario;
+import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 
 public class SistemaPropietario {
     private List<Propietario> propietarios;
@@ -48,4 +49,28 @@ public class SistemaPropietario {
         }
         return null;
     }
+
+
+    // Nuevo método agregado 
+
+public Vehiculo obtenerVehiculoPorMatricula(String matricula) {
+    for (Propietario p : propietarios) {          
+        for (Vehiculo v : p.getListVehiculos()) {
+            if (v.getMatricula().equalsIgnoreCase(matricula)) {
+                return v;
+            }
+        }
+    }
+    return null;
+}
+
+public Propietario obtenerPropietarioPorVehiculo(Vehiculo vehiculo) {
+    for (Propietario p : propietarios) {
+        if (p.getListVehiculos().contains(vehiculo)) {
+            return p;
+        }
+    }
+    return null;
+}
+
 }

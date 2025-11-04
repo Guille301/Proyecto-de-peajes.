@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emular tránsito</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="vistaWeb.js"></script>
+</head>
+<body class="page-emular">
+
+    <script src="utilesVista.js"></script>
+
+    <!-- ====== LAYOUT GENERAL: SIDEBAR + CONTENIDO ====== -->
+    <div class="layout-admin">
+
+        <!-- ====== SIDEBAR LATERAL ====== -->
+        <aside class="sidebar-admin">
+            <div class="sidebar-title">
+                Administrador
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="menuAdmin.html">Menú principal</a></li>
+                <li><a href="emularTransito.html" class="active">Emular tránsito</a></li>
+                <!-- Ajustá el href si tu logout va a otra página -->
+                <li><a href="loginAdmin.html">Salir</a></li>
+            </ul>
+        </aside>
+
+        <!-- ====== CONTENIDO DE ESTA PÁGINA ====== -->
+        <main class="content-admin">
+            <div class="container">
+
+                <h2>Emular tránsito</h2>
+                <p>Seleccione un puesto, verifique sus tarifas, ingrese una matrícula y emule un tránsito.</p>
+
+                <!-- Formulario principal -->
+                <form id="formEmularTransito">
+                    <!-- Puesto -->
+                    <div class="form-group">
+                        <label for="selPuesto">Puesto:</label>
+                        <!-- name = idPuesto para que llegue al controller -->
+                        <select id="selPuesto" name="idPuesto" onchange="cambiarPuesto()"></select>
+                    </div>
+
+                    <!-- Matrícula -->
+                    <div class="form-group">
+                        <label for="txtMatricula">Matrícula:</label>
+                        <!-- name = matricula -->
+                        <input type="text" id="txtMatricula" name="matricula" placeholder="ABC1234">
+                    </div>
+
+                    <!-- Fecha y hora -->
+                    <div class="form-group">
+                        <label for="txtFechaHora">Fecha y hora del tránsito:</label>
+                        <!-- name = fechaHora -->
+                        <input type="datetime-local" id="txtFechaHora" name="fechaHora">
+                    </div>
+
+                    <!-- Botón -->
+                    <div class="form-group">
+                        <button id="btnEmular" type="submit">Emular tránsito</button>
+                    </div>
+                </form>
+
+                <hr>
+
+                <!-- Tarifas del puesto -->
+                <h3>Tarifas del puesto</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Monto</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbodyTarifas"></tbody>
+                </table>
+
+                <hr>
+
+                <!-- Resultado -->
+                <h3>Resultado</h3>
+                <div id="divResultado"></div>
+
+                <p style="margin-top: 20px; font-size: 0.9em;">
+                    © 2025 – Emular tránsitos
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <!-- ====== JS DE LA PÁGINA (IGUAL QUE LO TENÍAS) ====== -->
+    <script>
+        urlIniciarVista = "/emularTransito/vistaConectada";
+
+        const formEmularTransito = document.getElementById("formEmularTransito");
+        const selPuesto           = document.getElementById("selPuesto");
+        const tbodyTarifas        = document.getElementById("tbodyTarifas");
+        const divResultado        = document.getElementById("divResultado");
+
+        // Enviar formulario -> /emularTransito/emular
+        formEmularTransito.addEventListener("submit", function (event) {
+            event.preventDefault();
+            submit("/emularTransito/emular", serializarFormulario("formEmularTransito"));
+        });
+
+        // Cuando cambia el puesto -> /emularTransito/cambiarPuesto
+        function cambiarPuesto() {
+            const data = "idPuesto=" + encodeURIComponent(selPuesto.value);
+            submit("/emularTransito/cambiarPuesto", data);
+        }
+
+        function mostrar_usuarioNoAutenticado(urlDestino) {
+            window.location.href = urlDestino;
+        }
+
+        // Respuesta "puestos"
+        function mostrar_puestos(puestos) {
+            selPuesto.innerHTML = "";
+            if (!puestos) return;
+            if (!Array.isArray(puestos)) puestos = [puestos];
+
+            puestos.forEach(p => {
+                const opt = document.createElement("option");
+                opt.value = p.id;
+                opt.textContent = p.nombre;
+                selPuesto.appendChild(opt);
+            });
+
+            if (puestos.length > 0) {
+                const data = "idPuesto=" + encodeURIComponent(selPuesto.value);
+                submit("/emularTransito/cambiarPuesto", data);
+            }
+        }
+
+        // Respuesta "tarifasPuesto"
+        function mostrar_tarifasPuesto(tarifas) {
+            tbodyTarifas.innerHTML = "";
+            if (!tarifas) return;
+            if (!Array.isArray(tarifas)) tarifas = [tarifas];
+
+            tarifas.forEach(t => {
+                const tr = document.createElement("tr");
+
+                const nombreCat =
+                    (t.categoria && t.categoria.nombre) ? t.categoria.nombre :
+                    (t.categoria || "");
+
+                tr.innerHTML =
+                    "<td>" + nombreCat + "</td>" +
+                    "<td>$ " + t.monto + "</td>";
+
+                tbodyTarifas.appendChild(tr);
+            });
+        }
+
+        // Respuesta "resultadoEmulacion" (DTO EmularTransitoDTO)
+        function mostrar_resultadoEmulacion(r) {
+            if (!r) {
+                divResultado.innerHTML = "<p>No hay resultado.</p>";
+                return;
+            }
+
+            divResultado.innerHTML =
+                "<p><b>Propietario:</b> " + r.nombrePropietario + " (" + r.estadoPropietario + ")</p>" +
+                "<p><b>Categoría:</b> " + r.categoriaVehiculo + "</p>" +
+                "<p><b>Bonificación:</b> " + (r.nombreBonificacion || "Sin bonificación") + "</p>" +
+                "<p><b>Costo del tránsito:</b> $ " + r.costoTransito + "</p>" +
+                "<p><b>Saldo luego del tránsito:</b> $ " + r.saldoLuegoDelTransito + "</p>";
+        }
+
+        // Respuesta "errorEmulacion"
+        async function mostrar_errorEmulacion(mensaje) {
+            await mostrarMensaje(mensaje);
+        }
+
+        async function excepcionDeAplicacion(text) {
+            await mostrarMensaje(text);
+        }
+    </script>
+
+</body>
+</html>

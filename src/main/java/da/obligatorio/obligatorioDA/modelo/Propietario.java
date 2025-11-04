@@ -108,4 +108,8 @@ public class Propietario extends Usuario {
     public void setListBonificaciones(List<Bonificacion> listBonificaciones) {
         this.listBonificaciones = listBonificaciones;
     }
+
+
+
+
 }

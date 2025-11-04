@@ -127,6 +127,10 @@ public class ObligatorioDaApplication {
         Tarifa t1 = new Tarifa(1, 50.0, catAuto);
         Tarifa t2 = new Tarifa(2, 30.0, catMoto);
 
+        puesto1.setListTarifas(Arrays.asList(t1, t2)); // Centro: auto y moto
+        puesto2.setListTarifas(Arrays.asList(t1));     // Norte: solo autos
+        puesto3.setListTarifas(Arrays.asList(t2));  
+
         // -- Bonificaciones y Cobros simples --
         Bonificacion b1 = new Bonificacion(1, p1, "Fidelidad", puesto1);
         Bonificacion b2 = new Bonificacion(2, p2, "Promoción", puesto2);
