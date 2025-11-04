@@ -25,7 +25,6 @@ import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 public class ControladorTableroPropietario {
 private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(ControladorTableroPropietario.class);
 
-    List<Vehiculo> vehiculosPropietario;
     
     @GetMapping("/resumenDelPropietario")
     public List<Respuesta> resumenDelPropietario(@SessionAttribute(name = "usuarioPropietario", required=false) Propietario usuario){

@@ -1,5 +1,6 @@
 package da.obligatorio.obligatorioDA.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Vehiculo {
@@ -23,7 +24,7 @@ public class Vehiculo {
         this.color = color;
         this.categoriaVehiculo = categoriaVehiculo;
         this.propietario = propietario;
-        this.listaTransito = listaTransito;
+        this.listaTransito = new ArrayList<>();
     }
 
     public int getId() {

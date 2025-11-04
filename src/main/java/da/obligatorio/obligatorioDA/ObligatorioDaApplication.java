@@ -110,9 +110,11 @@ public class ObligatorioDaApplication {
         Vehiculo v3 = new Vehiculo(3, "CDE-303", "Tornado", "Blanco", catMoto, p3, null);
         Vehiculo v4 = new Vehiculo(4, "DEF-404", "Corolla", "Gris", catAuto, p4, null);
         Vehiculo v5 = new Vehiculo(5, "EFG-505", "Pulsar", "Negro", catMoto, p5, null);
+        Vehiculo v6 = new Vehiculo(6, "SDG-505", "Seagull", "Blanco", catAuto, p1, null);
 
         // asignar vehiculos a sus propietarios (listas simples)
         p1.setListVehiculos(v1);
+        p1.setListVehiculos(v6);
         p2.setListVehiculos(v2);
         p3.setListVehiculos(v3);
         p4.setListVehiculos(v4);
