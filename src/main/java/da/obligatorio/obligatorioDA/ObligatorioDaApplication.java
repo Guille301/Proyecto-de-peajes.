@@ -36,6 +36,7 @@ public class ObligatorioDaApplication {
 
         // Estado propietario
         EstadoPropietario activo = new EstadoPropietario(1, "Activo");
+        EstadoPropietario deshabilitado = new EstadoPropietario(1, "Deshabilitado");
 
         // -- Propietarios (5) -- (creados de forma simple, parecido a Notificacion)
         Propietario p1 = new Propietario();
@@ -53,7 +54,7 @@ public class ObligatorioDaApplication {
         p2.setNombreCompleto("María Gomez");
         p2.setCedula("2002");
         p2.setSaldo(200.0);
-        p2.setEstadoPropietario(activo);
+        p2.setEstadoPropietario(deshabilitado);
         p2.setListaNotificaciones(Arrays.asList(new Notificacion(2, new Date(), "Bienvenida María")));
 
         Propietario p3 = new Propietario();

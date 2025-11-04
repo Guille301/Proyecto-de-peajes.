@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import da.obligatorio.obligatorioDA.dtos.emularTransitoDTO;
 import da.obligatorio.obligatorioDA.dtos.puestoDTO;
+import da.obligatorio.obligatorioDA.dtos.tarifaDTO;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
@@ -53,7 +54,7 @@ public List<Respuesta> inicializarVista(
 @PostMapping("/cambiarPuesto")
 public List<Respuesta> cambiarPuesto(@RequestParam int idPuesto) {
 
-    Puesto puesto = buscarPuestoPorId(idPuesto);
+    Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
 
     if (puesto == null) {
         return Respuesta.lista(
@@ -61,13 +62,21 @@ public List<Respuesta> cambiarPuesto(@RequestParam int idPuesto) {
         );
     }
 
-    // acá sacás las tarifas del puesto
-    List<Tarifa> tarifas = puesto.getListTarifas();   // ajustá el nombre del getter
+    List<Tarifa> tarifas = puesto.getListTarifas();
+
+    // Pasar a DTO
+    List<tarifaDTO> tarifasDto = new ArrayList<>();
+    if (tarifas != null) {
+        for (Tarifa t : tarifas) {
+            tarifasDto.add(new tarifaDTO(t));
+        }
+    }
 
     return Respuesta.lista(
-        new Respuesta("tarifasPuesto", tarifas)
+        new Respuesta("tarifasPuesto", tarifasDto)
     );
 }
+
 
 
 
@@ -79,7 +88,7 @@ public List<Respuesta> cambiarPuesto(@RequestParam int idPuesto) {
             
 
             // Buscar el puesto
-            Puesto puesto = buscarPuestoPorId(idPuesto);
+            Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
             if (puesto == null) {
                 throw new ObligatorioException("No existe el puesto");
             }
@@ -92,10 +101,16 @@ public List<Respuesta> cambiarPuesto(@RequestParam int idPuesto) {
 
             // Buscar propietario del vehículo
             Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorVehiculo(vehiculo);
+           if (propietario != null&& propietario.getEstadoPropietario() != null && "Deshabilitado".equalsIgnoreCase(
+                propietario.getEstadoPropietario().getNombre()
+           )) {
+
+    throw new ObligatorioException("El propietario del vehículo está deshabilitado, no puede realizar tránsitos");
+}
     
 
             // Buscar tarifa según categoría del vehículo
-            Tarifa tarifa = buscarTarifaParaCategoria(puesto, vehiculo);
+            Tarifa tarifa = puesto.obtenerTarifaPara(vehiculo);
             if (tarifa == null) {
                 throw new ObligatorioException("No hay tarifa para la categoría del vehículo en este puesto");
             }
@@ -141,21 +156,10 @@ public List<Respuesta> cambiarPuesto(@RequestParam int idPuesto) {
 
 
 
-    private Puesto buscarPuestoPorId(int id) {
-    for (Puesto p : Fachada.getInstancia().getPuestos()) {
-        if (p.getId() == id) {
-            return p;
-        }
-    }
-    return null;
-}
 
 
-    private Tarifa buscarTarifaParaCategoria(Puesto puesto, Vehiculo vehiculo) {
-        if (puesto.getListTarifas() == null) return null;
-        return puesto.getListTarifas().stream()
-                .filter(t -> t.getCategoriaVehiculo().equals(vehiculo.getCategoriaVehiculo()))
-                .findFirst()
-                .orElse(null);
-    }
+
+  
+
+   
 }

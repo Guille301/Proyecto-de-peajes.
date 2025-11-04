@@ -83,4 +83,21 @@ public class Puesto {
     public void setListaCobro(List<Cobro> listaCobro) {
         this.listaCobro = listaCobro;
     }
+
+
+   public Tarifa obtenerTarifaPara(Vehiculo vehiculo) {
+    if (listTarifas == null) {
+        return null;
+    }
+
+    for (Tarifa t : listTarifas) {
+       
+        if (t.getCategoriaVehiculo().equals(vehiculo.getCategoriaVehiculo())) {
+            return t; 
+        }
+    }
+
+    return null;
+}
+
 }
