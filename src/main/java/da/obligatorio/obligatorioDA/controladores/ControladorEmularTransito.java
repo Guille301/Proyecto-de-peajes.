@@ -1,6 +1,7 @@
 package da.obligatorio.obligatorioDA.controladores;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
@@ -20,6 +21,7 @@ import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Tarifa;
+import da.obligatorio.obligatorioDA.modelo.Transito;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
 
@@ -80,77 +82,73 @@ public List<Respuesta> cambiarPuesto(@RequestParam int idPuesto) {
 
 
 
-    //  Cuando se aprieta "Emular tránsito"
-    @PostMapping("/emular")
-    public List<Respuesta> emular(  @RequestParam int idPuesto, @RequestParam String matricula,@RequestParam String fechaHora) {
+  @PostMapping("/emular")
+public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String matricula, @RequestParam String fechaHora) {
 
-        try {
-            
-
-            // Buscar el puesto
-            Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
-            if (puesto == null) {
-                throw new ObligatorioException("No existe el puesto");
-            }
-
-            // Buscar vehículo por matrícula
-            Vehiculo vehiculo = Fachada.getInstancia().obtenerVehiculoPorMatricula(matricula); // delegando a sistemaPropietario
-            if (vehiculo == null) {
-                throw new ObligatorioException("No existe el vehículo");
-            }
-
-            // Buscar propietario del vehículo
-            Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorVehiculo(vehiculo);
-           if (propietario != null&& propietario.getEstadoPropietario() != null && "Deshabilitado".equalsIgnoreCase(
-                propietario.getEstadoPropietario().getNombre()
-           )) {
-
-    throw new ObligatorioException("El propietario del vehículo está deshabilitado, no puede realizar tránsitos");
-}
-    
-
-            // Buscar tarifa según categoría del vehículo
-            Tarifa tarifa = puesto.obtenerTarifaPara(vehiculo);
-            if (tarifa == null) {
-                throw new ObligatorioException("No hay tarifa para la categoría del vehículo en este puesto");
-            }
-
-            double costo = tarifa.getMonto();
-
-           
-            Bonificacion bonificacionAplicada = null;
-
-            //  Verificar saldo
-            if (propietario.getSaldo() < costo) {
-                throw new ObligatorioException("Saldo insuficiente: " + propietario.getSaldo());
-            }
-
-            double nuevoSaldo = propietario.getSaldo() - costo;
-            propietario.setSaldo(nuevoSaldo); 
-
-            
-            emularTransitoDTO dto = new emularTransitoDTO(propietario, vehiculo, bonificacionAplicada,costo,nuevoSaldo);
-
-            return Respuesta.lista(new Respuesta("resultadoEmulacion", dto));
-
-        } catch (ObligatorioException ex) {
-            return Respuesta.lista(new Respuesta("errorEmulacion", ex.getMessage()));
+    try {
+        
+        Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
+       
+        Vehiculo vehiculo = Fachada.getInstancia().obtenerVehiculoPorMatricula(matricula);
+        if (vehiculo == null) {
+            throw new ObligatorioException("No existe el vehículo");
         }
+
+        
+        Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorVehiculo(vehiculo);
+        if (propietario == null) {
+            throw new ObligatorioException("No existe un propietario asociado al vehículo");
+        }
+
+        
+        if (propietario.getEstadoPropietario() != null &&
+            "Deshabilitado".equalsIgnoreCase(propietario.getEstadoPropietario().getNombre())) {
+
+            throw new ObligatorioException("El propietario del vehículo está deshabilitado, no puede realizar tránsitos");
+        }
+
+       Date fehca = new Date();
+        Transito transito = new Transito(0, puesto, vehiculo, fehca);
+
+        
+        double costo = transito.costoTransitoEmulacion();
+
+        
+        propietario.debitarPorTransito(costo);
+        double nuevoSaldo = propietario.getSaldo();
+
+        
+        vehiculo.agregarTransito(transito);
+        puesto.agregarTransito(transito);
+
+
+        
+        Bonificacion bonificacionAplicada = puesto.obtenerBonificacionPara(propietario);
+
+        
+        emularTransitoDTO dto = new emularTransitoDTO(
+                propietario,
+                vehiculo,
+                bonificacionAplicada,
+                costo,
+                nuevoSaldo
+        );
+
+        return Respuesta.lista(new Respuesta("resultadoEmulacion", dto));
+
+    } catch (ObligatorioException ex) {
+        return Respuesta.lista(new Respuesta("errorEmulacion", ex.getMessage()));
     }
+}
 
    
 
   private Respuesta puestosRespuesta() {
-    // Traigo los puestos desde la fachada
     List<Puesto> lista = Fachada.getInstancia().getPuestos();
-
-    // Los paso a DTO
     List<puestoDTO> puestosDto = new ArrayList<>();
     for (Puesto p : lista) {
         puestosDto.add(new puestoDTO(p));
     }
-
-    // Devuelvo la Respuesta lista para la vista
     return new Respuesta("puestos", puestosDto);
 }
 

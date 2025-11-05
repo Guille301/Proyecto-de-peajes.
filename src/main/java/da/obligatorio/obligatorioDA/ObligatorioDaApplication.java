@@ -139,6 +139,9 @@ public class ObligatorioDaApplication {
         f.agregarBonificacion(b2);
         p1.setListBonificaciones(Arrays.asList(b1));
         p2.setListBonificaciones(Arrays.asList(b2));
+        
+        puesto1.setListBonificacion(Arrays.asList(b1));
+        puesto2.setListBonificacion(Arrays.asList(b2));
 
         Cobro cob1 = new Cobro(1, 50.0, puesto1);
         Cobro cob2 = new Cobro(2, 30.0, puesto2);

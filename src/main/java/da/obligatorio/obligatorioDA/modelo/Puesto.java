@@ -1,5 +1,6 @@
 package da.obligatorio.obligatorioDA.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Puesto {
@@ -99,5 +100,29 @@ public class Puesto {
 
     return null;
 }
+
+public void agregarTransito(Transito t) {
+    if (listTransito == null) {
+        listTransito = new ArrayList<>();
+    } else if (!(listTransito instanceof ArrayList)) {
+        listTransito = new ArrayList<>(listTransito);
+    }
+    listTransito.add(t);
+}
+
+
+public Bonificacion obtenerBonificacionPara(Propietario propietario) {
+    if (listBonificacion == null) {
+        return null;
+    }
+    for (Bonificacion b : listBonificacion) {
+        if (b.getPropietario().equals(propietario)) { 
+            return b;
+        }
+    }
+    return null;
+}
+
+
 
 }

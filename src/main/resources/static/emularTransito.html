@@ -12,10 +12,8 @@
 
     <script src="utilesVista.js"></script>
 
-    
     <div class="layout-admin">
 
-        
         <aside class="sidebar-admin">
             <div class="sidebar-title">
                 Administrador
@@ -27,37 +25,28 @@
             </ul>
         </aside>
 
-        
         <main class="content-admin">
             <div class="container">
 
                 <h2>Emular tránsito</h2>
                 <p>Seleccione un puesto, verifique sus tarifas, ingrese una matrícula y emule un tránsito.</p>
 
-                <!-- Formulario principal -->
-                <form id="formEmularTransito">
-                    <!-- Puesto -->
+                <form id="formEmularTransito" method="post" action="/emularTransito/emular">
                     <div class="form-group">
                         <label for="selPuesto">Puesto:</label>
-                        <!-- name = idPuesto para que llegue al controller -->
                         <select id="selPuesto" name="idPuesto" onchange="cambiarPuesto()"></select>
                     </div>
 
-                    <!-- Matrícula -->
                     <div class="form-group">
                         <label for="txtMatricula">Matrícula:</label>
-                        <!-- name = matricula -->
                         <input type="text" id="txtMatricula" name="matricula" placeholder="ABC1234">
                     </div>
 
-                    <!-- Fecha y hora -->
                     <div class="form-group">
                         <label for="txtFechaHora">Fecha y hora del tránsito:</label>
-                        <!-- name = fechaHora -->
                         <input type="datetime-local" id="txtFechaHora" name="fechaHora">
                     </div>
 
-                    <!-- Botón -->
                     <div class="form-group">
                         <button id="btnEmular" type="submit">Emular tránsito</button>
                     </div>
@@ -65,7 +54,6 @@
 
                 <hr>
 
-                <!-- Tarifas del puesto -->
                 <h3>Tarifas del puesto</h3>
                 <table>
                     <thead>
@@ -79,7 +67,6 @@
 
                 <hr>
 
-                <!-- Resultado -->
                 <h3>Resultado</h3>
                 <div id="divResultado"></div>
 
@@ -90,7 +77,6 @@
         </main>
     </div>
 
-    
     <script>
         urlIniciarVista = "/emularTransito/vistaConectada";
 
@@ -99,13 +85,11 @@
         const tbodyTarifas        = document.getElementById("tbodyTarifas");
         const divResultado        = document.getElementById("divResultado");
 
-        // Enviar formulario -> /emularTransito/emular
         formEmularTransito.addEventListener("submit", function (event) {
             event.preventDefault();
             submit("/emularTransito/emular", serializarFormulario("formEmularTransito"));
         });
 
-        // Cuando cambia el puesto -> /emularTransito/cambiarPuesto
         function cambiarPuesto() {
             const data = "idPuesto=" + encodeURIComponent(selPuesto.value);
             submit("/emularTransito/cambiarPuesto", data);
@@ -115,7 +99,6 @@
             window.location.href = urlDestino;
         }
 
-        // Respuesta "puestos"
         function mostrar_puestos(puestos) {
             selPuesto.innerHTML = "";
             if (!puestos) return;
@@ -134,7 +117,6 @@
             }
         }
 
-        // Respuesta "tarifasPuesto"
         function mostrar_tarifasPuesto(tarifas) {
             tbodyTarifas.innerHTML = "";
             if (!tarifas) return;
@@ -155,7 +137,6 @@
             });
         }
 
-        // Respuesta "resultadoEmulacion" (DTO EmularTransitoDTO)
         function mostrar_resultadoEmulacion(r) {
             if (!r) {
                 divResultado.innerHTML = "<p>No hay resultado.</p>";
@@ -170,7 +151,6 @@
                 "<p><b>Saldo luego del tránsito:</b> $ " + r.saldoLuegoDelTransito + "</p>";
         }
 
-        // Respuesta "errorEmulacion"
         async function mostrar_errorEmulacion(mensaje) {
             await mostrarMensaje(mensaje);
         }

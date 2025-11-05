@@ -1,5 +1,6 @@
 package da.obligatorio.obligatorioDA.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Vehiculo {
@@ -81,4 +82,22 @@ public class Vehiculo {
     public void setListaTransito(List<Transito> listaTransito) {
         this.listaTransito = listaTransito;
     }
+
+       public double calcularMontoTotalTodosLosTransitos(){
+        double montoTotal = 0.0;
+        for(Transito t : this.listaTransito){
+            montoTotal += t.costoTransito(this);
+        }
+        return montoTotal;
+    }
+
+    public void agregarTransito(Transito t) {
+    if (listaTransito == null) {
+        listaTransito = new ArrayList<>();
+    } else if (!(listaTransito instanceof ArrayList)) {
+        listaTransito = new ArrayList<>(listaTransito);
+    }
+    listaTransito.add(t);
+}
+
 }

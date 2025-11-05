@@ -2,6 +2,8 @@ package da.obligatorio.obligatorioDA.modelo;
 
 import java.util.List;
 
+import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
+
 public class Propietario extends Usuario {
     private int id;
     private String nombreCompleto;
@@ -108,6 +110,20 @@ public class Propietario extends Usuario {
     public void setListBonificaciones(List<Bonificacion> listBonificaciones) {
         this.listBonificaciones = listBonificaciones;
     }
+
+      public void debitarPorTransito(double costo) throws ObligatorioException {
+        if (this.saldo < costo) {
+            throw new ObligatorioException("Saldo insuficiente: " + this.saldo);
+        }
+        this.saldo -= costo;
+    }
+
+
+
+    
+
+
+    
 
 
 

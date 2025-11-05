@@ -21,9 +21,8 @@ public class emularTransitoDTO {
         this.estadoPropietario = propietario.getEstadoPropietario().getNombre(); 
         this.categoriaVehiculo = vehiculo.getCategoriaVehiculo().getNombre();           
 
-        this.nombreBonificacion = (bonificacionAplicada != null)
-                ? bonificacionAplicada.getNombre()      
-                : null;
+       this.nombreBonificacion = (bonificacionAplicada != null ? bonificacionAplicada.getNombre() : null);
+
 
         this.costoTransito = costoTransito;
         this.saldoLuegoDelTransito = saldoLuegoDelTransito;
