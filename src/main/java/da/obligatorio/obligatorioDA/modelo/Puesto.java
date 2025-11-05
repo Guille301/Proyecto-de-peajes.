@@ -1,5 +1,6 @@
 package da.obligatorio.obligatorioDA.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Puesto {
@@ -9,7 +10,6 @@ public class Puesto {
     private List<Tarifa> listTarifas;
     private List<Transito> listTransito;
     private List<Bonificacion> listBonificacion;
-    private List<Cobro> listaCobro;
 
 //Puesto
 
@@ -17,14 +17,13 @@ public class Puesto {
     }
 
     public Puesto(int id,String nombre, String direccion, List<Tarifa> listTarifas,
-                  List<Transito> listTransito, List<Bonificacion> listBonificacion,
-                  List<Cobro> listaCobro) {
+                  List<Transito> listTransito, List<Bonificacion> listBonificacion
+                  ) {
         this.nombre = nombre;
         this.direccion = direccion;
-        this.listTarifas = listTarifas;
+        this.listTarifas = new ArrayList<>();
         this.listTransito = listTransito;
         this.listBonificacion = listBonificacion;
-        this.listaCobro = listaCobro;
         this.id = id;
     }
 
@@ -56,8 +55,8 @@ public class Puesto {
         return listTarifas;
     }
 
-    public void setListTarifas(List<Tarifa> listTarifas) {
-        this.listTarifas = listTarifas;
+    public void setListTarifas(Tarifa nuevaTarifa) {
+        this.listTarifas.add(nuevaTarifa);
     }
 
     public List<Transito> getListTransito() {
@@ -76,11 +75,18 @@ public class Puesto {
         this.listBonificacion.add(nuevaBonificacion);
     }
 
-    public List<Cobro> getListaCobro() {
-        return listaCobro;
-    }
 
-    public void setListaCobro(List<Cobro> listaCobro) {
-        this.listaCobro = listaCobro;
+
+    public Tarifa obtenerTarifaPara(Vehiculo vehiculo){
+        if(listTarifas ==null){
+            return null;
+        }
+
+        for (Tarifa tarifa : listTarifas) {
+            if(tarifa.getCategoriaVehiculo().equals(vehiculo.getCategoriaVehiculo())){
+                return tarifa;
+            }
+        }
+        return null;
     }
 }

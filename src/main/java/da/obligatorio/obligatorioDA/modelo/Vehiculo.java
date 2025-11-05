@@ -82,4 +82,12 @@ public class Vehiculo {
     public void setListaTransito(Transito nuevoTransito) {
         this.listaTransito.add(nuevoTransito);
     }
+
+    public double calcularMontoTotalTodosLosTransitos(){
+        double montoTotal = 0.0;
+        for(Transito t : this.listaTransito){
+            montoTotal += t.costoTransito(this);
+        }
+        return montoTotal;
+    }
 }

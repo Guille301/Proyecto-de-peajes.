@@ -11,13 +11,15 @@ public class vehiculosDto {
     private String matricula;
     private String modelo;
     private String color;
-    //private List<Transito> listaTransito;
+    private int listaTransito;
+    private double montoTotal;
 
     public vehiculosDto(Vehiculo vehiculo) {
         this.matricula = vehiculo.getMatricula();
         this.modelo = vehiculo.getModelo();
         this.color = vehiculo.getColor();
-      //  this.listaTransito = vehiculo.getListaTransito();
+        this.listaTransito = vehiculo.getListaTransito().size();
+        this.montoTotal = vehiculo.calcularMontoTotalTodosLosTransitos();
     }
 
     public String getMatricula() {
@@ -32,7 +34,11 @@ public class vehiculosDto {
         return color;
     }
 
-   // public List<Transito> getListaTransito() {
-    //    return listaTransito;
-   // }
+    public int getListaTransito() {
+        return this.listaTransito;
+    }
+
+    public double getMontoTotal() {
+        return montoTotal;
+    }
 }

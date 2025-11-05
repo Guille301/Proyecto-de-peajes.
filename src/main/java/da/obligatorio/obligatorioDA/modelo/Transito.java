@@ -29,4 +29,11 @@ public class Transito {
 
     public Date getFechaYHora() { return fechaYHora; }
     public void setFechaYHora(Date fechaYHora) { this.fechaYHora = fechaYHora; }
+
+   public double costoTransito(Vehiculo vehiculo){
+       double monto = this.puesto.obtenerTarifaPara(vehiculo).getMonto();
+       return monto; 
+   }
+
+
 }

@@ -10,7 +10,6 @@ import da.obligatorio.obligatorioDA.servicios.Fachada;
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.CategoriaVehiculo;
-import da.obligatorio.obligatorioDA.modelo.Cobro;
 import da.obligatorio.obligatorioDA.modelo.Notificacion;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
@@ -121,9 +120,9 @@ public class ObligatorioDaApplication {
         p5.setListVehiculos(v5);
 
         // -- Puestos (3) --
-        Puesto puesto1 = new Puesto(1, "Puesto Centro", "Av. Principal 100", null, null, null, null);
-        Puesto puesto2 = new Puesto(2, "Puesto Norte", "Calle Norte 45", null, null, null, null);
-        Puesto puesto3 = new Puesto(3, "Puesto Sur", "Ruta 10 Km 5", null, null, null, null);
+        Puesto puesto1 = new Puesto(1, "Puesto Centro", "Av. Principal 100", null, null, null);
+        Puesto puesto2 = new Puesto(2, "Puesto Norte", "Calle Norte 45", null, null, null);
+        Puesto puesto3 = new Puesto(3, "Puesto Sur", "Ruta 10 Km 5", null, null, null);
 
         f.agregarPuesto(puesto1);
         f.agregarPuesto(puesto2);
@@ -132,6 +131,9 @@ public class ObligatorioDaApplication {
         // -- Tarifas de ejemplo --
         Tarifa t1 = new Tarifa(1, 50.0, catAuto);
         Tarifa t2 = new Tarifa(2, 30.0, catMoto);
+
+        puesto1.setListTarifas(t1);
+        puesto2.setListTarifas(t2);
 
         // -- Bonificaciones y Cobros simples --
         Bonificacion b1 = new Bonificacion(1, p1, "Fidelidad", puesto1, LocalDate.of(2024, 1, 15) );
@@ -142,10 +144,7 @@ public class ObligatorioDaApplication {
         p1.setListBonificaciones(b2);
         p2.setListBonificaciones(b2);
 
-        Cobro cob1 = new Cobro(1, 50.0, puesto1);
-        Cobro cob2 = new Cobro(2, 30.0, puesto2);
-        puesto1.setListaCobro(Arrays.asList(cob1));
-        puesto2.setListaCobro(Arrays.asList(cob2));
+        
 
         // -- Transitos (5) --
         Transito tr1 = new Transito(1, puesto1, v1, new Date());
@@ -155,6 +154,7 @@ public class ObligatorioDaApplication {
         Transito tr5 = new Transito(5, puesto2, v5, new Date());
 
         // asignar transitos a vehiculos y puestos
+        v1.setListaTransito(tr1);
         v1.setListaTransito(tr1);
         v2.setListaTransito(tr2);
         v3.setListaTransito(tr3);
