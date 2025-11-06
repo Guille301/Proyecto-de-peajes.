@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +24,21 @@ import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Tarifa;
 import da.obligatorio.obligatorioDA.modelo.Transito;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
+import da.obligatorio.obligatorioDA.observador.Observable;
+import da.obligatorio.obligatorioDA.observador.Observador;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
 
 @RestController
 @RequestMapping("/emularTransito")
 @Scope("session")
-public class ControladorEmularTransito {
+public class ControladorEmularTransito implements  Observador{
 
+    private Transito transito;
+
+
+    public ControladorEmularTransito() {
+        //TODDO ConexionNavegador
+    }
     
 
 @GetMapping("/vistaConectada")
@@ -42,10 +51,12 @@ public List<Respuesta> inicializarVista(
         );
     }
 
+     Fachada.getInstancia().agregarObservador(this);
  
     return Respuesta.lista(
             puestosRespuesta()
     );
+   
 }
 
 
@@ -83,22 +94,13 @@ public List<Respuesta> cambiarPuesto(@RequestParam int idPuesto) {
 
 
   @PostMapping("/emular")
-public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String matricula, @RequestParam String fechaHora) {
+public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String matricula,  @RequestParam  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date fechaHora) {
 
     try {
         
         Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
-       
-        Vehiculo vehiculo = Fachada.getInstancia().obtenerVehiculoPorMatricula(matricula);
-        if (vehiculo == null) {
-            throw new ObligatorioException("No existe el vehículo");
-        }
-
-        
-        Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorVehiculo(vehiculo);
-        if (propietario == null) {
-            throw new ObligatorioException("No existe un propietario asociado al vehículo");
-        }
+        Vehiculo vehiculo = Fachada.getInstancia().obtenerVehiculoPorMatriculaObligatorio(matricula);
+        Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorVehiculoObligatorio(vehiculo);
 
         
         if (propietario.getEstadoPropietario() != null &&
@@ -107,8 +109,8 @@ public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String 
             throw new ObligatorioException("El propietario del vehículo está deshabilitado, no puede realizar tránsitos");
         }
 
-       Date fehca = new Date();
-        Transito transito = new Transito(0, puesto, vehiculo, fehca);
+       
+        transito = new Transito(0, puesto, vehiculo, fechaHora);
 
         
         double costo = transito.costoTransitoEmulacion();
@@ -120,6 +122,9 @@ public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String 
         
         vehiculo.agregarTransito(transito);
         puesto.agregarTransito(transito);
+
+
+        Fachada.getInstancia().registrarNotificacionesTransito(propietario, puesto, vehiculo);
 
 
         
@@ -151,6 +156,17 @@ public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String 
     }
     return new Respuesta("puestos", puestosDto);
 }
+
+
+  @Override
+  public void actualizar(Object evento, Observable origen) {
+    if(evento.equals(Fachada.eventos.NOTIFICACION_TRANSITO)) {
+       
+        return;
+
+    }
+    
+  }
 
 
 

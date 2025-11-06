@@ -1,5 +1,6 @@
 package da.obligatorio.obligatorioDA.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
@@ -120,6 +121,15 @@ public class Propietario extends Usuario {
 
 
 
+        public void agregarNotificacion(Notificacion n) {
+        if (listaNotificaciones == null) {
+            listaNotificaciones = new ArrayList<>();
+        } else if (!(listaNotificaciones instanceof ArrayList)) {
+            listaNotificaciones = new ArrayList<>(listaNotificaciones);
+        }
+        listaNotificaciones.add(n);
+
+    }
     
 
 

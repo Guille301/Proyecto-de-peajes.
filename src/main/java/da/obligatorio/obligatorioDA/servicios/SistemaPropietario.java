@@ -1,9 +1,13 @@
 package da.obligatorio.obligatorioDA.servicios;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
+import da.obligatorio.obligatorioDA.modelo.Notificacion;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
+import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 
 public class SistemaPropietario {
@@ -72,5 +76,47 @@ public Propietario obtenerPropietarioPorVehiculo(Vehiculo vehiculo) {
     }
     return null;
 }
+
+
+
+
+public void registrarNotificacionesTransito(Propietario propietario,  Puesto puesto, Vehiculo vehiculo) {
+
+    Date ahora = new Date(System.currentTimeMillis());
+    
+    String msg1 = ahora  + " Pasaste por el puesto " + puesto.getId() + " con el vehículo " + vehiculo.getMatricula();
+
+    propietario.agregarNotificacion(new Notificacion(0, ahora , msg1));
+
+    Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_TRANSITO);
+}
+
+
+
+//Metodos con exceptions
+
+  public Vehiculo obtenerVehiculoPorMatriculaObligatorio(String matricula)
+            throws ObligatorioException {
+
+        Vehiculo v = obtenerVehiculoPorMatricula(matricula);
+        if (v == null) {
+            throw new ObligatorioException("No existe el vehículo");
+        }
+        return v;
+    }
+
+   
+    public Propietario obtenerPropietarioPorVehiculoObligatorio(Vehiculo vehiculo)
+            throws ObligatorioException {
+
+        Propietario p = obtenerPropietarioPorVehiculo(vehiculo);
+        if (p == null) {
+            throw new ObligatorioException("No existe un propietario asociado al vehículo");
+        }
+        return p;
+    }
+
+
+
 
 }

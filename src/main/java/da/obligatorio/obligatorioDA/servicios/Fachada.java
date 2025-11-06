@@ -10,19 +10,25 @@ import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Sesion;
 import da.obligatorio.obligatorioDA.modelo.Usuario;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
+import da.obligatorio.obligatorioDA.observador.Observable;;
 
 
-public class Fachada {
+public class Fachada extends Observable {
     private static Fachada instancia;
 
     private SistemaUsuarios sistemaUsuarios;
     private SistemaPuestos sistemaPuestos;
     private SistemaBonificaciones sistemaBonificaciones;
     private SistemaPropietario sistemaPropietario;
+
+
+    public enum eventos {
+        NOTIFICACION_TRANSITO
+    }
   
     
 
-    private Fachada() {
+    private Fachada()  {
         sistemaUsuarios = new SistemaUsuarios();
         sistemaPuestos = new SistemaPuestos();
         sistemaBonificaciones = new SistemaBonificaciones();
@@ -118,6 +124,23 @@ public class Fachada {
 public Propietario obtenerPropietarioPorVehiculo(Vehiculo v) {
     return sistemaPropietario.obtenerPropietarioPorVehiculo(v);
 }
+
+//Nuevos métodos
+
+public void registrarNotificacionesTransito(Propietario propietario, Puesto puesto,Vehiculo vehiculo) {
+    sistemaPropietario.registrarNotificacionesTransito(propietario, puesto, vehiculo);
+}
+
+
+    public Vehiculo obtenerVehiculoPorMatriculaObligatorio(String matricula)
+            throws ObligatorioException {
+        return sistemaPropietario.obtenerVehiculoPorMatriculaObligatorio(matricula);
+    }
+
+    public Propietario obtenerPropietarioPorVehiculoObligatorio(Vehiculo vehiculo)
+            throws ObligatorioException {
+        return sistemaPropietario.obtenerPropietarioPorVehiculoObligatorio(vehiculo);
+    }
 
 
 
