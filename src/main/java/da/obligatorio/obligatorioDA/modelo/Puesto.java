@@ -23,7 +23,7 @@ public class Puesto {
         this.direccion = direccion;
         this.listTarifas = new ArrayList<>();
         this.listTransito = listTransito;
-        this.listBonificacion = listBonificacion;
+        this.listBonificacion = new ArrayList<>();
         this.id = id;
     }
 
@@ -89,4 +89,21 @@ public class Puesto {
         }
         return null;
     }
+
+    //Traer la bonificacion para aplicar en el transito
+    public Bonificacion obtenerBonificacion(Transito transito){
+
+        if(listBonificacion == null){
+            return null;
+        }
+
+        for (Bonificacion bonificacion : listBonificacion) {
+            if(bonificacion.getPropietario().equals(transito.getVehiculo().getPropietario())){
+                return bonificacion;
+            }
+        }
+        return null;
+
+    }
+
 }

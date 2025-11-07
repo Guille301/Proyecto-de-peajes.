@@ -10,6 +10,7 @@ import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Sesion;
 import da.obligatorio.obligatorioDA.modelo.Usuario;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
+import da.obligatorio.obligatorioDA.modelo.Transito;
 
 public class Fachada {
     private static Fachada instancia;

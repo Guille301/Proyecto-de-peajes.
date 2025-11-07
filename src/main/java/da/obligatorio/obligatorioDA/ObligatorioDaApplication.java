@@ -15,7 +15,6 @@ import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Tarifa;
 import da.obligatorio.obligatorioDA.modelo.Transito;
-import da.obligatorio.obligatorioDA.modelo.Usuario;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.modelo.EstadoPropietario;
 
@@ -128,21 +127,27 @@ public class ObligatorioDaApplication {
         f.agregarPuesto(puesto2);
         f.agregarPuesto(puesto3);
 
-        // -- Tarifas de ejemplo --
+        // -- Tarifas --
         Tarifa t1 = new Tarifa(1, 50.0, catAuto);
         Tarifa t2 = new Tarifa(2, 30.0, catMoto);
+        Tarifa t3 = new Tarifa(3, 40.0, catAuto);
 
         puesto1.setListTarifas(t1);
         puesto2.setListTarifas(t2);
+        puesto3.setListTarifas(t3);
+
 
         // -- Bonificaciones y Cobros simples --
-        Bonificacion b1 = new Bonificacion(1, p1, "Fidelidad", puesto1, LocalDate.of(2024, 1, 15) );
-        Bonificacion b2 = new Bonificacion(2, p2, "Promoción", puesto2,LocalDate.of(2024, 1, 10));
+        Bonificacion b1 = new Bonificacion(1, p1, "Fidelidad", puesto1, LocalDate.of(2024, 1, 15), 10.0);
+        Bonificacion b2 = new Bonificacion(2, p2, "Promoción", puesto2,LocalDate.of(2024, 1, 10),20.0);
         f.agregarBonificacion(b1);
         f.agregarBonificacion(b2);
         p1.setListBonificaciones(b1);
         p1.setListBonificaciones(b2);
         p2.setListBonificaciones(b2);
+        puesto1.setListBonificacion(b1);
+        puesto2.setListBonificacion(b2);
+        puesto3.setListBonificacion(b1);
 
         
 
@@ -154,12 +159,11 @@ public class ObligatorioDaApplication {
         Transito tr5 = new Transito(5, puesto2, v5, new Date());
 
         // asignar transitos a vehiculos y puestos
-        v1.setListaTransito(tr1);
-        v1.setListaTransito(tr1);
-        v2.setListaTransito(tr2);
-        v3.setListaTransito(tr3);
-        v4.setListaTransito(tr4);
-        v5.setListaTransito(tr5);
+        v1.agregarTransito(tr1);
+        v2.agregarTransito(tr2);
+        v3.agregarTransito(tr3);
+        v4.agregarTransito(tr4);
+        v5.agregarTransito(tr5);
 
         puesto1.setListTransito(tr1);
         puesto1.setListTransito(tr2);

@@ -4,8 +4,7 @@ package da.obligatorio.obligatorioDA.dtos;
 import java.time.LocalDate;
 
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
-import da.obligatorio.obligatorioDA.modelo.Propietario;
-import da.obligatorio.obligatorioDA.modelo.Puesto;
+
 
 public class bonificacionPropietarioDto {
     private String nombre;

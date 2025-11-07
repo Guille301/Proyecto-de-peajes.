@@ -10,9 +10,10 @@ public class Vehiculo {
     private String color;
     private CategoriaVehiculo categoriaVehiculo;
     private Propietario propietario;
-    private List<Transito> listaTransito;
+    private List<Transito> listaTransito = new ArrayList<>(); 
 
     public Vehiculo() {
+        this.listaTransito = new ArrayList<>();
     }
 
     public Vehiculo(int id, String matricula, String modelo, String color,
@@ -79,15 +80,19 @@ public class Vehiculo {
         return listaTransito;
     }
 
-    public void setListaTransito(Transito nuevoTransito) {
+    public void agregarTransito(Transito nuevoTransito) {
         this.listaTransito.add(nuevoTransito);
     }
 
     public double calcularMontoTotalTodosLosTransitos(){
         double montoTotal = 0.0;
         for(Transito t : this.listaTransito){
-            montoTotal += t.costoTransito(this);
+            var tarifa = t.getPuesto().obtenerTarifaPara(this);
+            if (tarifa != null) {
+                montoTotal += tarifa.getMonto();
+            }
         }
         return montoTotal;
     }
+
 }

@@ -118,5 +118,14 @@ public class Propietario extends Usuario {
         return vehiculosConTransito;
     }
 
+    //Traigo los transitos de mis vehiculos
+    public List<Transito> traerTransitosDeMisVehiculos() {
+        List<Transito> transitosPropietario = new java.util.ArrayList<>();
+        for (Vehiculo v : this.listVehiculos) {
+            transitosPropietario.addAll(v.getListaTransito());
+        }
+        return transitosPropietario;
+    }
+
 
 }

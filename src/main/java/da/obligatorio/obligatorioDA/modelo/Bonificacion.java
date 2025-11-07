@@ -9,16 +9,18 @@ public class Bonificacion {
     private String nombre;
     private Puesto puestos;
     private LocalDate fechaAsignacion;
+    private double montoDescuento;
 
     public Bonificacion() {
     }
 
-    public Bonificacion(int id, Propietario propietario, String nombre, Puesto puestos, LocalDate fechaAsignacion) {
+    public Bonificacion(int id, Propietario propietario, String nombre, Puesto puestos, LocalDate fechaAsignacion, double montoDescuento) {
         this.id = id;
         this.propietario = propietario;
         this.nombre = nombre;
         this.puestos = puestos;
         this.fechaAsignacion = fechaAsignacion;
+        this.montoDescuento = montoDescuento;
     }
 
     public int getId() {
@@ -59,5 +61,13 @@ public class Bonificacion {
 
     public void setFechaAsignacion(LocalDate fechaAsignacion) {
         this.fechaAsignacion = fechaAsignacion;
+    }
+
+    public double getMontoDescuento() {
+        return montoDescuento;
+    }
+
+    public void setMontoDescuento(double montoDescuento) {
+        this.montoDescuento = montoDescuento;
     }
 }

@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
+import da.obligatorio.obligatorioDA.modelo.Puesto;
+import da.obligatorio.obligatorioDA.modelo.Transito;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Usuario;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
 import jakarta.servlet.http.HttpSession;
 import da.obligatorio.obligatorioDA.dtos.bonificacionPropietarioDto;
+import da.obligatorio.obligatorioDA.dtos.transitosRealizadosDto;
 import da.obligatorio.obligatorioDA.dtos.vehiculosDto;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 
@@ -37,9 +40,22 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
              new Respuesta("estadoPropietario", usuario.getEstadoPropietario().getNombre()),
              new Respuesta("saldoPropietario", String.valueOf(usuario.getSaldo())),
              vehiculosConTransito(usuario),
-             bonficacionesPropietario(usuario)      
+             bonficacionesPropietario(usuario),  
+             transitosRealizados(usuario)    
          );
         
+    }
+
+    private Respuesta transitosRealizados(Propietario usuario){
+        
+        List<Transito> transitos = usuario.traerTransitosDeMisVehiculos();
+        List<transitosRealizadosDto> transDtos = new ArrayList<>();
+        for(Transito tc : transitos){
+            Puesto puesto = tc.getPuesto();
+            transDtos.add(new transitosRealizadosDto(tc,puesto));
+        }
+        return new Respuesta("transitosRealizados", transDtos);
+
     }
 
     private Respuesta vehiculosConTransito(Propietario usuario){
@@ -60,5 +76,5 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
 
         return new Respuesta("bonificacionesPropietario", bonDtos);
     }
-    
+
 }
