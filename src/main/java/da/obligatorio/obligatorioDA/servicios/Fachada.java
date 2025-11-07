@@ -125,7 +125,7 @@ public Propietario obtenerPropietarioPorVehiculo(Vehiculo v) {
     return sistemaPropietario.obtenerPropietarioPorVehiculo(v);
 }
 
-//Nuevos métodos
+//Nuevos métodos de propiertario
 
 public void registrarNotificacionesTransito(Propietario propietario, Puesto puesto,Vehiculo vehiculo) {
     sistemaPropietario.registrarNotificacionesTransito(propietario, puesto, vehiculo);
@@ -141,6 +141,14 @@ public void registrarNotificacionesTransito(Propietario propietario, Puesto pues
             throws ObligatorioException {
         return sistemaPropietario.obtenerPropietarioPorVehiculoObligatorio(vehiculo);
     }
+
+
+   
+
+public void validarEstadoParaTransito(Propietario propietario) throws ObligatorioException {
+    sistemaPropietario.validarEstadoParaTransito(propietario);
+}
+
 
 
 

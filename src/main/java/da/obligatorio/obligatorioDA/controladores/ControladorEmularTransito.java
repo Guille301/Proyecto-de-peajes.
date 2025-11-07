@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,17 +28,20 @@ import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.observador.Observable;
 import da.obligatorio.obligatorioDA.observador.Observador;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
+import da.obligatorio.obligatorioDA.utils.ConexionNavegador;
 
 @RestController
 @RequestMapping("/emularTransito")
 @Scope("session")
 public class ControladorEmularTransito implements  Observador{
 
+    private ConexionNavegador conexionNavegador;
+
     private Transito transito;
 
 
-    public ControladorEmularTransito() {
-        //TODDO ConexionNavegador
+    public ControladorEmularTransito(@Autowired ConexionNavegador unaConexion) {
+        this.conexionNavegador = unaConexion;
     }
     
 
@@ -103,16 +107,12 @@ public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String 
         Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorVehiculoObligatorio(vehiculo);
 
         
-        if (propietario.getEstadoPropietario() != null &&
-            "Deshabilitado".equalsIgnoreCase(propietario.getEstadoPropietario().getNombre())) {
-
-            throw new ObligatorioException("El propietario del vehículo está deshabilitado, no puede realizar tránsitos");
-        }
+        Fachada.getInstancia().validarEstadoParaTransito(propietario);
 
        
         transito = new Transito(0, puesto, vehiculo, fechaHora);
 
-        
+    
         double costo = transito.costoTransitoEmulacion();
 
         
@@ -162,8 +162,9 @@ public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String 
   public void actualizar(Object evento, Observable origen) {
     if(evento.equals(Fachada.eventos.NOTIFICACION_TRANSITO)) {
        
-        return;
-
+        Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorVehiculo(transito.getVehiculo());
+       //   Respuesta r = notificacionesPropietario(propietario);
+       conexionNavegador.enviarJSON(Respuesta.lista(null) );
     }
     
   }

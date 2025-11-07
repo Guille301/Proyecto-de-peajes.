@@ -1,6 +1,6 @@
 package da.obligatorio.obligatorioDA.servicios;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,11 +82,12 @@ public Propietario obtenerPropietarioPorVehiculo(Vehiculo vehiculo) {
 
 public void registrarNotificacionesTransito(Propietario propietario,  Puesto puesto, Vehiculo vehiculo) {
 
-    Date ahora = new Date(System.currentTimeMillis());
-    
-    String msg1 = ahora  + " Pasaste por el puesto " + puesto.getId() + " con el vehículo " + vehiculo.getMatricula();
+    Date ahora = new Date();
 
-    propietario.agregarNotificacion(new Notificacion(0, ahora , msg1));
+    
+    String mensaje = ahora  + " Pasaste por el puesto " + puesto.getId() + " con el vehículo " + vehiculo.getMatricula();
+
+    propietario.agregarNotificacion(new Notificacion(0, ahora , mensaje));
 
     Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_TRANSITO);
 }
@@ -115,6 +116,20 @@ public void registrarNotificacionesTransito(Propietario propietario,  Puesto pue
         }
         return p;
     }
+
+    //Validar estado para el transito
+
+   
+public void validarEstadoParaTransito(Propietario propietario) throws ObligatorioException {
+    if (propietario.getEstadoPropietario() != null &&
+        "Deshabilitado".equalsIgnoreCase(propietario.getEstadoPropietario().getNombre())) {
+
+        throw new ObligatorioException(
+            "El propietario del vehículo está deshabilitado, no puede realizar tránsitos"
+        );
+    }
+}
+
 
 
 
