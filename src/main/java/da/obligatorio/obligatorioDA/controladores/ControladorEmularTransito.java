@@ -25,24 +25,20 @@ import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Tarifa;
 import da.obligatorio.obligatorioDA.modelo.Transito;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
-import da.obligatorio.obligatorioDA.observador.Observable;
-import da.obligatorio.obligatorioDA.observador.Observador;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
-import da.obligatorio.obligatorioDA.utils.ConexionNavegador;
+
 
 @RestController
 @RequestMapping("/emularTransito")
 @Scope("session")
-public class ControladorEmularTransito implements  Observador{
+public class ControladorEmularTransito {
 
-    private ConexionNavegador conexionNavegador;
+   
 
     private Transito transito;
 
 
-    public ControladorEmularTransito(@Autowired ConexionNavegador unaConexion) {
-        this.conexionNavegador = unaConexion;
-    }
+
     
 
 @GetMapping("/vistaConectada")
@@ -55,7 +51,7 @@ public List<Respuesta> inicializarVista(
         );
     }
 
-     Fachada.getInstancia().agregarObservador(this);
+    
  
     return Respuesta.lista(
             puestosRespuesta()
@@ -158,16 +154,6 @@ public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String 
 }
 
 
-  @Override
-  public void actualizar(Object evento, Observable origen) {
-    if(evento.equals(Fachada.eventos.NOTIFICACION_TRANSITO)) {
-       
-        Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorVehiculo(transito.getVehiculo());
-       //   Respuesta r = notificacionesPropietario(propietario);
-      // conexionNavegador.enviarJSON(Respuesta.lista(null) );
-    }
-    
-  }
 
 
 

@@ -46,6 +46,14 @@
         <h2>Transitos realizados</h2>
         <div id="transitosRealizados" ></div>  
     </section>
+      
+     
+    <section>
+    <h2>Notificaciones</h2>
+    <div id="notificacionesPropietario"></div>
+</section>
+
+  
 </main>
 
             
@@ -61,7 +69,10 @@
         const spnSaldo = document.getElementById("saldoPropietario");
         const divVehiculosConTransito = document.getElementById("vehiculosConTransito");
         const divbonificacionesPropietario = document.getElementById("bonificacionesPropietario");
-        const divtransitosRealizados = document.getElementById("transitosRealizados");        
+        const divtransitosRealizados = document.getElementById("transitosRealizados"); 
+        const divNotificaciones = document.getElementById("notificacionesPropietario");
+
+       
 		
         function cargarContenido(pagina) {
 			document.getElementById('contenidoFrame').src = pagina;
@@ -94,6 +105,10 @@
 
         function mostrar_transitosRealizados(transitosRealizados){
             divtransitosRealizados.innerHTML = crearTablaDesdeJson(transitosRealizados);
+        }
+        //Notificaciones
+        function mostrar_notificacionesPropietario(notificacionesPropietario) {
+        divNotificaciones.innerHTML = crearTablaDesdeJson(notificacionesPropietario);
         }
         
 		</script>

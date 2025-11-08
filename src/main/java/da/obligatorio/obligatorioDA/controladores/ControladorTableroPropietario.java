@@ -3,6 +3,8 @@ package da.obligatorio.obligatorioDA.controladores;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,17 +18,32 @@ import da.obligatorio.obligatorioDA.modelo.Transito;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Usuario;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
+import da.obligatorio.obligatorioDA.observador.Observador;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
+import da.obligatorio.obligatorioDA.utils.ConexionNavegador;
 import jakarta.servlet.http.HttpSession;
 import da.obligatorio.obligatorioDA.dtos.bonificacionPropietarioDto;
+import da.obligatorio.obligatorioDA.dtos.notificacionDTO;
 import da.obligatorio.obligatorioDA.dtos.transitosRealizadosDto;
 import da.obligatorio.obligatorioDA.dtos.vehiculosDto;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
+import da.obligatorio.obligatorioDA.observador.Observable;
+
 
 @RestController
 @RequestMapping("/tablero")
-public class ControladorTableroPropietario {
+@Scope("session")
+public class ControladorTableroPropietario  implements Observador{
 private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(ControladorTableroPropietario.class);
+
+   private final ConexionNavegador conexionNavegador;
+   private Propietario usuarioSesion;
+
+
+     @Autowired
+    public ControladorTableroPropietario(ConexionNavegador conexionNavegador) {
+        this.conexionNavegador = conexionNavegador;
+    }
 
     
     @GetMapping("/resumenDelPropietario")
@@ -35,13 +52,20 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
              // Manejar el caso en que el usuario no está en la sesión pide redireccionar a la página de login
              return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "loginPropietario.html"));
          }
+
+         this.usuarioSesion = usuario;
+
+         Fachada.getInstancia().agregarObservador(this);
+
+
          return Respuesta.lista(
              new Respuesta("nombreCompleto", usuario.getNombreCompleto()),
              new Respuesta("estadoPropietario", usuario.getEstadoPropietario().getNombre()),
              new Respuesta("saldoPropietario", String.valueOf(usuario.getSaldo())),
              vehiculosConTransito(usuario),
              bonficacionesPropietario(usuario),  
-             transitosRealizados(usuario)    
+             transitosRealizados(usuario),
+             notificacionesPropietario(usuario)    
          );
         
     }
@@ -76,5 +100,39 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
 
         return new Respuesta("bonificacionesPropietario", bonDtos);
     }
+
+
+
+     private Respuesta notificacionesPropietario(Propietario usuario) {
+        var lista = usuario.getListaNotificaciones();
+        List<notificacionDTO> notifsDto = new ArrayList<>();
+        if (lista != null) {
+            for (var n : lista) {
+                notifsDto.add(new notificacionDTO(n));
+            }
+        }
+        return new Respuesta("notificacionesPropietario", notifsDto);
+    }
+
+    
+    @Override
+    public void actualizar(Object evento, Observable origen) {
+
+        if (evento.equals(Fachada.eventos.NOTIFICACION_TRANSITO)) {
+
+            if (usuarioSesion == null) {
+                return; 
+            }
+
+            
+            Respuesta Saldo  = new Respuesta("saldoPropietario",String.valueOf(usuarioSesion.getSaldo()));
+            Respuesta Trans  = transitosRealizados(usuarioSesion);
+            Respuesta Notifs = notificacionesPropietario(usuarioSesion);
+
+            conexionNavegador.enviarJSON( Respuesta.lista(Saldo, Trans, Notifs));
+        }
+
+}
+
 
 }
