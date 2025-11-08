@@ -38,63 +38,63 @@ public class ObligatorioDaApplication {
         EstadoPropietario activo = new EstadoPropietario(1, "Activo");
 
         // -- Propietarios (5) -- (creados de forma simple, parecido a Notificacion)
-        Propietario p1 = new Propietario();
-        p1.setId(1);
-        p1.setNombreCompleto("Juan Perez");
-        p1.setContrasenia("123456");
-        p1.setCedula("2001");
-        p1.setSaldo(150.0);
-        p1.setEstadoPropietario(activo);
-        p1.setListaNotificaciones(Arrays.asList(new Notificacion(1, new Date(), "Bienvenido Juan")));
+        Propietario propietario1 = new Propietario();
+        propietario1.setId(1);
+        propietario1.setNombreCompleto("Juan Perez");
+        propietario1.setContrasenia("123456");
+        propietario1.setCedula("2001");
+        propietario1.setSaldo(150.0);
+        propietario1.setEstadoPropietario(activo);
+        propietario1.setListaNotificaciones(Arrays.asList(new Notificacion(1, new Date(), "Bienvenido Juan")));
 
-        Propietario p2 = new Propietario();
-        p2.setId(2);
-        p2.setContrasenia("123456");
-        p2.setNombreCompleto("María Gomez");
-        p2.setCedula("2002");
-        p2.setSaldo(200.0);
-        p2.setEstadoPropietario(activo);
-        p2.setListaNotificaciones(Arrays.asList(new Notificacion(2, new Date(), "Bienvenida María")));
+        Propietario propietario2 = new Propietario();
+        propietario2.setId(2);
+        propietario2.setContrasenia("123456");
+        propietario2.setNombreCompleto("María Gomez");
+        propietario2.setCedula("2002");
+        propietario2.setSaldo(200.0);
+        propietario2.setEstadoPropietario(activo);
+        propietario2.setListaNotificaciones(Arrays.asList(new Notificacion(2, new Date(), "Bienvenida María")));
 
-        Propietario p3 = new Propietario();
-        p3.setId(3);
-        p3.setContrasenia("123456");
-        p3.setNombreCompleto("Carlos Ruiz");
-        p3.setCedula("2003");
-        p3.setSaldo(50.0);
-        p3.setEstadoPropietario(activo);
-        p3.setListaNotificaciones(Arrays.asList(new Notificacion(3, new Date(), "Saldo bajo Carlos")));
+        Propietario propietario3 = new Propietario();
+        propietario3.setId(3);
+        propietario3.setContrasenia("123456");
+        propietario3.setNombreCompleto("Carlos Ruiz");
+        propietario3.setCedula("2003");
+        propietario3.setSaldo(50.0);
+        propietario3.setEstadoPropietario(activo);
+        propietario3.setListaNotificaciones(Arrays.asList(new Notificacion(3, new Date(), "Saldo bajo Carlos")));
 
-        Propietario p4 = new Propietario();
-        p4.setId(4); 
-        p4.setContrasenia("123456");
-        p4.setNombreCompleto("Lucía Fernández");
-        p4.setCedula("2004");
-        p4.setSaldo(300.0);
-        p4.setEstadoPropietario(activo);
-        p4.setListaNotificaciones(Arrays.asList(new Notificacion(4, new Date(), "Promoción disponible")));
+        Propietario propietario4 = new Propietario();
+        propietario4.setId(4); 
+        propietario4.setContrasenia("123456");
+        propietario4.setNombreCompleto("Lucía Fernández");
+        propietario4.setCedula("2004");
+        propietario4.setSaldo(300.0);
+        propietario4.setEstadoPropietario(activo);
+        propietario4.setListaNotificaciones(Arrays.asList(new Notificacion(4, new Date(), "Promoción disponible")));
 
-        Propietario p5 = new Propietario();
-        p5.setId(5);
-        p5.setContrasenia("123456");
-        p5.setNombreCompleto("Diego López");
-        p5.setCedula("2005");
-        p5.setSaldo(75.0);
-        p5.setEstadoPropietario(activo);
-        p5.setListaNotificaciones(Arrays.asList(new Notificacion(5, new Date(), "Recarga recomendada")));
+        Propietario propietario5 = new Propietario();
+        propietario5.setId(5);
+        propietario5.setContrasenia("123456");
+        propietario5.setNombreCompleto("Diego López");
+        propietario5.setCedula("2005");
+        propietario5.setSaldo(75.0);
+        propietario5.setEstadoPropietario(activo);
+        propietario5.setListaNotificaciones(Arrays.asList(new Notificacion(5, new Date(), "Recarga recomendada")));
 
         // agregar propietarios a fachada
-        f.agregarPropietario(p1);
-        f.agregarPropietario(p2);
-        f.agregarPropietario(p3);
-        f.agregarPropietario(p4);
-        f.agregarPropietario(p5);
+        f.agregarPropietario(propietario1);
+        f.agregarPropietario(propietario2);
+        f.agregarPropietario(propietario3);
+        f.agregarPropietario(propietario4);
+        f.agregarPropietario(propietario5);
 
-        f.agregar(p1);
-        f.agregar(p2);
-        f.agregar(p3);
-        f.agregar(p4);
-        f.agregar(p5);
+        f.agregar(propietario1);
+        f.agregar(propietario2);
+        f.agregar(propietario3);
+        f.agregar(propietario4);
+        f.agregar(propietario5);
 
 
         //Administrador
@@ -103,20 +103,20 @@ public class ObligatorioDaApplication {
 
 
         // -- Vehiculos (5) --
-        Vehiculo v1 = new Vehiculo(1, "ABC-101", "Fiesta", "Rojo", catAuto, p1, null);
-        Vehiculo v2 = new Vehiculo(2, "BCD-202", "Civic", "Azul", catAuto, p2, null);
-        Vehiculo v3 = new Vehiculo(3, "CDE-303", "Tornado", "Blanco", catMoto, p3, null);
-        Vehiculo v4 = new Vehiculo(4, "DEF-404", "Corolla", "Gris", catAuto, p4, null);
-        Vehiculo v5 = new Vehiculo(5, "EFG-505", "Pulsar", "Negro", catMoto, p5, null);
-        Vehiculo v6 = new Vehiculo(6, "SDG-505", "Seagull", "Blanco", catAuto, p1, null);
+        Vehiculo vehiculo1 = new Vehiculo(1, "ABC-101", "Fiesta", "Rojo", catAuto, propietario1, null);
+        Vehiculo vehiculo2 = new Vehiculo(2, "BCD-202", "Civic", "Azul", catAuto, propietario2, null);
+        Vehiculo vehiculo3 = new Vehiculo(3, "CDE-303", "Tornado", "Blanco", catMoto, propietario3, null);
+        Vehiculo vehiculo4 = new Vehiculo(4, "DEF-404", "Corolla", "Gris", catAuto, propietario4, null);
+        Vehiculo vehiculo5 = new Vehiculo(5, "EFG-505", "Pulsar", "Negro", catMoto, propietario5, null);
+        Vehiculo vehiculo6 = new Vehiculo(6, "SDG-505", "Seagull", "Blanco", catAuto, propietario1, null);
 
         // asignar vehiculos a sus propietarios (listas simples)
-        p1.setListVehiculos(v1);
-        p1.setListVehiculos(v6);
-        p2.setListVehiculos(v2);
-        p3.setListVehiculos(v3);
-        p4.setListVehiculos(v4);
-        p5.setListVehiculos(v5);
+        propietario1.agregarVehiculoPropietario(vehiculo1);
+        propietario1.agregarVehiculoPropietario(vehiculo6);
+        propietario2.agregarVehiculoPropietario(vehiculo2);
+        propietario3.agregarVehiculoPropietario(vehiculo3);
+        propietario4.agregarVehiculoPropietario(vehiculo4);
+        propietario5.agregarVehiculoPropietario(vehiculo5);
 
         // -- Puestos (3) --
         Puesto puesto1 = new Puesto(1, "Puesto Centro", "Av. Principal 100", null, null, null);
@@ -132,44 +132,62 @@ public class ObligatorioDaApplication {
         Tarifa t2 = new Tarifa(2, 30.0, catMoto);
         Tarifa t3 = new Tarifa(3, 40.0, catAuto);
 
-        puesto1.setListTarifas(t1);
-        puesto2.setListTarifas(t2);
-        puesto3.setListTarifas(t3);
+        puesto1.agrgarTarifaPuesto(t1);
+        puesto2.agrgarTarifaPuesto(t2);
+        puesto3.agrgarTarifaPuesto(t3);
 
 
         // -- Bonificaciones y Cobros simples --
-        Bonificacion b1 = new Bonificacion(1, p1, "Fidelidad", puesto1, LocalDate.of(2024, 1, 15), 10.0);
-        Bonificacion b2 = new Bonificacion(2, p2, "Promoción", puesto2,LocalDate.of(2024, 1, 10),20.0);
+        Bonificacion b1 = new Bonificacion(1, propietario1, "Fidelidad", puesto1, LocalDate.of(2024, 1, 15), 10.0);
+        Bonificacion b2 = new Bonificacion(2, propietario2, "Promoción", puesto2,LocalDate.of(2024, 1, 10),20.0);
+        Bonificacion b3 = new Bonificacion(3, propietario3, "Premium", puesto3,LocalDate.of(2024, 1, 10),20.0);
+        Bonificacion b4 = new Bonificacion(4, propietario4, "Promo", puesto3, LocalDate.now(), 5.0);
+        Bonificacion b5 = new Bonificacion(5, propietario5, "Platinum", puesto2, LocalDate.now(), 5.0);
+
+
         f.agregarBonificacion(b1);
         f.agregarBonificacion(b2);
-        p1.setListBonificaciones(b1);
-        p1.setListBonificaciones(b2);
-        p2.setListBonificaciones(b2);
-        puesto1.setListBonificacion(b1);
-        puesto2.setListBonificacion(b2);
-        puesto3.setListBonificacion(b1);
+        f.agregarBonificacion(b3);
+
+        propietario1.agregarBonificacionPropietario(b1);
+        propietario2.agregarBonificacionPropietario(b2);
+        propietario3.agregarBonificacionPropietario(b3);
+        propietario4.agregarBonificacionPropietario(b4);
+        propietario5.agregarBonificacionPropietario(b5);
+
+        puesto1.agregarBonificacionPuesto(b1);
+        puesto2.agregarBonificacionPuesto(b2);
+        puesto2.agregarBonificacionPuesto(b5);
+        puesto2.agregarBonificacionPuesto(b3);
+        puesto3.agregarBonificacionPuesto(b1);
+        puesto3.agregarBonificacionPuesto(b3);
+        puesto3.agregarBonificacionPuesto(b4);
+      
 
         
 
         // -- Transitos (5) --
-        Transito tr1 = new Transito(1, puesto1, v1, new Date());
-        Transito tr2 = new Transito(2, puesto1, v2, new Date());
-        Transito tr3 = new Transito(3, puesto2, v3, new Date());
-        Transito tr4 = new Transito(4, puesto3, v4, new Date());
-        Transito tr5 = new Transito(5, puesto2, v5, new Date());
+        Transito tr1 = new Transito(1, puesto1, vehiculo1, new Date());
+        Transito tr2 = new Transito(2, puesto2, vehiculo2, new Date());
+        Transito tr3 = new Transito(3, puesto2, vehiculo3, new Date());
+        Transito tr4 = new Transito(4, puesto3, vehiculo4, new Date());
+        Transito tr5 = new Transito(5, puesto2, vehiculo5, new Date());
+
 
         // asignar transitos a vehiculos y puestos
-        v1.agregarTransito(tr1);
-        v2.agregarTransito(tr2);
-        v3.agregarTransito(tr3);
-        v4.agregarTransito(tr4);
-        v5.agregarTransito(tr5);
+        vehiculo1.agregarTransito(tr1);
+        vehiculo2.agregarTransito(tr2);
+        vehiculo3.agregarTransito(tr3);
+        vehiculo4.agregarTransito(tr4);
+        vehiculo5.agregarTransito(tr5);
 
-        puesto1.setListTransito(tr1);
-        puesto1.setListTransito(tr2);
-        puesto2.setListTransito(tr3);
-        puesto2.setListTransito(tr5);
-        puesto3.setListTransito(tr4);
+        puesto1.agregarTransitoPuesto(tr1);
+        puesto1.agregarTransitoPuesto(tr2);
+        puesto2.agregarTransitoPuesto(tr3);
+        puesto2.agregarTransitoPuesto(tr5);
+        puesto3.agregarTransitoPuesto(tr4);
+        puesto2.agregarTransitoPuesto(tr2);
+
 
         }
 

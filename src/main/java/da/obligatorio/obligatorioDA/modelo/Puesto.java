@@ -14,6 +14,9 @@ public class Puesto {
 //Puesto
 
     public Puesto() {
+        this.listTarifas = new ArrayList<>();
+        this.listTransito = new ArrayList<>();
+        this.listBonificacion = new ArrayList<>();
     }
 
     public Puesto(int id,String nombre, String direccion, List<Tarifa> listTarifas,
@@ -22,7 +25,7 @@ public class Puesto {
         this.nombre = nombre;
         this.direccion = direccion;
         this.listTarifas = new ArrayList<>();
-        this.listTransito = listTransito;
+        this.listTransito = new ArrayList<>();
         this.listBonificacion = new ArrayList<>();
         this.id = id;
     }
@@ -55,7 +58,7 @@ public class Puesto {
         return listTarifas;
     }
 
-    public void setListTarifas(Tarifa nuevaTarifa) {
+    public void agrgarTarifaPuesto(Tarifa nuevaTarifa) {
         this.listTarifas.add(nuevaTarifa);
     }
 
@@ -63,7 +66,7 @@ public class Puesto {
         return listTransito;
     }
 
-    public void setListTransito(Transito nuevTransito) {
+    public void agregarTransitoPuesto(Transito nuevTransito) {
         this.listTransito.add(nuevTransito);
     }
 
@@ -71,7 +74,7 @@ public class Puesto {
         return listBonificacion;
     }
 
-    public void setListBonificacion(Bonificacion nuevaBonificacion) {
+    public void agregarBonificacionPuesto(Bonificacion nuevaBonificacion) {
         this.listBonificacion.add(nuevaBonificacion);
     }
 

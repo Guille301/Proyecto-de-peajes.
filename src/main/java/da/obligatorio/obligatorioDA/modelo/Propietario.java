@@ -1,6 +1,8 @@
 package da.obligatorio.obligatorioDA.modelo;
 
 import java.util.List;
+import java.util.ArrayList;
+
 
 public class Propietario extends Usuario {
     private int id;
@@ -13,9 +15,9 @@ public class Propietario extends Usuario {
     private List<Bonificacion> listBonificaciones;
 
     public Propietario() {
-        this.listaNotificaciones = new java.util.ArrayList<>();
-        this.listVehiculos = new java.util.ArrayList<>();
-        this.listBonificaciones = new java.util.ArrayList<>();
+        this.listaNotificaciones = new ArrayList<>();
+        this.listVehiculos = new ArrayList<>();
+        this.listBonificaciones = new ArrayList<>();
     }
 
     public Propietario(int id, String nombreCompleto, double saldo, Bonificacion bonificacion,
@@ -92,7 +94,7 @@ public class Propietario extends Usuario {
         return listVehiculos;
     }
 
-    public void setListVehiculos(Vehiculo nuevoVehiculo) {
+    public void agregarVehiculoPropietario(Vehiculo nuevoVehiculo) {
         this.listVehiculos.add(nuevoVehiculo);
     }
 
@@ -100,7 +102,7 @@ public class Propietario extends Usuario {
         return listBonificaciones;
     }
 
-    public void setListBonificaciones(Bonificacion nuevBonificacion) {
+    public void agregarBonificacionPropietario(Bonificacion nuevBonificacion) {
         this.listBonificaciones.add(nuevBonificacion);
     }
 
