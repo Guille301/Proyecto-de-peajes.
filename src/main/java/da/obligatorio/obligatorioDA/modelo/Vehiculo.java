@@ -79,9 +79,10 @@ public class Vehiculo {
         return listaTransito;
     }
 
-    public void setListaTransito(List<Transito> listaTransito) {
-        this.listaTransito = listaTransito;
+    public void setTransito(Transito t) {
+        listaTransito.add(t);
     }
+
 
        public double calcularMontoTotalTodosLosTransitos(){
         double montoTotal = 0.0;
@@ -91,13 +92,6 @@ public class Vehiculo {
         return montoTotal;
     }
 
-    public void agregarTransito(Transito t) {
-    if (listaTransito == null) {
-        listaTransito = new ArrayList<>();
-    } else if (!(listaTransito instanceof ArrayList)) {
-        listaTransito = new ArrayList<>(listaTransito);
-    }
-    listaTransito.add(t);
-}
+  
 
 }

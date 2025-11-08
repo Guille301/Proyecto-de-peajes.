@@ -91,25 +91,25 @@ public class Propietario extends Usuario {
     public List<Notificacion> getListaNotificaciones() {
         return listaNotificaciones;
     }
-
-    public void setListaNotificaciones(List<Notificacion> listaNotificaciones) {
-        this.listaNotificaciones = listaNotificaciones;
+    //Corregido
+    public void setNotificaciones(Notificacion n) {
+        listaNotificaciones.add(n);
     }
 
     public List<Vehiculo> getListVehiculos() {
         return listVehiculos;
     }
-
-    public void setListVehiculos(List<Vehiculo> listVehiculos) {
-        this.listVehiculos = listVehiculos;
+    //Corregido
+    public void setVehiculos(Vehiculo v) {
+        listVehiculos.add(v);
     }
 
     public List<Bonificacion> getListBonificaciones() {
         return listBonificaciones;
     }
-
-    public void setListBonificaciones(List<Bonificacion> listBonificaciones) {
-        this.listBonificaciones = listBonificaciones;
+     //Corregido
+    public void setBonificaciones(Bonificacion b) {
+        listBonificaciones.add(b);
     }
 
       public void debitarPorTransito(double costo) throws ObligatorioException {
@@ -121,15 +121,7 @@ public class Propietario extends Usuario {
 
 
 
-        public void agregarNotificacion(Notificacion n) {
-        if (listaNotificaciones == null) {
-            listaNotificaciones = new ArrayList<>();
-        } else if (!(listaNotificaciones instanceof ArrayList)) {
-            listaNotificaciones = new ArrayList<>(listaNotificaciones);
-        }
-        listaNotificaciones.add(n);
-
-    }
+      
     
 
 

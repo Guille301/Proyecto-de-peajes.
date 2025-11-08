@@ -10,7 +10,7 @@ public class Puesto {
     private List<Tarifa> listTarifas;
     private List<Transito> listTransito;
     private List<Bonificacion> listBonificacion;
-    private List<Cobro> listaCobro;
+    
 
 //Puesto
 
@@ -18,14 +18,12 @@ public class Puesto {
     }
 
     public Puesto(int id,String nombre, String direccion, List<Tarifa> listTarifas,
-                  List<Transito> listTransito, List<Bonificacion> listBonificacion,
-                  List<Cobro> listaCobro) {
+                  List<Transito> listTransito, List<Bonificacion> listBonificacion) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.listTarifas = listTarifas;
         this.listTransito = listTransito;
         this.listBonificacion = listBonificacion;
-        this.listaCobro = listaCobro;
         this.id = id;
     }
 
@@ -56,34 +54,28 @@ public class Puesto {
     public List<Tarifa> getListTarifas() {
         return listTarifas;
     }
-
-    public void setListTarifas(List<Tarifa> listTarifas) {
-        this.listTarifas = listTarifas;
+    //Corregido
+    public void setTarifas(Tarifa tarifa) {
+        listTarifas.add(tarifa);
     }
 
     public List<Transito> getListTransito() {
         return listTransito;
     }
-
-    public void setListTransito(List<Transito> listTransito) {
-        this.listTransito = listTransito;
+      //Corregido
+    public void setTransito(Transito t) {
+        listTransito.add(t);
     }
 
     public List<Bonificacion> getListBonificacion() {
         return listBonificacion;
     }
-
-    public void setListBonificacion(List<Bonificacion> listBonificacion) {
-        this.listBonificacion = listBonificacion;
+    //Corregido
+    public void setBonificacion(Bonificacion b) {
+       listBonificacion.add(b);
     }
 
-    public List<Cobro> getListaCobro() {
-        return listaCobro;
-    }
-
-    public void setListaCobro(List<Cobro> listaCobro) {
-        this.listaCobro = listaCobro;
-    }
+    
 
 
    public Tarifa obtenerTarifaPara(Vehiculo vehiculo) {
@@ -101,14 +93,6 @@ public class Puesto {
     return null;
 }
 
-public void agregarTransito(Transito t) {
-    if (listTransito == null) {
-        listTransito = new ArrayList<>();
-    } else if (!(listTransito instanceof ArrayList)) {
-        listTransito = new ArrayList<>(listTransito);
-    }
-    listTransito.add(t);
-}
 
 
 public Bonificacion obtenerBonificacionPara(Propietario propietario) {

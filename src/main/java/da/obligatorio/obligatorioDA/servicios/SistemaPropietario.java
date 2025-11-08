@@ -87,7 +87,9 @@ public void registrarNotificacionesTransito(Propietario propietario,  Puesto pue
     
     String mensaje = ahora  + " Pasaste por el puesto " + puesto.getId() + " con el vehículo " + vehiculo.getMatricula();
 
-    propietario.agregarNotificacion(new Notificacion(0, ahora , mensaje));
+    Notificacion notificacion = new Notificacion(0, ahora, mensaje);
+
+    propietario.setNotificaciones(notificacion);
 
     Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_TRANSITO);
 }

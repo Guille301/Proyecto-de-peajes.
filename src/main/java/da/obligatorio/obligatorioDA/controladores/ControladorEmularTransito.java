@@ -120,8 +120,8 @@ public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String 
         double nuevoSaldo = propietario.getSaldo();
 
         
-        vehiculo.agregarTransito(transito);
-        puesto.agregarTransito(transito);
+        vehiculo.setTransito(transito);
+        puesto.setTransito(transito);
 
 
         Fachada.getInstancia().registrarNotificacionesTransito(propietario, puesto, vehiculo);
