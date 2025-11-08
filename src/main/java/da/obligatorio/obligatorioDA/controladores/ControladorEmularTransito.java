@@ -164,7 +164,7 @@ public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String 
        
         Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorVehiculo(transito.getVehiculo());
        //   Respuesta r = notificacionesPropietario(propietario);
-       conexionNavegador.enviarJSON(Respuesta.lista(null) );
+      // conexionNavegador.enviarJSON(Respuesta.lista(null) );
     }
     
   }

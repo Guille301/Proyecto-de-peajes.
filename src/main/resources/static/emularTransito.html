@@ -31,7 +31,8 @@
                 <h2>Emular tránsito</h2>
                 <p>Seleccione un puesto, verifique sus tarifas, ingrese una matrícula y emule un tránsito.</p>
 
-                <form id="formEmularTransito" method="post" action="/emularTransito/emular">
+                <!-- Usamos JS para enviar, el action es solo decorativo -->
+                <form id="formEmularTransito" method="post" action="#">
                     <div class="form-group">
                         <label for="selPuesto">Puesto:</label>
                         <select id="selPuesto" name="idPuesto" onchange="cambiarPuesto()"></select>
@@ -44,7 +45,7 @@
 
                     <div class="form-group">
                         <label for="txtFechaHora">Fecha y hora del tránsito:</label>
-                       <input type="datetime-local" id="txtFechaHora" name="fechaHora">
+                        <input type="datetime-local" id="txtFechaHora" name="fechaHora">
                     </div>
 
                     <div class="form-group">
@@ -78,6 +79,7 @@
     </div>
 
     <script>
+        // Este endpoint se llama en GET desde vistaWeb.js al cargar la página
         urlIniciarVista = "/emularTransito/vistaConectada";
 
         const formEmularTransito = document.getElementById("formEmularTransito");
@@ -85,14 +87,20 @@
         const tbodyTarifas        = document.getElementById("tbodyTarifas");
         const divResultado        = document.getElementById("divResultado");
 
+        // Enviar formulario -> /emularTransito/emular (POST)
         formEmularTransito.addEventListener("submit", function (event) {
             event.preventDefault();
-            submit("/emularTransito/emular", serializarFormulario("formEmularTransito"));
+            submit(
+                "/emularTransito/emular",
+                serializarFormulario("formEmularTransito"),
+                "POST"
+            );
         });
 
+        // Cuando cambia el puesto -> /emularTransito/cambiarPuesto (POST)
         function cambiarPuesto() {
             const data = "idPuesto=" + encodeURIComponent(selPuesto.value);
-            submit("/emularTransito/cambiarPuesto", data);
+            submit("/emularTransito/cambiarPuesto", data, "POST");
         }
 
         function mostrar_usuarioNoAutenticado(urlDestino) {
@@ -113,7 +121,7 @@
 
             if (puestos.length > 0) {
                 const data = "idPuesto=" + encodeURIComponent(selPuesto.value);
-                submit("/emularTransito/cambiarPuesto", data);
+                submit("/emularTransito/cambiarPuesto", data, "POST");
             }
         }
 

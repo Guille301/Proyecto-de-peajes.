@@ -450,3 +450,17 @@ body.page-gestion-contactos .form-container-fullwidth {
     flex: 1;
     padding: 30px;
 }
+
+
+/* ========= Página Emular tránsito ========= */
+body.page-emular {
+
+    display: block;
+    justify-content: initial;
+    align-items: initial;
+    height: auto;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
