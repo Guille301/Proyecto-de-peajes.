@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
@@ -27,15 +28,18 @@ public class ObligatorioDaApplication {
 	}
 
 	private static void cargarDatosIniciales() {
- 		Fachada f = Fachada.getInstancia();
+    Fachada f = Fachada.getInstancia();
 
+    // Categorias de vehiculo
+    CategoriaVehiculo catAuto = new CategoriaVehiculo(1, "Auto");
+    CategoriaVehiculo catMoto = new CategoriaVehiculo(2, "Moto");
 
-        // Categorias de vehiculo
-        CategoriaVehiculo catAuto = new CategoriaVehiculo(1, "Auto");
-        CategoriaVehiculo catMoto = new CategoriaVehiculo(2, "Moto");
+    // Estados de propietario
+    EstadoPropietario activo = new EstadoPropietario(1, "Activo");
+    EstadoPropietario deshabilitado = new EstadoPropietario(2, "Deshabilitado");
 
-        // Estado propietario
-        EstadoPropietario activo = new EstadoPropietario(1, "Activo");
+    // ========= PROPIETARIOS =========
+    // Usamos el constructor grande con listas inicializadas
 
         // -- Propietarios (5) -- (creados de forma simple, parecido a Notificacion)
         Propietario propietario1 = new Propietario();
@@ -45,7 +49,7 @@ public class ObligatorioDaApplication {
         propietario1.setCedula("2001");
         propietario1.setSaldo(150.0);
         propietario1.setEstadoPropietario(activo);
-        propietario1.setListaNotificaciones(Arrays.asList(new Notificacion(1, new Date(), "Bienvenido Juan")));
+        propietario1.setNotificaciones((new Notificacion(1, new Date(), "Bienvenido Juan")));
 
         Propietario propietario2 = new Propietario();
         propietario2.setId(2);
@@ -54,7 +58,7 @@ public class ObligatorioDaApplication {
         propietario2.setCedula("2002");
         propietario2.setSaldo(200.0);
         propietario2.setEstadoPropietario(activo);
-        propietario2.setListaNotificaciones(Arrays.asList(new Notificacion(2, new Date(), "Bienvenida María")));
+        propietario2.setNotificaciones((new Notificacion(2, new Date(), "Bienvenida María")));
 
         Propietario propietario3 = new Propietario();
         propietario3.setId(3);
@@ -63,7 +67,7 @@ public class ObligatorioDaApplication {
         propietario3.setCedula("2003");
         propietario3.setSaldo(50.0);
         propietario3.setEstadoPropietario(activo);
-        propietario3.setListaNotificaciones(Arrays.asList(new Notificacion(3, new Date(), "Saldo bajo Carlos")));
+        propietario3.setNotificaciones((new Notificacion(3, new Date(), "Saldo bajo Carlos")));
 
         Propietario propietario4 = new Propietario();
         propietario4.setId(4); 
@@ -72,7 +76,7 @@ public class ObligatorioDaApplication {
         propietario4.setCedula("2004");
         propietario4.setSaldo(300.0);
         propietario4.setEstadoPropietario(activo);
-        propietario4.setListaNotificaciones(Arrays.asList(new Notificacion(4, new Date(), "Promoción disponible")));
+        propietario4.setNotificaciones((new Notificacion(4, new Date(), "Promoción disponible")));
 
         Propietario propietario5 = new Propietario();
         propietario5.setId(5);
@@ -81,7 +85,7 @@ public class ObligatorioDaApplication {
         propietario5.setCedula("2005");
         propietario5.setSaldo(75.0);
         propietario5.setEstadoPropietario(activo);
-        propietario5.setListaNotificaciones(Arrays.asList(new Notificacion(5, new Date(), "Recarga recomendada")));
+        propietario5.setNotificaciones((new Notificacion(5, new Date(), "Recarga recomendada")));
 
         // agregar propietarios a fachada
         f.agregarPropietario(propietario1);
@@ -97,10 +101,12 @@ public class ObligatorioDaApplication {
         f.agregar(propietario5);
 
 
-        //Administrador
-        Administrador admin = new Administrador(1, "Juan", "a",  "a");
-        f.agregar(admin);
+    // ========= ADMINISTRADOR =========
+    Administrador admin = new Administrador(1, "Juan", "a", "a");
+    f.agregar(admin);
 
+    // ========= VEHÍCULOS =========
+    // Ojo: pasamos new ArrayList<>() para listaTransito
 
         // -- Vehiculos (5) --
         Vehiculo vehiculo1 = new Vehiculo(1, "ABC-101", "Fiesta", "Rojo", catAuto, propietario1, null);
@@ -122,10 +128,6 @@ public class ObligatorioDaApplication {
         Puesto puesto1 = new Puesto(1, "Puesto Centro", "Av. Principal 100", null, null, null);
         Puesto puesto2 = new Puesto(2, "Puesto Norte", "Calle Norte 45", null, null, null);
         Puesto puesto3 = new Puesto(3, "Puesto Sur", "Ruta 10 Km 5", null, null, null);
-
-        f.agregarPuesto(puesto1);
-        f.agregarPuesto(puesto2);
-        f.agregarPuesto(puesto3);
 
         // -- Tarifas --
         Tarifa t1 = new Tarifa(1, 50.0, catAuto);

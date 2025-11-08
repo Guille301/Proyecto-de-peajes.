@@ -404,3 +404,63 @@ body.page-gestion-contactos .form-container-fullwidth {
 .busqueda-resultados {
     margin-top: 20px;
 }
+
+
+
+
+
+.layout-admin {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar-admin {
+    width: 220px;
+    background: #0d6efd;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar-title {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    margin-bottom: 10px;
+}
+
+.sidebar-menu a {
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar-menu a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.content-admin {
+    flex: 1;
+    padding: 30px;
+}
+
+
+/* ========= Página Emular tránsito ========= */
+body.page-emular {
+
+    display: block;
+    justify-content: initial;
+    align-items: initial;
+    height: auto;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+

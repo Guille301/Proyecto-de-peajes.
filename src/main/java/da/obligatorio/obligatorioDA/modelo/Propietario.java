@@ -1,8 +1,11 @@
 package da.obligatorio.obligatorioDA.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
 
+
+import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 
 public class Propietario extends Usuario {
     private int id;
@@ -85,9 +88,9 @@ public class Propietario extends Usuario {
     public List<Notificacion> getListaNotificaciones() {
         return listaNotificaciones;
     }
-
-    public void setListaNotificaciones(List<Notificacion> listaNotificaciones) {
-        this.listaNotificaciones = listaNotificaciones;
+    //Corregido
+    public void setNotificaciones(Notificacion n) {
+        listaNotificaciones.add(n);
     }
 
     public List<Vehiculo> getListVehiculos() {
@@ -128,6 +131,29 @@ public class Propietario extends Usuario {
         }
         return transitosPropietario;
     }
+
+
+     //Corregido
+    public void setBonificaciones(Bonificacion b) {
+        listBonificaciones.add(b);
+    }
+
+      public void debitarPorTransito(double costo) throws ObligatorioException {
+        if (this.saldo < costo) {
+            throw new ObligatorioException("Saldo insuficiente: " + this.saldo);
+        }
+        this.saldo -= costo;
+    }
+
+
+
+      
+    
+
+
+    
+
+
 
 
 }

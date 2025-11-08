@@ -2,6 +2,8 @@ package da.obligatorio.obligatorioDA.modelo;
 
 import java.util.Date;
 
+import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
+
 public class Transito {
     private int id;
     private Puesto puesto;         
@@ -30,10 +32,27 @@ public class Transito {
     public Date getFechaYHora() { return fechaYHora; }
     public void setFechaYHora(Date fechaYHora) { this.fechaYHora = fechaYHora; }
 
-   public double costoTransito(Vehiculo vehiculo){
+     public double costoTransito(Vehiculo vehiculo){
        double monto = this.puesto.obtenerTarifaPara(vehiculo).getMonto();
        return monto; 
    }
 
 
+
+   public double costoTransitoEmulacion() throws ObligatorioException {
+    Tarifa tarifa = this.puesto.obtenerTarifaPara(this.vehiculo);
+    if (tarifa == null) {
+        throw new ObligatorioException(
+            "No hay tarifa para la categoría del vehículo en este puesto"
+        );
+    }
+    return tarifa.getMonto();
+    }
+
+
 }
+
+
+
+
+

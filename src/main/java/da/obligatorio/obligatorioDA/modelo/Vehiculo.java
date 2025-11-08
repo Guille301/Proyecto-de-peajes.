@@ -84,15 +84,16 @@ public class Vehiculo {
         this.listaTransito.add(nuevoTransito);
     }
 
-    public double calcularMontoTotalTodosLosTransitos(){
+  
+       public double calcularMontoTotalTodosLosTransitos(){
         double montoTotal = 0.0;
         for(Transito t : this.listaTransito){
-            var tarifa = t.getPuesto().obtenerTarifaPara(this);
-            if (tarifa != null) {
-                montoTotal += tarifa.getMonto();
-            }
+            montoTotal += t.costoTransito(this);
         }
         return montoTotal;
     }
 
 }
+
+
+

@@ -11,8 +11,10 @@ import da.obligatorio.obligatorioDA.modelo.Sesion;
 import da.obligatorio.obligatorioDA.modelo.Usuario;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.modelo.Transito;
+import da.obligatorio.obligatorioDA.observador.Observable;;
 
-public class Fachada {
+
+public class Fachada extends Observable {
     private static Fachada instancia;
 
     private SistemaUsuarios sistemaUsuarios;
@@ -20,11 +22,19 @@ public class Fachada {
     private SistemaBonificaciones sistemaBonificaciones;
     private SistemaPropietario sistemaPropietario;
 
-    private Fachada() {
+
+    public enum eventos {
+        NOTIFICACION_TRANSITO
+    }
+  
+    
+
+    private Fachada()  {
         sistemaUsuarios = new SistemaUsuarios();
         sistemaPuestos = new SistemaPuestos();
         sistemaBonificaciones = new SistemaBonificaciones();
         sistemaPropietario = new SistemaPropietario();
+       
     }
 
     public static Fachada getInstancia() {
@@ -118,4 +128,41 @@ public class Fachada {
     public List<Bonificacion> obtenerBonificacionesDePropietarioActual(){
         return sistemaPropietario.obtenerBonificacionesDePropietarioActual();
     }
+
+    public Vehiculo obtenerVehiculoPorMatricula(String matricula) {
+    return sistemaPropietario.obtenerVehiculoPorMatricula(matricula);
+}
+
+public Propietario obtenerPropietarioPorVehiculo(Vehiculo v) {
+    return sistemaPropietario.obtenerPropietarioPorVehiculo(v);
+}
+
+//Nuevos métodos de propiertario
+
+public void registrarNotificacionesTransito(Propietario propietario, Puesto puesto,Vehiculo vehiculo) {
+    sistemaPropietario.registrarNotificacionesTransito(propietario, puesto, vehiculo);
+}
+
+
+    public Vehiculo obtenerVehiculoPorMatriculaObligatorio(String matricula)
+            throws ObligatorioException {
+        return sistemaPropietario.obtenerVehiculoPorMatriculaObligatorio(matricula);
+    }
+
+    public Propietario obtenerPropietarioPorVehiculoObligatorio(Vehiculo vehiculo)
+            throws ObligatorioException {
+        return sistemaPropietario.obtenerPropietarioPorVehiculoObligatorio(vehiculo);
+    }
+
+
+   
+
+public void validarEstadoParaTransito(Propietario propietario) throws ObligatorioException {
+    sistemaPropietario.validarEstadoParaTransito(propietario);
+}
+
+
+
+
+  
 }
