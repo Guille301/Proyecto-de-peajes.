@@ -57,7 +57,7 @@ public class ObligatorioDaApplication {
         propietario2.setNombreCompleto("María Gomez");
         propietario2.setCedula("2002");
         propietario2.setSaldo(200.0);
-        propietario2.setEstadoPropietario(activo);
+        propietario2.setEstadoPropietario(deshabilitado);
         propietario2.setNotificaciones((new Notificacion(2, new Date(), "Bienvenida María")));
 
         Propietario propietario3 = new Propietario();
@@ -128,6 +128,13 @@ public class ObligatorioDaApplication {
         Puesto puesto1 = new Puesto(1, "Puesto Centro", "Av. Principal 100", null, null, null);
         Puesto puesto2 = new Puesto(2, "Puesto Norte", "Calle Norte 45", null, null, null);
         Puesto puesto3 = new Puesto(3, "Puesto Sur", "Ruta 10 Km 5", null, null, null);
+
+
+        
+
+        f.agregarPuesto(puesto1);
+        f.agregarPuesto(puesto2);
+        f.agregarPuesto(puesto3);
 
         // -- Tarifas --
         Tarifa t1 = new Tarifa(1, 50.0, catAuto);
