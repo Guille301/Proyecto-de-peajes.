@@ -161,6 +161,12 @@ public void validarEstadoParaTransito(Propietario propietario) throws Obligatori
 
 
 
+  public void borrarNotificaciones(Propietario propietario) {
+        propietario.borrarNotificaciones();
+    }
+
+
+
 
 
 }

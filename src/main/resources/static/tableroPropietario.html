@@ -6,6 +6,7 @@
     <title>Tablero de propietario</title>
     <link rel="stylesheet" href="style.css">
     <script src="vistaWeb.js"></script>
+    <script src="sse.js"></script>
 </head>
 <body>
     <script src="utilesVista.js"></script>
@@ -48,8 +49,9 @@
     </section>
       
      
-    <section>
+ <section>
     <h2>Notificaciones</h2>
+    <button type="button" onclick="borrarNotificaciones()">Borrar notificaciones</button>
     <div id="notificacionesPropietario"></div>
 </section>
 
@@ -63,6 +65,7 @@
 
 <script>
 		urlIniciarVista="/tablero/resumenDelPropietario";
+        urlRegistroSSE  = "/tablero/registrarSSE";
 
     	const spnNombreCompleto = document.getElementById("nombreCompleto");
         const spnEstado = document.getElementById("estadoPropietario");
@@ -110,6 +113,19 @@
         function mostrar_notificacionesPropietario(notificacionesPropietario) {
         divNotificaciones.innerHTML = crearTablaDesdeJson(notificacionesPropietario);
         }
+
+        function borrarNotificaciones() {
+        submit("/tablero/borrarNotificaciones", "", "POST");
+        }
+
+         function procesarMensajeSSE(mensaje) {
+        procesarResultadosSubmit(mensaje); 
+    }
+
+    function conexionSSECerrada(event) {
+        console.log("SSE cerrado", event);
+    }
+
         
 		</script>
 </body>

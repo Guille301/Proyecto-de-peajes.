@@ -31,7 +31,7 @@
                 <h2>Emular tránsito</h2>
                 <p>Seleccione un puesto, verifique sus tarifas, ingrese una matrícula y emule un tránsito.</p>
 
-                <!-- Usamos JS para enviar, el action es solo decorativo -->
+                
                 <form id="formEmularTransito" method="post" action="#">
                     <div class="form-group">
                         <label for="selPuesto">Puesto:</label>
@@ -79,7 +79,7 @@
     </div>
 
     <script>
-        // Este endpoint se llama en GET desde vistaWeb.js al cargar la página
+        
         urlIniciarVista = "/emularTransito/vistaConectada";
 
         const formEmularTransito = document.getElementById("formEmularTransito");
@@ -87,7 +87,7 @@
         const tbodyTarifas        = document.getElementById("tbodyTarifas");
         const divResultado        = document.getElementById("divResultado");
 
-        // Enviar formulario -> /emularTransito/emular (POST)
+      
         formEmularTransito.addEventListener("submit", function (event) {
             event.preventDefault();
             submit(
@@ -97,7 +97,7 @@
             );
         });
 
-        // Cuando cambia el puesto -> /emularTransito/cambiarPuesto (POST)
+      
         function cambiarPuesto() {
             const data = "idPuesto=" + encodeURIComponent(selPuesto.value);
             submit("/emularTransito/cambiarPuesto", data, "POST");

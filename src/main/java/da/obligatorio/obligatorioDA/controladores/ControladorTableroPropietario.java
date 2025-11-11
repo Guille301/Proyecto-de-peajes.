@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
@@ -21,6 +22,7 @@ import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.observador.Observador;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
 import da.obligatorio.obligatorioDA.utils.ConexionNavegador;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import da.obligatorio.obligatorioDA.dtos.bonificacionPropietarioDto;
 import da.obligatorio.obligatorioDA.dtos.notificacionDTO;
@@ -70,6 +72,30 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
         
     }
 
+
+
+
+
+
+
+    @PostMapping("/borrarNotificaciones")
+public List<Respuesta> borrarNotificaciones(
+        @SessionAttribute(name = "usuarioPropietario", required = false) Propietario usuario) {
+
+    if (usuario == null) {
+        return Respuesta.lista(  new Respuesta("usuarioNoAutenticado", "loginPropietario.html"));
+    }
+
+    
+    Fachada.getInstancia().borrarNotificacionesPropietario(usuario);
+
+    
+    Respuesta notifs = notificacionesPropietario(usuario);
+
+    return Respuesta.lista(notifs);
+}
+
+
     private Respuesta transitosRealizados(Propietario usuario){
         
         List<Transito> transitos = usuario.traerTransitosDeMisVehiculos();
@@ -114,18 +140,45 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
         return new Respuesta("notificacionesPropietario", notifsDto);
     }
 
+
+
+
+
+
+       @GetMapping("/registrarSSE")
+    public SseEmitter registrarSSE(
+            @SessionAttribute(name = "usuarioPropietario", required = false) Propietario usuario) {
+
+      
+        if (usuario == null) {
+            
+            SseEmitter vacio = new SseEmitter(0L);
+            vacio.complete();
+            return vacio;
+        }
+
+        
+        this.usuarioSesion = usuario;
+
+        
+        conexionNavegador.conectarSSE();
+
+        
+        return conexionSSE();
+    }
+
+    private SseEmitter conexionSSE() {
+        return conexionNavegador.getConexionSSE();
+    }
+
+
     
     @Override
     public void actualizar(Object evento, Observable origen) {
 
         if (evento.equals(Fachada.eventos.NOTIFICACION_TRANSITO)) {
-
-            if (usuarioSesion == null) {
-                return; 
-            }
-
-            
-            Respuesta Saldo  = new Respuesta("saldoPropietario",String.valueOf(usuarioSesion.getSaldo()));
+              
+            Respuesta Saldo  = new Respuesta("saldoPropietario",usuarioSesion.getSaldo());
             Respuesta Trans  = transitosRealizados(usuarioSesion);
             Respuesta Notifs = notificacionesPropietario(usuarioSesion);
 
@@ -133,6 +186,9 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
         }
 
 }
+
+
+
 
 
 }

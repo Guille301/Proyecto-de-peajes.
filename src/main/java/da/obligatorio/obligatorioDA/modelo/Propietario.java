@@ -147,6 +147,15 @@ public class Propietario extends Usuario {
 
 
 
+    public void borrarNotificaciones() {
+    if (listaNotificaciones != null) {
+        listaNotificaciones.clear();
+    }
+}
+
+
+
+
       
     
 
