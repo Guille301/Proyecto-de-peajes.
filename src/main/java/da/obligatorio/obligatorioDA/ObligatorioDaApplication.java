@@ -11,6 +11,8 @@ import da.obligatorio.obligatorioDA.servicios.Fachada;
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.CategoriaVehiculo;
+import da.obligatorio.obligatorioDA.modelo.EstadoDeshabilitado;
+import da.obligatorio.obligatorioDA.modelo.EstadoHabilitado;
 import da.obligatorio.obligatorioDA.modelo.Notificacion;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
@@ -35,8 +37,8 @@ public class ObligatorioDaApplication {
     CategoriaVehiculo catMoto = new CategoriaVehiculo(2, "Moto");
 
     // Estados de propietario
-    EstadoPropietario activo = new EstadoPropietario(1, "Activo");
-    EstadoPropietario deshabilitado = new EstadoPropietario(2, "Deshabilitado");
+    EstadoPropietario habilitado = new EstadoHabilitado(null);
+    EstadoPropietario deshabilitado = new EstadoDeshabilitado(null);
 
     // ========= PROPIETARIOS =========
     // Usamos el constructor grande con listas inicializadas
@@ -48,7 +50,7 @@ public class ObligatorioDaApplication {
         propietario1.setContrasenia("123456");
         propietario1.setCedula("2001");
         propietario1.setSaldo(150.0);
-        propietario1.setEstadoPropietario(activo);
+        propietario1.setEstadoPropietario(habilitado);
         propietario1.setNotificaciones((new Notificacion(1, new Date(), "Bienvenido Juan")));
 
         Propietario propietario2 = new Propietario();
@@ -66,7 +68,7 @@ public class ObligatorioDaApplication {
         propietario3.setNombreCompleto("Carlos Ruiz");
         propietario3.setCedula("2003");
         propietario3.setSaldo(50.0);
-        propietario3.setEstadoPropietario(activo);
+        propietario3.setEstadoPropietario(habilitado);
         propietario3.setNotificaciones((new Notificacion(3, new Date(), "Saldo bajo Carlos")));
 
         Propietario propietario4 = new Propietario();
@@ -75,7 +77,7 @@ public class ObligatorioDaApplication {
         propietario4.setNombreCompleto("Lucía Fernández");
         propietario4.setCedula("2004");
         propietario4.setSaldo(300.0);
-        propietario4.setEstadoPropietario(activo);
+        propietario4.setEstadoPropietario(habilitado);
         propietario4.setNotificaciones((new Notificacion(4, new Date(), "Promoción disponible")));
 
         Propietario propietario5 = new Propietario();
@@ -84,7 +86,7 @@ public class ObligatorioDaApplication {
         propietario5.setNombreCompleto("Diego López");
         propietario5.setCedula("2005");
         propietario5.setSaldo(75.0);
-        propietario5.setEstadoPropietario(activo);
+        propietario5.setEstadoPropietario(habilitado);
         propietario5.setNotificaciones((new Notificacion(5, new Date(), "Recarga recomendada")));
 
         // agregar propietarios a fachada

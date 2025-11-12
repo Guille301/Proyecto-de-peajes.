@@ -1,15 +1,17 @@
 package da.obligatorio.obligatorioDA.modelo;
 
-public class EstadoPropietario {
+public abstract class EstadoPropietario {
     private int id;
     private String nombre;
+    private Propietario propietario;
 
     public EstadoPropietario() {
     }
 
-    public EstadoPropietario(int id, String nombre) {
+    public EstadoPropietario(int id, String nombre, Propietario propietario) {
         this.id = id;
         this.nombre = nombre;
+        this.propietario = propietario;
     }
 
     public int getId() {
@@ -27,4 +29,15 @@ public class EstadoPropietario {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public Propietario getPropietario() {
+        return propietario;
+    }
+
+    public void setPropietario(Propietario propietario) {
+        this.propietario = propietario;
+    }
+
+    //Tengo que tener todos los metodos que van a implementar en cada estado
+
 }
