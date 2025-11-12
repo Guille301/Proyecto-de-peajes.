@@ -98,32 +98,19 @@ public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String 
 
     try {
         
-        Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
-        Vehiculo vehiculo = Fachada.getInstancia().obtenerVehiculoPorMatriculaObligatorio(matricula);
-        Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorVehiculoObligatorio(vehiculo);
-
-        
-        Fachada.getInstancia().validarEstadoParaTransito(propietario);
-
-       
-        transito = new Transito(0, puesto, vehiculo, fechaHora);
-
     
+      
+
+        
+         transito = Fachada.getInstancia().emularTransito(idPuesto, matricula, fechaHora);
+
+        
+        Vehiculo vehiculo = transito.getVehiculo();
+        Propietario propietario = vehiculo.getPropietario();
+        Puesto puesto = transito.getPuesto();
+
         double costo = transito.costoTransitoEmulacion();
-
-        
-        propietario.debitarPorTransito(costo);
         double nuevoSaldo = propietario.getSaldo();
-
-        
-        vehiculo.agregarTransito(transito);
-        puesto.agregarTransitoPuesto(transito);
-
-
-        Fachada.getInstancia().registrarNotificacionesTransito(propietario, puesto, vehiculo);
-
-
-        
         Bonificacion bonificacionAplicada = puesto.obtenerBonificacionPara(propietario);
 
         

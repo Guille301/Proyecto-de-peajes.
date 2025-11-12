@@ -1,5 +1,7 @@
 package da.obligatorio.obligatorioDA.servicios;
 
+
+import java.util.Date;
 import java.util.List;
 
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
@@ -164,6 +166,13 @@ public void validarEstadoParaTransito(Propietario propietario) throws Obligatori
 
  public void borrarNotificacionesPropietario(Propietario propietario) {
         sistemaPropietario.borrarNotificaciones(propietario);
+    }
+
+
+
+      public Transito emularTransito(int idPuesto, String matricula, Date fechaHora)
+            throws ObligatorioException {
+        return sistemaPuestos.emularTransito(idPuesto, matricula, fechaHora);
     }
 
 

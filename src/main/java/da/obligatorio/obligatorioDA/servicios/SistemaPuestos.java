@@ -1,9 +1,15 @@
 package da.obligatorio.obligatorioDA.servicios;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
+import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
+import da.obligatorio.obligatorioDA.modelo.Transito;
+import da.obligatorio.obligatorioDA.modelo.Vehiculo;
+
 
 public class SistemaPuestos {
     private List<Puesto> puestos;
@@ -40,4 +46,43 @@ public class SistemaPuestos {
         }
         return null;
     }
+
+
+
+    public Transito emularTransito(int idPuesto, String matricula, Date fechaHora)
+            throws ObligatorioException {
+
+        Fachada fachada = Fachada.getInstancia();
+
+        
+        Puesto puesto = fachada.obtenerPuestoPorId(idPuesto);
+        
+
+        
+        Vehiculo vehiculo = fachada.obtenerVehiculoPorMatriculaObligatorio(matricula);
+        Propietario propietario = fachada.obtenerPropietarioPorVehiculoObligatorio(vehiculo);
+
+        
+        fachada.validarEstadoParaTransito(propietario);
+
+    
+        Transito transito = new Transito(0, puesto, vehiculo, fechaHora);
+
+        
+        double costo = transito.costoTransitoEmulacion();
+        propietario.debitarPorTransito(costo);
+
+        
+        vehiculo.agregarTransito(transito);
+        puesto.agregarTransitoPuesto(transito);
+
+        
+        fachada.registrarNotificacionesTransito(propietario, puesto, vehiculo);
+
+    
+        return transito;
+    }
+
+
+
 }
