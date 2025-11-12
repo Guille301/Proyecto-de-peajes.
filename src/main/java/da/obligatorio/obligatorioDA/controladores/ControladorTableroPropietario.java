@@ -101,8 +101,7 @@ public List<Respuesta> borrarNotificaciones(
         List<Transito> transitos = usuario.traerTransitosDeMisVehiculos();
         List<transitosRealizadosDto> transDtos = new ArrayList<>();
         for(Transito tc : transitos){
-            Puesto puesto = tc.getPuesto();
-            transDtos.add(new transitosRealizadosDto(tc,puesto));
+            transDtos.add(new transitosRealizadosDto(tc));
         }
         return new Respuesta("transitosRealizados", transDtos);
 

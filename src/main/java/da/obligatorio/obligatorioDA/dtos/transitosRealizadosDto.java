@@ -4,44 +4,44 @@ import da.obligatorio.obligatorioDA.modelo.Puesto;
 
 public class transitosRealizadosDto {
 
-    private String nombrePuesto;
-    private String matriculaVehiculo;
-    private String categoriaVehiculo;
+    private String puesto;
+    private String matricula;
+    private String categoria;
     private double montoTarifa;
-    private String nombreBonificacion;
+    private String Bonificacion;
     private double montoBonificacion;
     private double montoPagado;
     private String fechaYHora; 
 
-    public transitosRealizadosDto(Transito transito, Puesto puesto) {
-        this.nombrePuesto = transito.getPuesto().getNombre();
-        this.matriculaVehiculo = transito.getVehiculo().getMatricula();
-        this.categoriaVehiculo = transito.getVehiculo().getCategoriaVehiculo().getNombre();
-        this.montoTarifa = puesto.obtenerTarifaPara(transito.getVehiculo()).getMonto();
-        this.nombreBonificacion = puesto.obtenerBonificacion(transito).getNombre();
-        this.montoBonificacion = puesto.obtenerBonificacion(transito).getMontoDescuento();
+    public transitosRealizadosDto(Transito transito) {
+        this.puesto = transito.getPuesto().getNombre();
+        this.matricula = transito.getVehiculo().getMatricula();
+        this.categoria = transito.getVehiculo().getCategoriaVehiculo().getNombre();
+        this.montoTarifa = transito.tarifaDelTransito().getMonto();
+        this.Bonificacion = transito.bonificacionDelTransito().getNombre();
+        this.montoBonificacion = transito.bonificacionDelTransito().getMontoDescuento();
         this.montoPagado = transito.costoTransito(transito.getVehiculo());
         this.fechaYHora = transito.getFechaYHora().toString();
     }
 
-    public String getNombrePuesto() {
-        return nombrePuesto;
+    public String getPuesto() {
+        return puesto;
     }
 
-    public String getMatriculaVehiculo() {
-        return matriculaVehiculo;
+    public String getMatricula() {
+        return matricula;
     }
 
-    public String getCategoriaVehiculo() {
-        return categoriaVehiculo;
+    public String getCategoria() {
+        return categoria;
     }
 
     public double getMontoTarifa() {
         return montoTarifa;
     }
 
-    public String getNombreBonificacion() {
-        return nombreBonificacion;
+    public String getBonificacion() {
+        return Bonificacion;
     }
 
     public double getMontoBonificacion() {

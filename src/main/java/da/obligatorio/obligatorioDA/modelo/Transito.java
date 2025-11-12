@@ -49,6 +49,13 @@ public class Transito {
     return tarifa.getMonto();
     }
 
+    public Bonificacion bonificacionDelTransito() {
+        return this.puesto.obtenerBonificacion(this);
+    }
+
+    public Tarifa tarifaDelTransito() {
+        return this.puesto.obtenerTarifaPara(this.vehiculo);
+    }
 
 }
 
