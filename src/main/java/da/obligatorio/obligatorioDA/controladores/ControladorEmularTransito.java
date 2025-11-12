@@ -98,11 +98,8 @@ public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String 
 
     try {
         
-    
-      
-
         
-         transito = Fachada.getInstancia().emularTransito(idPuesto, matricula, fechaHora);
+        transito = Fachada.getInstancia().emularTransito(idPuesto, matricula, fechaHora);
 
         
         Vehiculo vehiculo = transito.getVehiculo();

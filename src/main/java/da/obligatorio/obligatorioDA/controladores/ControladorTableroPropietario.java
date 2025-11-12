@@ -30,6 +30,7 @@ import da.obligatorio.obligatorioDA.dtos.transitosRealizadosDto;
 import da.obligatorio.obligatorioDA.dtos.vehiculosDto;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 import da.obligatorio.obligatorioDA.observador.Observable;
+import org.springframework.http.MediaType;
 
 
 @RestController
@@ -43,7 +44,7 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
 
 
      @Autowired
-    public ControladorTableroPropietario(ConexionNavegador conexionNavegador) {
+    public ControladorTableroPropietario(@Autowired ConexionNavegador conexionNavegador) {
         this.conexionNavegador = conexionNavegador;
     }
 
@@ -144,29 +145,9 @@ public List<Respuesta> borrarNotificaciones(
 
 
 
-       @GetMapping("/registrarSSE")
-    public SseEmitter registrarSSE(
-            @SessionAttribute(name = "usuarioPropietario", required = false) Propietario usuario) {
-
-      
-        if (usuario == null) {
-            
-            SseEmitter vacio = new SseEmitter(0L);
-            vacio.complete();
-            return vacio;
-        }
-
-        
-        this.usuarioSesion = usuario;
-
-        
+        @GetMapping(value = "/registrarSSE", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter registrarSSE() {
         conexionNavegador.conectarSSE();
-
-        
-        return conexionSSE();
-    }
-
-    private SseEmitter conexionSSE() {
         return conexionNavegador.getConexionSSE();
     }
 
