@@ -146,7 +146,7 @@ public List<Respuesta> borrarNotificaciones(
 
 
         @GetMapping(value = "/registrarSSE", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter registrarSSE() {
+        public SseEmitter registrarSSE() {
         conexionNavegador.conectarSSE();
         return conexionNavegador.getConexionSSE();
     }

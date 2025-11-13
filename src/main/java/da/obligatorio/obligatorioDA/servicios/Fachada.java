@@ -170,8 +170,7 @@ public void validarEstadoParaTransito(Propietario propietario) throws Obligatori
 
 
 
-      public Transito emularTransito(int idPuesto, String matricula, Date fechaHora)
-            throws ObligatorioException {
+      public Transito emularTransito(int idPuesto, String matricula, Date fechaHora) throws ObligatorioException {
         return sistemaPuestos.emularTransito(idPuesto, matricula, fechaHora);
     }
 
