@@ -11,6 +11,8 @@ import da.obligatorio.obligatorioDA.servicios.Fachada;
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.CategoriaVehiculo;
+import da.obligatorio.obligatorioDA.modelo.CriterioPropietarioHabilitado;
+import da.obligatorio.obligatorioDA.modelo.CriterioPuestoConBonificacion;
 import da.obligatorio.obligatorioDA.modelo.Notificacion;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
@@ -171,6 +173,9 @@ public class ObligatorioDaApplication {
         puesto3.agregarBonificacionPuesto(b1);
         puesto3.agregarBonificacionPuesto(b3);
         puesto3.agregarBonificacionPuesto(b4);
+
+       
+
       
 
         

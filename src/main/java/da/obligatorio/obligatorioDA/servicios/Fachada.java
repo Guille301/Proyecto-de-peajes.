@@ -174,6 +174,10 @@ public void validarEstadoParaTransito(Propietario propietario) throws Obligatori
         return sistemaPuestos.emularTransito(idPuesto, matricula, fechaHora);
     }
 
+    public Bonificacion asignarBonificacion(String cedula, int idPuesto, String nombreBonificacion, java.time.LocalDate fecha) throws ObligatorioException {
+        return sistemaBonificaciones.asignarBonificacion(cedula, idPuesto, nombreBonificacion, fecha);
+    }
+
 
 
 
