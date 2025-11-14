@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import da.obligatorio.obligatorioDA.dtos.bonificacionPropietarioDto;
+import da.obligatorio.obligatorioDA.dtos.estadoPropietarioDTO;
 import da.obligatorio.obligatorioDA.dtos.propietarioDto;
 import da.obligatorio.obligatorioDA.dtos.puestoDTO;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
+import da.obligatorio.obligatorioDA.modelo.EstadoPropietario;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
@@ -31,7 +33,10 @@ public class ControladorCambiarEstado {
       if (usuario == null) {
           return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "loginAdmin.html"));
       }
-    return Respuesta.lista(new Respuesta("ok", true));
+    return Respuesta.lista(
+      new Respuesta("ok", true),
+      mostrarEstados()
+      );
   }
 
   @PostMapping("/buscarPropietario")
@@ -53,17 +58,22 @@ public class ControladorCambiarEstado {
 
     } catch(ObligatorioException e){
         return Respuesta.lista(new Respuesta("errorBuscador", e.getMessage()));
-      }
     }
+  }
 
-    private Respuesta resultado(Propietario propietario){
-      return new Respuesta("propietarioEncontrado", new propietarioDto(propietario));
+  private Respuesta resultado(Propietario propietario){
+    return new Respuesta("propietarioEncontrado", new propietarioDto(propietario));
+  }
+
+  private Respuesta mostrarEstados(){
+    List<EstadoPropietario> listaEstado = Fachada.getInstancia().getListEstadosPropietario();
+    List<estadoPropietarioDTO> estadosDto = new ArrayList<>();
+    for(EstadoPropietario ep : listaEstado){
+      estadosDto.add(new estadoPropietarioDTO(ep));
     }
+    return new Respuesta("mostrarEstados", estadosDto);
+  }
 
 
-//public list<respeusta> vistaConectada (HttpSession s) { validarAdmin;  
-//  fachada.agregarObservador(this);  
-//  return Respuesta.lista(new Respuesta('ok' true));  
-//} 
 
 }

@@ -36,10 +36,19 @@
                     <button type="submit" class="busqueda-button" >Buscar</button>
                 </div>
             </form>
-
-            <div id="divPropietario"></div> 
+            
+            <div>
+                <h2>Propietario</h2>
+                <div id="divPropietario"></div> 
+            </div>
+            
 
         </Section>
+
+        <section>
+            <h2>Todos los estados</h2>
+            <div id="divEstadosPropietarios"></div>
+        </section>
 
         
 </main>
@@ -51,6 +60,19 @@
         
         urlIniciarVista = "/cambiarEstado/vistaConectada";
 
+        const divEstadoPropietario = document.getElementById("divEstadosPropietarios");
+
+        function mostrar_mostrarEstados(mostrarEstados){
+            // Carga select de tipos de contacto
+            divEstadoPropietario.innerHTML = crearListaDesdeJson({
+                    data: mostrarEstados,
+                    campoMostrar: 'nombre',
+                    multiple : false,
+                    mostrarOpcionInicial : true, 
+                    id : 'posMostrarEstados'
+                 });       
+        }
+
         function buscarPropietario(event) {
             event.preventDefault();
             submit("/cambiarEstado/buscarPropietario", serializarFormulario("formBuscar"));
@@ -58,6 +80,7 @@
 
         function mostrar_propietarioEncontrado(propietarioEncontrado) {
             document.getElementById("divPropietario").innerHTML = propietarioEncontrado.nombreCompleto +"  "+ propietarioEncontrado.estadoPropietario;
+         //   document.getElementById("divEstadosPropietarios").selectedIndex = posMostrarEstados;
         }
 
         function mostrar_usuarioNoAutenticado(urlDestino) {

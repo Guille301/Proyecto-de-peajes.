@@ -13,6 +13,7 @@ import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.CategoriaVehiculo;
 import da.obligatorio.obligatorioDA.modelo.EstadoDeshabilitado;
 import da.obligatorio.obligatorioDA.modelo.EstadoHabilitado;
+import da.obligatorio.obligatorioDA.modelo.EstadoPenalizado;
 import da.obligatorio.obligatorioDA.modelo.Notificacion;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
@@ -20,6 +21,7 @@ import da.obligatorio.obligatorioDA.modelo.Tarifa;
 import da.obligatorio.obligatorioDA.modelo.Transito;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.modelo.EstadoPropietario;
+import da.obligatorio.obligatorioDA.modelo.EstadoSuspendido;
 
 @SpringBootApplication
 public class ObligatorioDaApplication {
@@ -39,6 +41,13 @@ public class ObligatorioDaApplication {
     // Estados de propietario
     EstadoPropietario habilitado = new EstadoHabilitado(null);
     EstadoPropietario deshabilitado = new EstadoDeshabilitado(null);
+    EstadoPropietario penalizado = new EstadoPenalizado(null);
+    EstadoPropietario suspendido = new EstadoSuspendido(null);
+
+    f.agregarEstadosPropietario(habilitado);
+    f.agregarEstadosPropietario(deshabilitado);
+    f.agregarEstadosPropietario(penalizado);
+    f.agregarEstadosPropietario(suspendido);
 
     // ========= PROPIETARIOS =========
     // Usamos el constructor grande con listas inicializadas

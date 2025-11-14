@@ -5,6 +5,7 @@ import java.util.List;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
+import da.obligatorio.obligatorioDA.modelo.EstadoPropietario;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Sesion;
@@ -160,4 +161,14 @@ public class Fachada extends Observable {
         return sistemaPropietario.buscarPropietarioPorCedula(cedula);
     }
   
+    //Estado Propietario
+    public void agregarEstadosPropietario(EstadoPropietario nuevoEstadoPropietario) {
+        sistemaUsuarios.agregarEstadosPropietario(nuevoEstadoPropietario);
+    }
+
+    public List<EstadoPropietario> getListEstadosPropietario() {
+        return sistemaUsuarios.getListEstadosPropietario();
+    }
+
+
 }
