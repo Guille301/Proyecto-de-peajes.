@@ -12,6 +12,7 @@
     <label id="lblNombreAdmin"></label>
 
     <button onclick="irEmularTransito()">Emular tránsito</button>
+    <button onclick="irCambiarEstado()">Cambiar estado</button>
 
     <button onclick="logoutAdmin()">Salir</button>
 </div>
@@ -27,8 +28,11 @@
     const lblNombreAdmin = document.getElementById("lblNombreAdmin");
 
     function irEmularTransito() {
-        // emularTransito.html
         window.location.href = "emularTransito.html";
+    }
+
+    function irCambiarEstado() {
+        window.location.href = "cambiarEstado.html";
     }
 
     function logoutAdmin() {

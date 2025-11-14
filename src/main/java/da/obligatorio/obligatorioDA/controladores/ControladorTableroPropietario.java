@@ -41,25 +41,19 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
    private final ConexionNavegador conexionNavegador;
    private Propietario usuarioSesion;
 
-
      @Autowired
     public ControladorTableroPropietario(ConexionNavegador conexionNavegador) {
         this.conexionNavegador = conexionNavegador;
     }
 
-    
     @GetMapping("/resumenDelPropietario")
     public List<Respuesta> resumenDelPropietario(@SessionAttribute(name = "usuarioPropietario", required=false) Propietario usuario){
         if (usuario == null) {
              // Manejar el caso en que el usuario no está en la sesión pide redireccionar a la página de login
              return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "loginPropietario.html"));
          }
-
          this.usuarioSesion = usuario;
-
          Fachada.getInstancia().agregarObservador(this);
-
-
          return Respuesta.lista(
              new Respuesta("nombreCompleto", usuario.getNombreCompleto()),
              new Respuesta("estadoPropietario", usuario.getEstadoPropietario().getNombre()),
@@ -72,39 +66,25 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
         
     }
 
-
-
-
-
-
-
     @PostMapping("/borrarNotificaciones")
-public List<Respuesta> borrarNotificaciones(
+    public List<Respuesta> borrarNotificaciones(
         @SessionAttribute(name = "usuarioPropietario", required = false) Propietario usuario) {
 
-    if (usuario == null) {
-        return Respuesta.lista(  new Respuesta("usuarioNoAutenticado", "loginPropietario.html"));
+        if (usuario == null) {
+            return Respuesta.lista(  new Respuesta("usuarioNoAutenticado", "loginPropietario.html"));
+        }
+        Fachada.getInstancia().borrarNotificacionesPropietario(usuario);
+        Respuesta notifs = notificacionesPropietario(usuario);
+        return Respuesta.lista(notifs);
     }
 
-    
-    Fachada.getInstancia().borrarNotificacionesPropietario(usuario);
-
-    
-    Respuesta notifs = notificacionesPropietario(usuario);
-
-    return Respuesta.lista(notifs);
-}
-
-
     private Respuesta transitosRealizados(Propietario usuario){
-        
         List<Transito> transitos = usuario.traerTransitosDeMisVehiculos();
         List<transitosRealizadosDto> transDtos = new ArrayList<>();
         for(Transito tc : transitos){
             transDtos.add(new transitosRealizadosDto(tc));
         }
         return new Respuesta("transitosRealizados", transDtos);
-
     }
 
     private Respuesta vehiculosConTransito(Propietario usuario){
@@ -122,13 +102,10 @@ public List<Respuesta> borrarNotificaciones(
         for(Bonificacion tc : bonificaciones){
             bonDtos.add(new bonificacionPropietarioDto(tc));
         }
-
         return new Respuesta("bonificacionesPropietario", bonDtos);
     }
 
-
-
-     private Respuesta notificacionesPropietario(Propietario usuario) {
+    private Respuesta notificacionesPropietario(Propietario usuario) {
         var lista = usuario.getListaNotificaciones();
         List<notificacionDTO> notifsDto = new ArrayList<>();
         if (lista != null) {
@@ -139,30 +116,16 @@ public List<Respuesta> borrarNotificaciones(
         return new Respuesta("notificacionesPropietario", notifsDto);
     }
 
-
-
-
-
-
-       @GetMapping("/registrarSSE")
+    @GetMapping("/registrarSSE")
     public SseEmitter registrarSSE(
-            @SessionAttribute(name = "usuarioPropietario", required = false) Propietario usuario) {
-
-      
-        if (usuario == null) {
-            
+        @SessionAttribute(name = "usuarioPropietario", required = false) Propietario usuario) {
+        if (usuario == null) {    
             SseEmitter vacio = new SseEmitter(0L);
             vacio.complete();
             return vacio;
         }
-
-        
         this.usuarioSesion = usuario;
-
-        
         conexionNavegador.conectarSSE();
-
-        
         return conexionSSE();
     }
 
@@ -170,24 +133,14 @@ public List<Respuesta> borrarNotificaciones(
         return conexionNavegador.getConexionSSE();
     }
 
-
-    
     @Override
     public void actualizar(Object evento, Observable origen) {
-
         if (evento.equals(Fachada.eventos.NOTIFICACION_TRANSITO)) {
-              
             Respuesta Saldo  = new Respuesta("saldoPropietario",usuarioSesion.getSaldo());
             Respuesta Trans  = transitosRealizados(usuarioSesion);
             Respuesta Notifs = notificacionesPropietario(usuarioSesion);
-
             conexionNavegador.enviarJSON( Respuesta.lista(Saldo, Trans, Notifs));
         }
-
-}
-
-
-
-
+    }
 
 }

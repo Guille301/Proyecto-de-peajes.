@@ -14,10 +14,10 @@ public class SistemaUsuarios {
     private List<Administrador> administradores;
     private List<Sesion> sesiones;
 
-      public SistemaUsuarios() {
+    public SistemaUsuarios() {
         this.propietarios = new ArrayList<>();
         this.administradores = new ArrayList<>();
-       this.sesiones = new ArrayList<>();
+        this.sesiones = new ArrayList<>();
     }
 
     public void agregar(Propietario usuario) {
@@ -28,12 +28,8 @@ public class SistemaUsuarios {
         administradores.add(usuario);
     }
 
-
     //Login
- 
-
     public Administrador loginAdmin(String cedula, String contrasenia) throws ObligatorioException{
-        
         Administrador usuario = (Administrador) login(cedula, contrasenia,administradores);
         if(usuario!=null){
             return usuario;

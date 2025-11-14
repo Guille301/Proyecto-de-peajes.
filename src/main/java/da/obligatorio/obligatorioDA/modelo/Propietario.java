@@ -67,8 +67,6 @@ public class Propietario extends Usuario {
         this.saldo = saldo;
     }
 
-  
-
     public String getCedula() {
         return cedula;
     }
@@ -156,15 +154,5 @@ public class Propietario extends Usuario {
         }
         this.estadoPropietario = nuevoEstado;
     }
-
-
-      
-    
-
-
-    
-
-
-
 
 }
