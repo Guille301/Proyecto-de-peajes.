@@ -1,6 +1,5 @@
 package da.obligatorio.obligatorioDA.dtos;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
 
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 

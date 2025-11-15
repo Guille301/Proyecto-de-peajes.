@@ -8,27 +8,21 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
-import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Transito;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
-import da.obligatorio.obligatorioDA.modelo.Usuario;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.observador.Observador;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
 import da.obligatorio.obligatorioDA.utils.ConexionNavegador;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import da.obligatorio.obligatorioDA.dtos.bonificacionPropietarioDto;
 import da.obligatorio.obligatorioDA.dtos.notificacionDTO;
 import da.obligatorio.obligatorioDA.dtos.transitosRealizadosDto;
 import da.obligatorio.obligatorioDA.dtos.vehiculosDto;
-import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 import da.obligatorio.obligatorioDA.observador.Observable;
 
 

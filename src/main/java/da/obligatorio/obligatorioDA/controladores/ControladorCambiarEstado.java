@@ -101,6 +101,7 @@ public class ControladorCambiarEstado implements Observador {
       Propietario propietario = Fachada.getInstancia().getPropietarioPorId(idPropietario);
       EstadoPropietario nuevoEstado = estadosCache.get(posMostrarEstados);
       propietario.cambiarEstado(nuevoEstado);
+      Fachada.getInstancia().registrarNotificacionesEstado(propietario, nuevoEstado);
       
       return Respuesta.lista(new Respuesta("limpiarCampos",true));
       

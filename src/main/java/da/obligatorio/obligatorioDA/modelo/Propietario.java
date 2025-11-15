@@ -2,7 +2,6 @@ package da.obligatorio.obligatorioDA.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ArrayList;
 
 
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;

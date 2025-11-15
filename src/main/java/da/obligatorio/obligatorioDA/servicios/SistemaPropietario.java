@@ -7,14 +7,11 @@ import java.util.List;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.EstadoPropietario;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
-import da.obligatorio.obligatorioDA.modelo.Transito;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 import da.obligatorio.obligatorioDA.modelo.Notificacion;
-import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
-import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 
 public class SistemaPropietario {
     private List<Propietario> propietarios;
