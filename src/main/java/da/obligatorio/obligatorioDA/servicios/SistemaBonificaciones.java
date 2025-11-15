@@ -72,10 +72,6 @@ public class SistemaBonificaciones {
         throw new ObligatorioException("Debe especificar una bonificación");
     }
 
-    if (!"Activo".equalsIgnoreCase(propietario.getEstadoPropietario().getNombre())) {
-        throw new ObligatorioException("El propietario está deshabilitado. No se pueden asignar bonificaciones");
-    }
-
     if (propietario.getListBonificaciones() != null) {
         for (Bonificacion b : propietario.getListBonificaciones()) {
             if (b != null && b.getPuestos() != null
