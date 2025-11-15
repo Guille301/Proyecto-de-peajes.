@@ -11,15 +11,18 @@ import da.obligatorio.obligatorioDA.servicios.Fachada;
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.CategoriaVehiculo;
-import da.obligatorio.obligatorioDA.modelo.CriterioPropietarioHabilitado;
-import da.obligatorio.obligatorioDA.modelo.CriterioPuestoConBonificacion;
+import da.obligatorio.obligatorioDA.modelo.CriterioAsignacionBonificacion;
 import da.obligatorio.obligatorioDA.modelo.Notificacion;
+import da.obligatorio.obligatorioDA.modelo.Platinum;
+import da.obligatorio.obligatorioDA.modelo.Premium;
+import da.obligatorio.obligatorioDA.modelo.Promocion;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Tarifa;
 import da.obligatorio.obligatorioDA.modelo.Transito;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.modelo.EstadoPropietario;
+import da.obligatorio.obligatorioDA.modelo.Fidelidad;
 
 @SpringBootApplication
 public class ObligatorioDaApplication {
@@ -148,59 +151,115 @@ public class ObligatorioDaApplication {
         puesto3.agrgarTarifaPuesto(t3);
 
 
-        // -- Bonificaciones y Cobros simples --
-        Bonificacion b1 = new Bonificacion(1, propietario1, "Fidelidad", puesto1, LocalDate.of(2024, 1, 15), 10.0);
-        Bonificacion b2 = new Bonificacion(2, propietario2, "Promoción", puesto2,LocalDate.of(2024, 1, 10),20.0);
-        Bonificacion b3 = new Bonificacion(3, propietario3, "Premium", puesto3,LocalDate.of(2024, 1, 10),20.0);
-        Bonificacion b4 = new Bonificacion(4, propietario4, "Promo", puesto3, LocalDate.now(), 5.0);
-        Bonificacion b5 = new Bonificacion(5, propietario5, "Platinum", puesto2, LocalDate.now(), 5.0);
-
-
-        f.agregarBonificacion(b1);
-        f.agregarBonificacion(b2);
-        f.agregarBonificacion(b3);
-
-        propietario1.agregarBonificacionPropietario(b1);
-        propietario2.agregarBonificacionPropietario(b2);
-        propietario3.agregarBonificacionPropietario(b3);
-        propietario4.agregarBonificacionPropietario(b4);
-        propietario5.agregarBonificacionPropietario(b5);
-
-        puesto1.agregarBonificacionPuesto(b1);
-        puesto2.agregarBonificacionPuesto(b2);
-        puesto2.agregarBonificacionPuesto(b5);
-        puesto2.agregarBonificacionPuesto(b3);
-        puesto3.agregarBonificacionPuesto(b1);
-        puesto3.agregarBonificacionPuesto(b3);
-        puesto3.agregarBonificacionPuesto(b4);
-
-       
-
-      
-
         
 
-        // -- Transitos (5) --
-        Transito tr1 = new Transito(1, puesto1, vehiculo1, new Date());
-        Transito tr2 = new Transito(2, puesto2, vehiculo2, new Date());
-        Transito tr3 = new Transito(3, puesto2, vehiculo3, new Date());
-        Transito tr4 = new Transito(4, puesto3, vehiculo4, new Date());
-        Transito tr5 = new Transito(5, puesto2, vehiculo5, new Date());
+// ========= BONIFICACIONES =========
+
+// Estrategias de bonificación (pueden reutilizarse, no guardan estado)
+CriterioAsignacionBonificacion critFidelidad = new Fidelidad();
+CriterioAsignacionBonificacion critPromocion = new Promocion();
+CriterioAsignacionBonificacion critPremium   = new Premium();
+CriterioAsignacionBonificacion critPlatinum  = new Platinum();
+
+// -- Bonificaciones y cobros simples --
+Bonificacion b1 = new Bonificacion(
+        1,
+        propietario1,
+        "Fidelidad",
+        puesto1,
+        LocalDate.of(2024, 1, 15),
+        10.0,               // si ya no usás “monto fijo”, podés poner 0.0
+        critFidelidad
+);
+
+Bonificacion b2 = new Bonificacion(
+        2,
+        propietario2,
+        "Promoción",
+        puesto2,
+        LocalDate.of(2024, 1, 10),
+        20.0,
+        critPromocion
+);
+
+Bonificacion b3 = new Bonificacion(
+        3,
+        propietario3,
+        "Premium",
+        puesto3,
+        LocalDate.of(2024, 1, 10),
+        20.0,
+        critPremium
+);
+
+Bonificacion b4 = new Bonificacion(
+        4,
+        propietario4,
+        "Promoción",        // si querés usar “Promo” cambialo también en tests / UI
+        puesto3,
+        LocalDate.now(),
+        5.0,
+        critPromocion
+);
+
+Bonificacion b5 = new Bonificacion(
+        5,
+        propietario5,
+        "Platinum",
+        puesto2,
+        LocalDate.now(),
+        5.0,
+        critPlatinum
+);
+
+// Registrar bonificaciones en la fachada (no te olvides de b4 y b5)
+f.agregarBonificacion(b1);
+f.agregarBonificacion(b2);
+f.agregarBonificacion(b3);
+f.agregarBonificacion(b4);
+f.agregarBonificacion(b5);
+
+// Asociar bonificaciones a propietarios
+propietario1.agregarBonificacionPropietario(b1);
+propietario2.agregarBonificacionPropietario(b2);
+propietario3.agregarBonificacionPropietario(b3);
+propietario4.agregarBonificacionPropietario(b4);
+propietario5.agregarBonificacionPropietario(b5);
+
+// Asociar bonificaciones a puestos
+puesto1.agregarBonificacionPuesto(b1);
+
+puesto2.agregarBonificacionPuesto(b2);
+puesto2.agregarBonificacionPuesto(b5);
+// si realmente querés que b3 aplique también en puesto2, dejá esta:
+puesto2.agregarBonificacionPuesto(b3);
 
 
-        // asignar transitos a vehiculos y puestos
-        vehiculo1.agregarTransito(tr1);
-        vehiculo2.agregarTransito(tr2);
-        vehiculo3.agregarTransito(tr3);
-        vehiculo4.agregarTransito(tr4);
-        vehiculo5.agregarTransito(tr5);
+puesto3.agregarBonificacionPuesto(b4);
 
-        puesto1.agregarTransitoPuesto(tr1);
-        puesto1.agregarTransitoPuesto(tr2);
-        puesto2.agregarTransitoPuesto(tr3);
-        puesto2.agregarTransitoPuesto(tr5);
-        puesto3.agregarTransitoPuesto(tr4);
-        puesto2.agregarTransitoPuesto(tr2);
+// ========= TRÁNSITOS =========
+
+Transito tr1 = new Transito(1, puesto1, vehiculo1, new Date());
+Transito tr2 = new Transito(2, puesto2, vehiculo2, new Date());
+Transito tr3 = new Transito(3, puesto2, vehiculo3, new Date());
+Transito tr4 = new Transito(4, puesto3, vehiculo4, new Date());
+Transito tr5 = new Transito(5, puesto2, vehiculo5, new Date());
+
+// asignar tránsitos a vehículos
+vehiculo1.agregarTransito(tr1);
+vehiculo2.agregarTransito(tr2);
+vehiculo3.agregarTransito(tr3);
+vehiculo4.agregarTransito(tr4);
+vehiculo5.agregarTransito(tr5);
+
+// asignar tránsitos a puestos
+puesto1.agregarTransitoPuesto(tr1);
+puesto1.agregarTransitoPuesto(tr2);
+puesto2.agregarTransitoPuesto(tr3);
+puesto2.agregarTransitoPuesto(tr5);
+puesto3.agregarTransitoPuesto(tr4);
+puesto2.agregarTransitoPuesto(tr2);
+
 
 
         }

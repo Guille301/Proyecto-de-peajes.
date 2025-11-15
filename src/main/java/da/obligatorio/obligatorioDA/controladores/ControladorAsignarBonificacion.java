@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import da.obligatorio.obligatorioDA.dtos.BonificacionAsignadaDTO;
 import da.obligatorio.obligatorioDA.dtos.bonificacionDefinidaDTO;
+import da.obligatorio.obligatorioDA.dtos.propietarioAsignarBonifDTO;
 import da.obligatorio.obligatorioDA.dtos.puestoDTO;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
+import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
 
@@ -45,16 +47,15 @@ public List<Respuesta> inicializarVista(
 
 
 @PostMapping("/asignar")
-    public List<Respuesta> asignarBonificacion( @RequestParam String cedula, @RequestParam int idPuesto, @RequestParam String nombreBonificacion, @RequestParam
-     @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fecha) {
+    public List<Respuesta> asignarBonificacion( @RequestParam String cedula, @RequestParam int idPuesto, @RequestParam String nombreBonificacion) {
 
         try {
-            fecha = LocalDate.now();
             
-            Bonificacion bonificacion = Fachada.getInstancia().asignarBonificacion(cedula, idPuesto, nombreBonificacion, fecha);
+            
+            Bonificacion bonificacion = Fachada.getInstancia().asignarBonificacion(cedula, idPuesto, nombreBonificacion);
 
            
-            BonificacionAsignadaDTO dto = new BonificacionAsignadaDTO(bonificacion.getPuestos().getNombre(),bonificacion.getNombre(), fecha);
+            BonificacionAsignadaDTO dto = new BonificacionAsignadaDTO(bonificacion.getPuestos().getNombre(),bonificacion.getNombre(), bonificacion.getFechaAsignacion());
             return Respuesta.lista(
                     new Respuesta("resultadoAsignacionBonificacion", dto)
             );
@@ -65,6 +66,41 @@ public List<Respuesta> inicializarVista(
             );
         }
     }
+
+
+    @PostMapping("/buscarPropietario")
+public List<Respuesta> buscarPropietario( @RequestParam String cedula,@SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
+
+    try {
+        if (usuario == null) {
+            return Respuesta.lista(
+                    new Respuesta("usuarioNoAutenticado", "loginAdmin.html")
+            );
+        }
+
+        if (cedula == null || cedula.isBlank()) {
+            throw new ObligatorioException("Valor ingresado inválido");
+        }
+
+        Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorCedula(cedula);
+        if (propietario == null) {
+            throw new ObligatorioException("No se encuentra un propietario con esa cédula");
+        }
+
+        
+        propietarioAsignarBonifDTO dto = new propietarioAsignarBonifDTO(propietario);
+
+        return Respuesta.lista(
+                new Respuesta("propietarioBusqueda", dto)
+        );
+
+    } catch (ObligatorioException e) {
+        return Respuesta.lista(
+                new Respuesta("errorBuscador", e.getMessage())
+        );
+    }
+
+}
 
 
 

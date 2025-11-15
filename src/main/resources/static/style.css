@@ -464,3 +464,240 @@ body.page-emular {
     background-color: #f4f4f4;
 }
 
+
+
+
+
+/* ===== SOLO PARA asignarBonificacion.html ===== */
+
+body.page-asignar-bonificacion {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: #f4f6fb;
+    color: #111827;
+}
+
+/* Header superior */
+
+.page-asignar-bonificacion .admin-header {
+    background: #0b4fd8;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 32px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.page-asignar-bonificacion .admin-logo {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.page-asignar-bonificacion .admin-nav a {
+    color: #e5edff;
+    text-decoration: none;
+    margin-left: 16px;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 999px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.page-asignar-bonificacion .admin-nav a:hover {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+.page-asignar-bonificacion .admin-nav a.active {
+    background: #fff;
+    color: #0b4fd8;
+}
+
+/* Contenedor principal */
+
+.page-asignar-bonificacion .container {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 24px 28px 32px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(15,23,42,0.08);
+}
+
+.page-asignar-bonificacion h2 {
+    margin: 0 0 12px;
+    font-size: 1.4rem;
+}
+
+/* Layout 2 columnas */
+
+.page-asignar-bonificacion .layout {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+    gap: 24px;
+}
+
+/* Columna izquierda */
+
+.page-asignar-bonificacion .col-izquierda {
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid #e5e7eb;
+}
+
+.page-asignar-bonificacion .form-group {
+    margin-bottom: 14px;
+}
+
+.page-asignar-bonificacion .form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.page-asignar-bonificacion select,
+.page-asignar-bonificacion input[type="text"] {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 0.9rem;
+    outline: none;
+    background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.page-asignar-bonificacion select:focus,
+.page-asignar-bonificacion input[type="text"]:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.2);
+}
+
+/* Columna derecha */
+
+.page-asignar-bonificacion .col-derecha {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.page-asignar-bonificacion .form-group-inline {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.page-asignar-bonificacion .form-group-inline .form-group {
+    flex: 1;
+}
+
+/* Botones */
+
+.page-asignar-bonificacion button {
+    border: none;
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: #2563eb;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(37,99,235,0.35);
+    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+
+.page-asignar-bonificacion button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.page-asignar-bonificacion button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(37,99,235,0.25);
+}
+
+/* Panel propietario */
+
+.page-asignar-bonificacion .panel-propietario {
+    padding: 16px 18px 18px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.page-asignar-bonificacion .panel-propietario h3 {
+    margin: 0 0 6px;
+    font-size: 1.05rem;
+}
+
+.page-asignar-bonificacion .panel-propietario h4 {
+    margin: 14px 0 6px;
+    font-size: 0.98rem;
+}
+
+.page-asignar-bonificacion .panel-propietario p {
+    margin: 2px 0;
+    font-size: 0.9rem;
+}
+
+.page-asignar-bonificacion .texto-ayuda {
+    margin-top: 4px;
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+/* Tabla bonificaciones */
+
+.page-asignar-bonificacion .tabla-bonificaciones {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+    font-size: 0.9rem;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.08);
+}
+
+.page-asignar-bonificacion .tabla-bonificaciones thead {
+    background: #eff3ff;
+}
+
+.page-asignar-bonificacion .tabla-bonificaciones th,
+.page-asignar-bonificacion .tabla-bonificaciones td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.page-asignar-bonificacion .tabla-bonificaciones th {
+    font-weight: 600;
+}
+
+.page-asignar-bonificacion .tabla-bonificaciones tbody tr:nth-child(even) {
+    background: #f9fafb;
+}
+
+.page-asignar-bonificacion .tabla-vacia {
+    margin-top: 6px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #f3f4f6;
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+/* Responsive simple */
+
+@media (max-width: 900px) {
+    .page-asignar-bonificacion .layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+

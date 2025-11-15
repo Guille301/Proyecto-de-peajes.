@@ -46,7 +46,16 @@ public class Transito {
             "No hay tarifa para la categoría del vehículo en este puesto"
         );
     }
-    return tarifa.getMonto();
+    double montoTarifa = tarifa.getMonto();
+    Propietario propietario = vehiculo.getPropietario();
+    Bonificacion bonif = puesto.obtenerBonificacionPara(propietario);
+
+double descuento = 0;
+if (bonif != null) {
+    descuento = bonif.calcularDescuento(montoTarifa);
+}
+
+return montoTarifa - descuento;
     }
 
     public Bonificacion bonificacionDelTransito() {

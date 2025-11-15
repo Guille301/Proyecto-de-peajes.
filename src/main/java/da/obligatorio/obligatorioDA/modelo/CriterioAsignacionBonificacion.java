@@ -15,5 +15,5 @@ public abstract class CriterioAsignacionBonificacion {
     }
 
     
-    public abstract void validar(Propietario propietario,Puesto puesto) throws ObligatorioException;
+    public abstract double calcularDescuento(double montoTarifa, Propietario propietario, Puesto puesto) throws ObligatorioException;
 }

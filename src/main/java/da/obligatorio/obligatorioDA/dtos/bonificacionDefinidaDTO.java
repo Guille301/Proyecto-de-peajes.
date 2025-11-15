@@ -15,7 +15,7 @@ public class bonificacionDefinidaDTO {
         this.nombre = bonificacion.getNombre();
     }
 
-    public String getNombreBonificacion() {
+    public String getNombre() {
         return nombre;
     }
 

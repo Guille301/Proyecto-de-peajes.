@@ -56,30 +56,59 @@ public class SistemaBonificaciones {
     }
 
 
-   public Bonificacion asignarBonificacion( String cedula,  int idPuesto, String nombreBonificacion,LocalDate fecha  ) throws ObligatorioException {
+ public Bonificacion asignarBonificacion(String cedula,int idPuesto,String nombreBonificacion) throws ObligatorioException {
 
-            Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorCedula(cedula);
-            Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
+    Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorCedula(cedula);
+    Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
 
-        if (propietario == null) throw new ObligatorioException("No existe el propietario");
-        if (puesto == null) throw new ObligatorioException("Debe especificar un puesto");
-        if (nombreBonificacion == null) throw new ObligatorioException("Debe especificar una bonificación");
-
-        
-        for (CriterioAsignacionBonificacion criterio : criteriosAsignacion) {
-            criterio.validar(propietario, puesto);
-        }
-
-        
-        Bonificacion asignada = new Bonificacion( 0,  propietario, nombreBonificacion, puesto,fecha,0);
-
-        propietario.setBonificaciones(asignada);
-        puesto.agregarBonificacionPuesto(asignada);
-
-        agregarBonificacion(asignada);
-
-        return asignada;
+    
+    if (propietario == null) {
+        throw new ObligatorioException("No existe el propietario");
     }
+    if (puesto == null) {
+        throw new ObligatorioException("Debe especificar un puesto");
+    }
+    if (nombreBonificacion == null || nombreBonificacion.isBlank()) {
+        throw new ObligatorioException("Debe especificar una bonificación");
+    }
+
+    if (!"Activo".equalsIgnoreCase(propietario.getEstadoPropietario().getNombre())) {
+        throw new ObligatorioException("El propietario está deshabilitado. No se pueden asignar bonificaciones");
+    }
+
+    if (propietario.getListBonificaciones() != null) {
+        for (Bonificacion b : propietario.getListBonificaciones()) {
+            if (b != null && b.getPuestos() != null
+                    && b.getPuestos().getId() == puesto.getId()) {
+                throw new ObligatorioException("Ya tiene una bonificación asignada para ese puesto");
+            }
+        }
+    }
+
+      LocalDate fechaAsignacion = LocalDate.now();
+
+      CriterioAsignacionBonificacion criterio = null;
+
+      for (CriterioAsignacionBonificacion c : criteriosAsignacion) {
+    if (c.getNombre().equalsIgnoreCase(nombreBonificacion)) {
+        criterio = c;
+        break;
+    }
+}
+
+    
+    Bonificacion asignada = new Bonificacion(  0,propietario, nombreBonificacion, puesto,fechaAsignacion,0, criterio);
+
+   
+    propietario.setBonificaciones(asignada);   
+    puesto.agregarBonificacionPuesto(asignada);
+
+    
+    agregarBonificacion(asignada);
+
+    return asignada;
+}
+
 
 
 

@@ -2,6 +2,8 @@ package da.obligatorio.obligatorioDA.modelo;
 
 import java.time.LocalDate;
 
+import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
+
 
 public class Bonificacion {
     private int id;
@@ -10,17 +12,19 @@ public class Bonificacion {
     private Puesto puestos;
     private LocalDate fechaAsignacion;
     private double montoDescuento;
+    private CriterioAsignacionBonificacion criterio;
 
     public Bonificacion() {
     }
 
-    public Bonificacion(int id, Propietario propietario, String nombre, Puesto puestos, LocalDate fechaAsignacion, double montoDescuento) {
+    public Bonificacion(int id, Propietario propietario, String nombre, Puesto puestos, LocalDate fechaAsignacion, double montoDescuento, CriterioAsignacionBonificacion criterio) {
         this.id = id;
         this.propietario = propietario;
         this.nombre = nombre;
         this.puestos = puestos;
         this.fechaAsignacion = fechaAsignacion;
         this.montoDescuento = montoDescuento;
+        this.criterio = criterio;
     }
 
     public int getId() {
@@ -69,5 +73,14 @@ public class Bonificacion {
 
     public void setMontoDescuento(double montoDescuento) {
         this.montoDescuento = montoDescuento;
+    }
+
+        public CriterioAsignacionBonificacion getCriterio() {
+        return criterio;
+    }
+
+    public double calcularDescuento(double montoTarifa) throws ObligatorioException {
+        if (criterio == null) return 0;
+        return criterio.calcularDescuento(montoTarifa, propietario, puestos);
     }
 }
