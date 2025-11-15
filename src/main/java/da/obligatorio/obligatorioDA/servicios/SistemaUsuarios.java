@@ -67,4 +67,13 @@ public class SistemaUsuarios {
         return listEstadosPropietario;
     }
 
+    public EstadoPropietario getEstadoPropietarioPorId(int id) throws ObligatorioException {
+        for (EstadoPropietario estado : listEstadosPropietario) {
+            if (estado.getId() == id) {
+                return estado;
+            }
+        }
+        throw new ObligatorioException("EstadoPropietario con ID " + id + " no encontrado.");
+    }
+
 }

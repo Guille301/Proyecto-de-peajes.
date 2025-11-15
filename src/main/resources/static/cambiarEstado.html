@@ -6,6 +6,7 @@
     <title>Cambiar estado</title>
     <link rel="stylesheet" href="style.css">
     <script src="vistaWeb.js"></script>
+    <script src="sse.js"></script>
 </head>
 <body>
 
@@ -37,17 +38,25 @@
                 </div>
             </form>
             
-            <div>
-                <h2>Propietario</h2>
-                <div id="divPropietario"></div> 
-            </div>
-            
+            <form id="formCambiarEstado">
+                <div>
+                    <h2>Propietario</h2>
+                    <div id="divPropietario"></div> 
+                    <input type="hidden" id="idPropietario" name="idPropietario">
 
-        </Section>
+                </div>
 
-        <section>
-            <h2>Todos los estados</h2>
-            <div id="divEstadosPropietarios"></div>
+                <div>
+                    <h2>Todos los estados</h2>
+                    <div id="divEstadosPropietarios"></div>
+                </div>
+
+                <div class="form-group">
+                    <button id="btnCrearContacto" type="submit">Cambiar estado</button>
+                </div>
+
+            </form>
+                        
         </section>
 
         
@@ -61,6 +70,14 @@
         urlIniciarVista = "/cambiarEstado/vistaConectada";
 
         const divEstadoPropietario = document.getElementById("divEstadosPropietarios");
+        const formCambiarEstado = document.getElementById('formCambiarEstado');
+
+        formCambiarEstado.addEventListener('submit', cambiarEstado);
+
+        function cambiarEstado(event) {
+            event.preventDefault();
+            submit("/cambiarEstado/cambiarEstadoPropietario", serializarFormulario("formCambiarEstado"));
+        } 
 
         function mostrar_mostrarEstados(mostrarEstados){
             // Carga select de tipos de contacto
@@ -80,6 +97,7 @@
 
         function mostrar_propietarioEncontrado(propietarioEncontrado) {
             document.getElementById("divPropietario").innerHTML = propietarioEncontrado.nombreCompleto +"  "+ propietarioEncontrado.estadoPropietario;
+            document.getElementById("idPropietario").value = propietarioEncontrado.id;
          //   document.getElementById("divEstadosPropietarios").selectedIndex = posMostrarEstados;
         }
 
@@ -94,7 +112,22 @@
         async function mostrar_errorBuscador(mensaje) {
             await mostrarMensaje(mensaje);
         }
+
+        async function mostrar_errorEstadoPropietario(mensaje) {
+            await mostrarMensaje(mensaje);
+        }
+
+        function mostrar_limpiarCampos() {
+            formBuscar.reset();
+        }
      
+        function procesarMensajeSSE(mensaje) {
+            procesarResultadosSubmit(mensaje); 
+        }
+
+        function conexionSSECerrada(event) {
+            console.log("SSE cerrado", event);
+        }
 
     </script>
 

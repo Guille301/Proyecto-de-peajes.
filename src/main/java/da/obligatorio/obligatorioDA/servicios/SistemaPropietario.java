@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
+import da.obligatorio.obligatorioDA.modelo.EstadoPropietario;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Transito;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
@@ -147,5 +148,14 @@ public class SistemaPropietario {
             }
         }
         return null;
+    }
+
+    //Estado
+    public void registrarNotificacionesEstado(Propietario propietario,  EstadoPropietario nuevoEstado) {
+        Date ahora = new Date();
+        String mensaje = ahora  + "Se ha cambiado tu estado en el sistema. Tu estado actual es " + nuevoEstado.getNombre(); 
+        Notificacion notificacion = new Notificacion(0, ahora, mensaje);
+        propietario.setNotificaciones(notificacion);
+        Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_CAMBIO_ESTADO);
     }
 }

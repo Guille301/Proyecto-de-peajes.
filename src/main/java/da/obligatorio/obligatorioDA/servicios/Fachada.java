@@ -25,7 +25,7 @@ public class Fachada extends Observable {
 
 
     public enum eventos {
-        NOTIFICACION_TRANSITO
+        NOTIFICACION_TRANSITO, NOTIFICACION_CAMBIO_ESTADO
     }
   
     private Fachada()  {
@@ -160,6 +160,10 @@ public class Fachada extends Observable {
     public Propietario buscarPropietarioPorCedula(String cedula) {
         return sistemaPropietario.buscarPropietarioPorCedula(cedula);
     }
+
+    public Propietario getPropietarioPorId(int id) throws ObligatorioException {
+        return sistemaPropietario.obtenerPropietarioPorId(id);
+    }
   
     //Estado Propietario
     public void agregarEstadosPropietario(EstadoPropietario nuevoEstadoPropietario) {
@@ -170,5 +174,11 @@ public class Fachada extends Observable {
         return sistemaUsuarios.getListEstadosPropietario();
     }
 
+    public EstadoPropietario getEstadoPropietarioPorId(int id) throws ObligatorioException {
+        return sistemaUsuarios.getEstadoPropietarioPorId(id);
+    }
 
+    public void registrarNotificacionesEstado(Propietario propietario, EstadoPropietario nuevoEstado) {
+        sistemaPropietario.registrarNotificacionesEstado(propietario, nuevoEstado);
+    }
 }
