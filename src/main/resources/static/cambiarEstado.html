@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambiar estado</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="vistaWeb.js"></script>
+    <script src="sse.js"></script>
+</head>
+<body>
+
+    <script src="utilesVista.js"></script>
+
+        <aside class="sidebar-admin">
+            <div class="sidebar-title">
+                Administrador
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="menuAdmin.html">Menú principal</a></li>
+                <li><a href="emularTransito.html" class="active">Emular tránsito</a></li>
+                <li><a href="cambiarEstado.html" class="active">Cambiar estado</a></li>
+                <li><a href="loginAdmin.html">Salir</a></li>
+            </ul>
+        </aside>
+<main>
+    <h1>Cambiar estado propietario</h1>
+    
+        <Section>
+            <h3>Cédula de identidad</h3>
+            <form id="formBuscar" onsubmit="buscarPropietario(event)">
+                <div class="form-group busqueda-form-group" >
+                    <label for="cedula">Buscador:</label>
+                    <input type="text" id="cedula" name="cedula" placeholder="Ingrese cedula" class="busqueda-input" />
+                </div>
+                <div class="form-group busqueda-button-group">
+                    <button type="submit" class="busqueda-button" >Buscar</button>
+                </div>
+            </form>
+            
+            <form id="formCambiarEstado">
+                <div>
+                    <h2>Propietario</h2>
+                    <div id="divPropietario"></div> 
+                    <input type="hidden" id="idPropietario" name="idPropietario">
+
+                </div>
+
+                <div>
+                    <h2>Todos los estados</h2>
+                    <div id="divEstadosPropietarios"></div>
+                </div>
+
+                <div class="form-group">
+                    <button id="btnCrearContacto" type="submit">Cambiar estado</button>
+                </div>
+
+            </form>
+                        
+        </section>
+
+        
+</main>
+   
+       
+
+
+    <script>
+        
+        urlIniciarVista = "/cambiarEstado/vistaConectada";
+
+        const divEstadoPropietario = document.getElementById("divEstadosPropietarios");
+        const formCambiarEstado = document.getElementById('formCambiarEstado');
+
+        formCambiarEstado.addEventListener('submit', cambiarEstado);
+
+        function cambiarEstado(event) {
+            event.preventDefault();
+            submit("/cambiarEstado/cambiarEstadoPropietario", serializarFormulario("formCambiarEstado"));
+        } 
+
+        function mostrar_mostrarEstados(mostrarEstados){
+            // Carga select de tipos de contacto
+            divEstadoPropietario.innerHTML = crearListaDesdeJson({
+                    data: mostrarEstados,
+                    campoMostrar: 'nombre',
+                    multiple : false,
+                    mostrarOpcionInicial : true, 
+                    id : 'posMostrarEstados'
+                 });       
+        }
+
+        function buscarPropietario(event) {
+            event.preventDefault();
+            submit("/cambiarEstado/buscarPropietario", serializarFormulario("formBuscar"));
+        }
+
+        function mostrar_propietarioEncontrado(propietarioEncontrado) {
+            document.getElementById("divPropietario").innerHTML = propietarioEncontrado.nombreCompleto +"  "+ propietarioEncontrado.estadoPropietario;
+            document.getElementById("idPropietario").value = propietarioEncontrado.id;
+         //   document.getElementById("divEstadosPropietarios").selectedIndex = posMostrarEstados;
+        }
+
+        function mostrar_usuarioNoAutenticado(urlDestino) {
+            window.location.href = urlDestino;
+        }
+        
+        function mostrar_ok(ok) {
+            document.getElementById("divPropietario").innerHTML = crearTablaDesdeJson(ok);
+        }
+
+        async function mostrar_errorBuscador(mensaje) {
+            await mostrarMensaje(mensaje);
+        }
+
+        async function mostrar_errorEstadoPropietario(mensaje) {
+            await mostrarMensaje(mensaje);
+        }
+
+        function mostrar_limpiarCampos() {
+            formBuscar.reset();
+        }
+     
+        function procesarMensajeSSE(mensaje) {
+            procesarResultadosSubmit(mensaje); 
+        }
+
+        function conexionSSECerrada(event) {
+            console.log("SSE cerrado", event);
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,6 +1,5 @@
 package da.obligatorio.obligatorioDA.dtos;
 import da.obligatorio.obligatorioDA.modelo.Transito;
-import da.obligatorio.obligatorioDA.modelo.Puesto;
 
 public class transitosRealizadosDto {
 

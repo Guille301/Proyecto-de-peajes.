@@ -11,9 +11,6 @@ public class Puesto {
     private List<Transito> listTransito;
     private List<Bonificacion> listBonificacion;
     
-
-//Puesto
-
     public Puesto() {
         this.listTarifas = new ArrayList<>();
         this.listTransito = new ArrayList<>();
@@ -79,7 +76,6 @@ public class Puesto {
         this.listBonificacion.add(nuevaBonificacion);
     }
 
-
     //Traer la bonificacion para aplicar en el transito
     public Bonificacion obtenerBonificacion(Transito transito){
 
@@ -101,38 +97,28 @@ public class Puesto {
        listBonificacion.add(b);
     }
 
-    
+    public Tarifa obtenerTarifaPara(Vehiculo vehiculo) {
+        if (listTarifas == null) {
+            return null;
+        }
+        for (Tarifa t : listTarifas) { 
+            if (t.getCategoriaVehiculo().equals(vehiculo.getCategoriaVehiculo())) {
+                 return t; 
+                }
+            }
 
-
-   public Tarifa obtenerTarifaPara(Vehiculo vehiculo) {
-    if (listTarifas == null) {
         return null;
     }
 
-    for (Tarifa t : listTarifas) {
-       
-        if (t.getCategoriaVehiculo().equals(vehiculo.getCategoriaVehiculo())) {
-            return t; 
+    public Bonificacion obtenerBonificacionPara(Propietario propietario) {
+        if (listBonificacion == null) {
+            return null;
         }
-    }
-
-    return null;
-}
-
-
-
-public Bonificacion obtenerBonificacionPara(Propietario propietario) {
-    if (listBonificacion == null) {
+        for (Bonificacion b : listBonificacion) {
+            if (b.getPropietario().equals(propietario)) { 
+                return b;
+            }
+        }
         return null;
     }
-    for (Bonificacion b : listBonificacion) {
-        if (b.getPropietario().equals(propietario)) { 
-            return b;
-        }
-    }
-    return null;
-}
-
-
-
 }

@@ -13,16 +13,13 @@ import java.util.List;
 public class ControladorMenuAdmin {
 
     @GetMapping("/vistaConectada")
-    public List<Respuesta> inicializarVista(
-            @SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
-
+    public List<Respuesta> inicializarVista(@SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
         // Si no hay admin logueado -> volver al login
         if (usuario == null) {
             return Respuesta.lista(
                     new Respuesta("usuarioNoAutenticado", "loginAdmin.html")
             );
         }
-
         // Mandamos el nombre del admin a la vista
         return Respuesta.lista(
                 new Respuesta("nombreCompleto", usuario.getNombreCompleto())

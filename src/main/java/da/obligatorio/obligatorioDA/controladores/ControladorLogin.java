@@ -19,7 +19,7 @@ import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 @RequestMapping("/acceso")
 public class ControladorLogin {
 
- //Administrador
+    //Administrador
     @PostMapping("/loginAdmin")
     public List<Respuesta> loginAdmin(HttpSession sesionHttp, @RequestParam String Cedula, @RequestParam String contrasenia) throws ObligatorioException {
         Administrador usuarioAdmin  = Fachada.getInstancia().loginAdmin(Cedula, contrasenia);
@@ -37,28 +37,21 @@ public class ControladorLogin {
         return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "index.html"));
     }
  
-// Propietario
+    // Propietario
     @PostMapping("/loginPropietario")
-       public List<Respuesta> loginPropietario(HttpSession sesionHttp, @RequestParam String Cedula, @RequestParam String contrasenia) throws ObligatorioException {
-           
-           Usuario unUsuario = Fachada.getInstancia().loginUsuarioPropietario(Cedula, contrasenia);
-           sesionHttp.setAttribute("usuarioPropietario", unUsuario);
-           return Respuesta.lista(new Respuesta("loginExitoso","menuPropietario.html"));
-           
-       
+    public List<Respuesta> loginPropietario(HttpSession sesionHttp, @RequestParam String Cedula, @RequestParam String contrasenia) throws ObligatorioException {
+        Usuario unUsuario = Fachada.getInstancia().loginUsuarioPropietario(Cedula, contrasenia);
+        sesionHttp.setAttribute("usuarioPropietario", unUsuario);
+        return Respuesta.lista(new Respuesta("loginExitoso","menuPropietario.html"));
     }
 
-      @PostMapping("/logoutPropietario")
+    @PostMapping("/logoutPropietario")
     public List<Respuesta> logout(HttpSession sesionHttp) {
         Propietario usuario = (Propietario) sesionHttp.getAttribute("usuarioPropietario");
         if (usuario != null) {
-            sesionHttp.removeAttribute("usuarioPropietario");
-            
+            sesionHttp.removeAttribute("usuarioPropietario");        
         }
         return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "index.html"));
     }
-
-
-
 
 }

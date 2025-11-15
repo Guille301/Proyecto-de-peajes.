@@ -7,6 +7,7 @@ import java.util.List;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
+import da.obligatorio.obligatorioDA.modelo.EstadoPropietario;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Sesion;
@@ -26,24 +27,20 @@ public class Fachada extends Observable {
 
 
     public enum eventos {
-        NOTIFICACION_TRANSITO
+        NOTIFICACION_TRANSITO, NOTIFICACION_CAMBIO_ESTADO
     }
   
-    
-
     private Fachada()  {
         sistemaUsuarios = new SistemaUsuarios();
         sistemaPuestos = new SistemaPuestos();
         sistemaBonificaciones = new SistemaBonificaciones();
-        sistemaPropietario = new SistemaPropietario();
-       
+        sistemaPropietario = new SistemaPropietario();       
     }
 
     public static Fachada getInstancia() {
         if (instancia == null) instancia = new Fachada();
         return instancia;
     }
-
   
     //Agregar propietario y admin
     public void agregar(Propietario usuario) {
@@ -53,7 +50,6 @@ public class Fachada extends Observable {
     public void agregar(Administrador usuario) {
         sistemaUsuarios.agregar(usuario);
     }
-
 
     //Login
     public Propietario loginUsuarioPropietario(String nombre, String contrasenia) throws ObligatorioException {
@@ -132,22 +128,19 @@ public class Fachada extends Observable {
     }
 
     public Vehiculo obtenerVehiculoPorMatricula(String matricula) {
-    return sistemaPropietario.obtenerVehiculoPorMatricula(matricula);
-}
+        return sistemaPropietario.obtenerVehiculoPorMatricula(matricula);
+    }
 
-public Propietario obtenerPropietarioPorVehiculo(Vehiculo v) {
-    return sistemaPropietario.obtenerPropietarioPorVehiculo(v);
-}
+    public Propietario obtenerPropietarioPorVehiculo(Vehiculo v) {
+        return sistemaPropietario.obtenerPropietarioPorVehiculo(v);
+    }
 
-//Nuevos métodos de propiertario
+    //Nuevos métodos de propiertario
+    public void registrarNotificacionesTransito(Propietario propietario, Puesto puesto,Vehiculo vehiculo) {
+        sistemaPropietario.registrarNotificacionesTransito(propietario, puesto, vehiculo);
+    }
 
-public void registrarNotificacionesTransito(Propietario propietario, Puesto puesto,Vehiculo vehiculo) {
-    sistemaPropietario.registrarNotificacionesTransito(propietario, puesto, vehiculo);
-}
-
-
-    public Vehiculo obtenerVehiculoPorMatriculaObligatorio(String matricula)
-            throws ObligatorioException {
+    public Vehiculo obtenerVehiculoPorMatriculaObligatorio(String matricula) throws ObligatorioException {
         return sistemaPropietario.obtenerVehiculoPorMatriculaObligatorio(matricula);
     }
 
@@ -156,21 +149,16 @@ public void registrarNotificacionesTransito(Propietario propietario, Puesto pues
         return sistemaPropietario.obtenerPropietarioPorVehiculoObligatorio(vehiculo);
     }
 
-
-   
-
-public void validarEstadoParaTransito(Propietario propietario) throws ObligatorioException {
-    sistemaPropietario.validarEstadoParaTransito(propietario);
-}
-
-
- public void borrarNotificacionesPropietario(Propietario propietario) {
-        sistemaPropietario.borrarNotificaciones(propietario);
+    public void validarEstadoParaTransito(Propietario propietario) throws ObligatorioException {
+        sistemaPropietario.validarEstadoParaTransito(propietario);
     }
 
 
+    public void borrarNotificacionesPropietario(Propietario propietario) {
+        sistemaPropietario.borrarNotificaciones(propietario);
+    }
 
-      public Transito emularTransito(int idPuesto, String matricula, Date fechaHora) throws ObligatorioException {
+    public Transito emularTransito(int idPuesto, String matricula, Date fechaHora) throws ObligatorioException {
         return sistemaPuestos.emularTransito(idPuesto, matricula, fechaHora);
     }
 
@@ -180,6 +168,29 @@ public void validarEstadoParaTransito(Propietario propietario) throws Obligatori
 
 
 
+    //Buscador propietario
+    public Propietario buscarPropietarioPorCedula(String cedula) {
+        return sistemaPropietario.buscarPropietarioPorCedula(cedula);
+    }
 
+    public Propietario getPropietarioPorId(int id) throws ObligatorioException {
+        return sistemaPropietario.obtenerPropietarioPorId(id);
+    }
   
+    //Estado Propietario
+    public void agregarEstadosPropietario(EstadoPropietario nuevoEstadoPropietario) {
+        sistemaUsuarios.agregarEstadosPropietario(nuevoEstadoPropietario);
+    }
+
+    public List<EstadoPropietario> getListEstadosPropietario() {
+        return sistemaUsuarios.getListEstadosPropietario();
+    }
+
+    public EstadoPropietario getEstadoPropietarioPorId(int id) throws ObligatorioException {
+        return sistemaUsuarios.getEstadoPropietarioPorId(id);
+    }
+
+    public void registrarNotificacionesEstado(Propietario propietario, EstadoPropietario nuevoEstado) {
+        sistemaPropietario.registrarNotificacionesEstado(propietario, nuevoEstado);
+    }
 }

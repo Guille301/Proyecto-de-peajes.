@@ -12,6 +12,7 @@
     <label id="lblNombreAdmin"></label>
 
     <button onclick="irEmularTransito()">Emular tránsito</button>
+    <button onclick="irCambiarEstado()">Cambiar estado</button>
 
     <button onclick="irAsignarBonificacion()">Asignar Bonificacion</button>
 
@@ -31,12 +32,15 @@
     const lblNombreAdmin = document.getElementById("lblNombreAdmin");
 
     function irEmularTransito() {
-        // emularTransito.html
         window.location.href = "emularTransito.html";
     }
 
-     function irAsignarBonificacion() {
+    function irAsignarBonificacion() {
         window.location.href = "asignarBonificacion.html";
+    }
+
+    function irCambiarEstado() {
+        window.location.href = "cambiarEstado.html";
     }
 
     function logoutAdmin() {

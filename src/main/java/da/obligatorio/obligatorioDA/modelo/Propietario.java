@@ -2,7 +2,6 @@ package da.obligatorio.obligatorioDA.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ArrayList;
 
 
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
@@ -67,8 +66,6 @@ public class Propietario extends Usuario {
         this.saldo = saldo;
     }
 
-  
-
     public String getCedula() {
         return cedula;
     }
@@ -132,37 +129,29 @@ public class Propietario extends Usuario {
         return transitosPropietario;
     }
 
-
-     //Corregido
     public void setBonificaciones(Bonificacion b) {
         listBonificaciones.add(b);
     }
 
-      public void debitarPorTransito(double costo) throws ObligatorioException {
+    public void debitarPorTransito(double costo) throws ObligatorioException {
         if (this.saldo < costo) {
             throw new ObligatorioException("Saldo insuficiente: " + this.saldo);
         }
         this.saldo -= costo;
     }
 
-
-
     public void borrarNotificaciones() {
-    if (listaNotificaciones != null) {
-        listaNotificaciones.clear();
+        if (listaNotificaciones != null) {
+            listaNotificaciones.clear();
+        }
     }
-}
 
-
-
-
-      
-    
-
-
-    
-
-
-
+    //Cambio de estado
+    public void cambiarEstado(EstadoPropietario nuevoEstado) throws ObligatorioException {
+        if (this.estadoPropietario == nuevoEstado) {
+            throw new ObligatorioException("El propietario ya esta en estado: " + this.estadoPropietario.getNombre());
+        }
+        this.estadoPropietario = nuevoEstado;
+    }
 
 }

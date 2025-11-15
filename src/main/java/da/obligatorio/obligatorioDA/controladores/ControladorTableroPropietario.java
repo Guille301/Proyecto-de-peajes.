@@ -8,27 +8,21 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
-import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Transito;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
-import da.obligatorio.obligatorioDA.modelo.Usuario;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.observador.Observador;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
 import da.obligatorio.obligatorioDA.utils.ConexionNavegador;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import da.obligatorio.obligatorioDA.dtos.bonificacionPropietarioDto;
 import da.obligatorio.obligatorioDA.dtos.notificacionDTO;
 import da.obligatorio.obligatorioDA.dtos.transitosRealizadosDto;
 import da.obligatorio.obligatorioDA.dtos.vehiculosDto;
-import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 import da.obligatorio.obligatorioDA.observador.Observable;
 import org.springframework.http.MediaType;
 
@@ -42,25 +36,19 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
    private final ConexionNavegador conexionNavegador;
    private Propietario usuarioSesion;
 
-
      @Autowired
     public ControladorTableroPropietario(@Autowired ConexionNavegador conexionNavegador) {
         this.conexionNavegador = conexionNavegador;
     }
 
-    
     @GetMapping("/resumenDelPropietario")
     public List<Respuesta> resumenDelPropietario(@SessionAttribute(name = "usuarioPropietario", required=false) Propietario usuario){
         if (usuario == null) {
              // Manejar el caso en que el usuario no está en la sesión pide redireccionar a la página de login
              return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "loginPropietario.html"));
          }
-
          this.usuarioSesion = usuario;
-
          Fachada.getInstancia().agregarObservador(this);
-
-
          return Respuesta.lista(
              new Respuesta("nombreCompleto", usuario.getNombreCompleto()),
              new Respuesta("estadoPropietario", usuario.getEstadoPropietario().getNombre()),
@@ -73,39 +61,25 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
         
     }
 
-
-
-
-
-
-
     @PostMapping("/borrarNotificaciones")
-public List<Respuesta> borrarNotificaciones(
+    public List<Respuesta> borrarNotificaciones(
         @SessionAttribute(name = "usuarioPropietario", required = false) Propietario usuario) {
 
-    if (usuario == null) {
-        return Respuesta.lista(  new Respuesta("usuarioNoAutenticado", "loginPropietario.html"));
+        if (usuario == null) {
+            return Respuesta.lista(  new Respuesta("usuarioNoAutenticado", "loginPropietario.html"));
+        }
+        Fachada.getInstancia().borrarNotificacionesPropietario(usuario);
+        Respuesta notifs = notificacionesPropietario(usuario);
+        return Respuesta.lista(notifs);
     }
 
-    
-    Fachada.getInstancia().borrarNotificacionesPropietario(usuario);
-
-    
-    Respuesta notifs = notificacionesPropietario(usuario);
-
-    return Respuesta.lista(notifs);
-}
-
-
     private Respuesta transitosRealizados(Propietario usuario){
-        
         List<Transito> transitos = usuario.traerTransitosDeMisVehiculos();
         List<transitosRealizadosDto> transDtos = new ArrayList<>();
         for(Transito tc : transitos){
             transDtos.add(new transitosRealizadosDto(tc));
         }
         return new Respuesta("transitosRealizados", transDtos);
-
     }
 
     private Respuesta vehiculosConTransito(Propietario usuario){
@@ -123,13 +97,10 @@ public List<Respuesta> borrarNotificaciones(
         for(Bonificacion tc : bonificaciones){
             bonDtos.add(new bonificacionPropietarioDto(tc));
         }
-
         return new Respuesta("bonificacionesPropietario", bonDtos);
     }
 
-
-
-     private Respuesta notificacionesPropietario(Propietario usuario) {
+    private Respuesta notificacionesPropietario(Propietario usuario) {
         var lista = usuario.getListaNotificaciones();
         List<notificacionDTO> notifsDto = new ArrayList<>();
         if (lista != null) {
@@ -140,35 +111,20 @@ public List<Respuesta> borrarNotificaciones(
         return new Respuesta("notificacionesPropietario", notifsDto);
     }
 
-
-
-
-
-
-        @GetMapping(value = "/registrarSSE", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-        public SseEmitter registrarSSE() {
+    @GetMapping(value = "/registrarSSE", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter registrarSSE() {
         conexionNavegador.conectarSSE();
         return conexionNavegador.getConexionSSE();
     }
 
-
-    
     @Override
     public void actualizar(Object evento, Observable origen) {
-
         if (evento.equals(Fachada.eventos.NOTIFICACION_TRANSITO)) {
-              
             Respuesta Saldo  = new Respuesta("saldoPropietario",usuarioSesion.getSaldo());
             Respuesta Trans  = transitosRealizados(usuarioSesion);
             Respuesta Notifs = notificacionesPropietario(usuarioSesion);
-
             conexionNavegador.enviarJSON( Respuesta.lista(Saldo, Trans, Notifs));
         }
-
-}
-
-
-
-
+    }
 
 }
