@@ -12,11 +12,10 @@ import da.obligatorio.obligatorioDA.modelo.Puesto;
 
 public class SistemaBonificaciones {
     private List<Bonificacion> bonificaciones;
+    private List<CriterioAsignacionBonificacion> criteriosAsignacion = new ArrayList<>();
 
-     private List<CriterioAsignacionBonificacion> criteriosAsignacion = new ArrayList<>();
 
-
-      public void agregarCriterioAsignacion(CriterioAsignacionBonificacion c) {
+    public void agregarCriterioAsignacion(CriterioAsignacionBonificacion c) {
         if (c != null) {
             criteriosAsignacion.add(c);
         }
@@ -55,58 +54,49 @@ public class SistemaBonificaciones {
         return null;
     }
 
+    public Bonificacion asignarBonificacion(String cedula,int idPuesto,String nombreBonificacion) throws ObligatorioException {
 
- public Bonificacion asignarBonificacion(String cedula,int idPuesto,String nombreBonificacion) throws ObligatorioException {
+        Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorCedula(cedula);
+        Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
 
-    Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorCedula(cedula);
-    Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
+        Fachada.getInstancia().validarEstadoAsignarBonificacion(propietario);
+ 
+        if (propietario == null) {
+            throw new ObligatorioException("No existe el propietario");
+        }
+        
+        if (puesto == null) {
+            throw new ObligatorioException("Debe especificar un puesto");
+        }
+        
+        if (nombreBonificacion == null || nombreBonificacion.isBlank()) {
+            throw new ObligatorioException("Debe especificar una bonificación");
+        }
 
-    
-    if (propietario == null) {
-        throw new ObligatorioException("No existe el propietario");
-    }
-    if (puesto == null) {
-        throw new ObligatorioException("Debe especificar un puesto");
-    }
-    if (nombreBonificacion == null || nombreBonificacion.isBlank()) {
-        throw new ObligatorioException("Debe especificar una bonificación");
-    }
-
-    if (propietario.getListBonificaciones() != null) {
-        for (Bonificacion b : propietario.getListBonificaciones()) {
-            if (b != null && b.getPuestos() != null
-                    && b.getPuestos().getId() == puesto.getId()) {
-                throw new ObligatorioException("Ya tiene una bonificación asignada para ese puesto");
+        if (propietario.getListBonificaciones() != null) {
+            for (Bonificacion b : propietario.getListBonificaciones()) {
+                if (b != null && b.getPuestos() != null && b.getPuestos().getId() == puesto.getId()) {
+                    throw new ObligatorioException("Ya tiene una bonificación asignada para ese puesto");
+                }
             }
         }
-    }
 
-      LocalDate fechaAsignacion = LocalDate.now();
+        LocalDate fechaAsignacion = LocalDate.now();
+        CriterioAsignacionBonificacion criterio = null;
 
-      CriterioAsignacionBonificacion criterio = null;
-
-      for (CriterioAsignacionBonificacion c : criteriosAsignacion) {
-    if (c.getNombre().equalsIgnoreCase(nombreBonificacion)) {
-        criterio = c;
-        break;
-    }
-}
-
+        for (CriterioAsignacionBonificacion c : criteriosAsignacion) {
+            if (c.getNombre().equalsIgnoreCase(nombreBonificacion)) {
+                criterio = c;
+                break;
+            }
+        }
     
-    Bonificacion asignada = new Bonificacion(  0,propietario, nombreBonificacion, puesto,fechaAsignacion,0, criterio);
+        Bonificacion asignada = new Bonificacion(  0,propietario, nombreBonificacion, puesto,fechaAsignacion,0, criterio);
+        propietario.setBonificaciones(asignada);   
+        puesto.agregarBonificacionPuesto(asignada);
+        agregarBonificacion(asignada);
 
-   
-    propietario.setBonificaciones(asignada);   
-    puesto.agregarBonificacionPuesto(asignada);
-
-    
-    agregarBonificacion(asignada);
-
-    return asignada;
-}
-
-
-
-
+        return asignada;
+    }
 
 }

@@ -6,4 +6,9 @@ public class EstadoPenalizado extends EstadoPropietario {
         super(4, "Penalizado", propietario);
     }
 
+    @Override public void validarPuedeTransitar() { }
+    @Override public void validarIngresarSistema() { }
+    @Override public void validarAsignarBonificacion() { }
+
+
 }

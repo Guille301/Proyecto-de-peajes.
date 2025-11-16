@@ -47,42 +47,24 @@ public class SistemaPuestos {
         return null;
     }
 
-
-
-    public Transito emularTransito(int idPuesto, String matricula, Date fechaHora)
-            throws ObligatorioException {
-
+    public Transito emularTransito(int idPuesto, String matricula, Date fechaHora) throws ObligatorioException {
         Fachada fachada = Fachada.getInstancia();
-
         
         Puesto puesto = fachada.obtenerPuestoPorId(idPuesto);
-        
-
-        
         Vehiculo vehiculo = fachada.obtenerVehiculoPorMatriculaObligatorio(matricula);
         Propietario propietario = fachada.obtenerPropietarioPorVehiculoObligatorio(vehiculo);
 
-        
-        fachada.validarEstadoParaTransito(propietario);
-
+        fachada.validarEstadoPoderTransitar(propietario);
     
         Transito transito = new Transito(0, puesto, vehiculo, fechaHora);
-
-        
         double costo = transito.costoTransitoEmulacion();
-        propietario.debitarPorTransito(costo);
-
         
+        propietario.debitarPorTransito(costo);        
         vehiculo.agregarTransito(transito);
         puesto.agregarTransitoPuesto(transito);
-
-        
         fachada.registrarNotificacionesTransito(propietario, puesto, vehiculo);
 
-    
         return transito;
     }
-
-
 
 }

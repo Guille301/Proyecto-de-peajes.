@@ -1,5 +1,7 @@
 package da.obligatorio.obligatorioDA.modelo;
 
+import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
+
 public abstract class EstadoPropietario {
     private int id;
     private String nombre;
@@ -39,5 +41,8 @@ public abstract class EstadoPropietario {
     }
 
     //Tengo que tener todos los metodos que van a implementar en cada estado
+    public abstract void validarIngresarSistema() throws ObligatorioException;
+    public abstract void validarPuedeTransitar() throws ObligatorioException;
+    public abstract void validarAsignarBonificacion() throws ObligatorioException;
 
 }

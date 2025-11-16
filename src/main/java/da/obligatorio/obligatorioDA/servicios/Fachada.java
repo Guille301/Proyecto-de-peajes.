@@ -144,15 +144,22 @@ public class Fachada extends Observable {
         return sistemaPropietario.obtenerVehiculoPorMatriculaObligatorio(matricula);
     }
 
-    public Propietario obtenerPropietarioPorVehiculoObligatorio(Vehiculo vehiculo)
-            throws ObligatorioException {
+    public Propietario obtenerPropietarioPorVehiculoObligatorio(Vehiculo vehiculo) throws ObligatorioException {
         return sistemaPropietario.obtenerPropietarioPorVehiculoObligatorio(vehiculo);
     }
 
-    public void validarEstadoParaTransito(Propietario propietario) throws ObligatorioException {
-        sistemaPropietario.validarEstadoParaTransito(propietario);
+    //Estados
+    public void validarEstadoIngresarSistema(Propietario propietario) throws ObligatorioException {
+        sistemaPropietario.validarIngresarSistema(propietario);
     }
 
+    public void validarEstadoPoderTransitar(Propietario propietario) throws ObligatorioException {
+        sistemaPropietario.validarPoderTransitar(propietario);
+    }
+
+    public void validarEstadoAsignarBonificacion(Propietario propietario) throws ObligatorioException {
+        sistemaPropietario.validarAsignarleBonificacion(propietario);
+    }
 
     public void borrarNotificacionesPropietario(Propietario propietario) {
         sistemaPropietario.borrarNotificaciones(propietario);
@@ -165,8 +172,6 @@ public class Fachada extends Observable {
     public Bonificacion asignarBonificacion(String cedula, int idPuesto, String nombreBonificacion) throws ObligatorioException {
         return sistemaBonificaciones.asignarBonificacion(cedula, idPuesto, nombreBonificacion);
     }
-
-
 
     //Buscador propietario
     public Propietario buscarPropietarioPorCedula(String cedula) {
