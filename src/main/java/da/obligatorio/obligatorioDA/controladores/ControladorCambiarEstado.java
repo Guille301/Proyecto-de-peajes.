@@ -130,8 +130,5 @@ public class ControladorCambiarEstado implements Observador {
             conexionNavegador.enviarJSON( Respuesta.lista(estadoActual, Notifs));
     }
   }
-  
-
-
 
 }

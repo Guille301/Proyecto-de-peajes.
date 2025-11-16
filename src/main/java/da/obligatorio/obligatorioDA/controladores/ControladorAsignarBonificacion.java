@@ -29,97 +29,67 @@ import da.obligatorio.obligatorioDA.servicios.Fachada;
 @Scope("session")
 public class ControladorAsignarBonificacion {
 
-
-
     @GetMapping("/vistaConectada")
-public List<Respuesta> inicializarVista(
-        @SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
-
-    if (usuario == null) {
-        return Respuesta.lista(
-                new Respuesta("usuarioNoAutenticado", "loginAdmin.html")
-        );
+    public List<Respuesta> inicializarVista(@SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
+        if (usuario == null) {
+            return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "loginAdmin.html"));
+        }
+        return Respuesta.lista( puestosRespuesta(), bonificacionesRespuesta());
     }
- 
-    return Respuesta.lista( puestosRespuesta(), bonificacionesRespuesta());
-   
-}
 
-
-@PostMapping("/asignar")
+    @PostMapping("/asignar")
     public List<Respuesta> asignarBonificacion( @RequestParam String cedula, @RequestParam int idPuesto, @RequestParam String nombreBonificacion) {
-
-        try {
-            
-            
+        try {            
             Bonificacion bonificacion = Fachada.getInstancia().asignarBonificacion(cedula, idPuesto, nombreBonificacion);
-
-           
             BonificacionAsignadaDTO dto = new BonificacionAsignadaDTO(bonificacion.getPuestos().getNombre(),bonificacion.getNombre(), bonificacion.getFechaAsignacion());
-            return Respuesta.lista(
-                    new Respuesta("resultadoAsignacionBonificacion", dto)
-            );
+            
+            return Respuesta.lista(new Respuesta("resultadoAsignacionBonificacion", dto));
 
         } catch (ObligatorioException ex) {
-            return Respuesta.lista(
-                    new Respuesta("errorAsignacionBonificacion", ex.getMessage())
-            );
+            return Respuesta.lista(new Respuesta("errorAsignacionBonificacion", ex.getMessage()));
         }
     }
-
 
     @PostMapping("/buscarPropietario")
-public List<Respuesta> buscarPropietario( @RequestParam String cedula,@SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
+    public List<Respuesta> buscarPropietario( @RequestParam String cedula,@SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
+        try {
+            if (usuario == null) {
+                return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "loginAdmin.html"));
+            }
 
-    try {
-        if (usuario == null) {
-            return Respuesta.lista(
-                    new Respuesta("usuarioNoAutenticado", "loginAdmin.html")
-            );
+            if (cedula == null || cedula.isBlank()) {
+                throw new ObligatorioException("Valor ingresado inválido");
+            }
+
+            Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorCedula(cedula);
+            if (propietario == null) {
+                throw new ObligatorioException("No se encuentra un propietario con esa cédula");
+            }
+
+            propietarioAsignarBonifDTO dto = new propietarioAsignarBonifDTO(propietario);
+
+            return Respuesta.lista(new Respuesta("propietarioBusqueda", dto));
+
+        } catch (ObligatorioException e) {
+            return Respuesta.lista(new Respuesta("errorBuscador", e.getMessage()));
         }
-
-        if (cedula == null || cedula.isBlank()) {
-            throw new ObligatorioException("Valor ingresado inválido");
-        }
-
-        Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorCedula(cedula);
-        if (propietario == null) {
-            throw new ObligatorioException("No se encuentra un propietario con esa cédula");
-        }
-
-        
-        propietarioAsignarBonifDTO dto = new propietarioAsignarBonifDTO(propietario);
-
-        return Respuesta.lista(
-                new Respuesta("propietarioBusqueda", dto)
-        );
-
-    } catch (ObligatorioException e) {
-        return Respuesta.lista(
-                new Respuesta("errorBuscador", e.getMessage())
-        );
     }
 
-}
-
-
-
-  private Respuesta puestosRespuesta() {
-    List<Puesto> lista = Fachada.getInstancia().getPuestos();
-    List<puestoDTO> puestosDto = new ArrayList<>();
-    for (Puesto p : lista) {
-        puestosDto.add(new puestoDTO(p));
+    private Respuesta puestosRespuesta() {
+        List<Puesto> lista = Fachada.getInstancia().getPuestos();
+        List<puestoDTO> puestosDto = new ArrayList<>();
+            for (Puesto p : lista) {
+                puestosDto.add(new puestoDTO(p));
+            }
+            return new Respuesta("puestos", puestosDto); 
     }
-    return new Respuesta("puestos", puestosDto);
-}
 
-private Respuesta bonificacionesRespuesta() {
-    List<Bonificacion> lista = Fachada.getInstancia().getBonificaciones();
-    List<bonificacionDefinidaDTO> bonificacionesDto = new ArrayList<>();
-    for (Bonificacion b : lista) {
-        bonificacionesDto.add(new bonificacionDefinidaDTO(b));
+    private Respuesta bonificacionesRespuesta() {
+        List<Bonificacion> lista = Fachada.getInstancia().getBonificaciones();
+        List<bonificacionDefinidaDTO> bonificacionesDto = new ArrayList<>();
+        for (Bonificacion b : lista) {
+            bonificacionesDto.add(new bonificacionDefinidaDTO(b));
+        }
+        return new Respuesta("bonificaciones", bonificacionesDto);
     }
-    return new Respuesta("bonificaciones", bonificacionesDto);
-    
-}
 }

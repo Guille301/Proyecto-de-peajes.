@@ -33,118 +33,75 @@ import da.obligatorio.obligatorioDA.servicios.Fachada;
 @Scope("session")
 public class ControladorEmularTransito {
 
-   
-
     private Transito transito;
 
-
-
-    
-
-@GetMapping("/vistaConectada")
-public List<Respuesta> inicializarVista(
-        @SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
-
-    if (usuario == null) {
-        return Respuesta.lista(
-                new Respuesta("usuarioNoAutenticado", "loginAdmin.html")
-        );
+    @GetMapping("/vistaConectada")
+    public List<Respuesta> inicializarVista(@SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
+        if (usuario == null) {
+             return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "loginAdmin.html"));
+        }
+        return Respuesta.lista(puestosRespuesta());
     }
-
-    
- 
-    return Respuesta.lista(
-            puestosRespuesta()
-    );
-   
-}
-
-
-
 
     //  Cuando cambia el puesto, la vista manda el idPuesto
 
-@PostMapping("/cambiarPuesto")
-public List<Respuesta> cambiarPuesto(@RequestParam int idPuesto) {
+    @PostMapping("/cambiarPuesto")
+    public List<Respuesta> cambiarPuesto(@RequestParam int idPuesto) {
+        Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
+        if (puesto == null) {
+            return Respuesta.lista(new Respuesta("errorEmulacion", "Puesto inexistente"));
+        }
+        List<Tarifa> tarifas = puesto.getListTarifas();
 
-    Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
+        // Pasar a DTO
+        List<tarifaDTO> tarifasDto = new ArrayList<>();
+        if (tarifas != null) {
+            for (Tarifa t : tarifas) {
+                tarifasDto.add(new tarifaDTO(t));
+            }
+        }
 
-    if (puesto == null) {
-        return Respuesta.lista(
-            new Respuesta("errorEmulacion", "Puesto inexistente")
-        );
+        return Respuesta.lista(new Respuesta("tarifasPuesto", tarifasDto));
     }
 
-    List<Tarifa> tarifas = puesto.getListTarifas();
 
-    // Pasar a DTO
-    List<tarifaDTO> tarifasDto = new ArrayList<>();
-    if (tarifas != null) {
-        for (Tarifa t : tarifas) {
-            tarifasDto.add(new tarifaDTO(t));
+
+
+    @PostMapping("/emular")
+    public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String matricula,  @RequestParam  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date fechaHora) {
+
+        try {
+            transito = Fachada.getInstancia().emularTransito(idPuesto, matricula, fechaHora);
+            Vehiculo vehiculo = transito.getVehiculo();
+            Propietario propietario = vehiculo.getPropietario();
+            Puesto puesto = transito.getPuesto();
+
+            double costo = transito.costoTransitoEmulacion();
+            double nuevoSaldo = propietario.getSaldo();
+            Bonificacion bonificacionAplicada = puesto.obtenerBonificacionPara(propietario);
+
+            emularTransitoDTO dto = new emularTransitoDTO(
+                    propietario,
+                    vehiculo,
+                    bonificacionAplicada,
+                    costo,
+                    nuevoSaldo
+            );
+
+            return Respuesta.lista(new Respuesta("resultadoEmulacion", dto));
+
+        } catch (ObligatorioException ex) {
+            return Respuesta.lista(new Respuesta("errorEmulacion", ex.getMessage()));
         }
     }
 
-    return Respuesta.lista(
-        new Respuesta("tarifasPuesto", tarifasDto)
-    );
-}
-
-
-
-
-  @PostMapping("/emular")
-public List<Respuesta> emular(@RequestParam int idPuesto,  @RequestParam String matricula,  @RequestParam  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date fechaHora) {
-
-    try {
-        
-        
-        transito = Fachada.getInstancia().emularTransito(idPuesto, matricula, fechaHora);
-
-        
-        Vehiculo vehiculo = transito.getVehiculo();
-        Propietario propietario = vehiculo.getPropietario();
-        Puesto puesto = transito.getPuesto();
-
-        double costo = transito.costoTransitoEmulacion();
-        double nuevoSaldo = propietario.getSaldo();
-        Bonificacion bonificacionAplicada = puesto.obtenerBonificacionPara(propietario);
-
-        
-        emularTransitoDTO dto = new emularTransitoDTO(
-                propietario,
-                vehiculo,
-                bonificacionAplicada,
-                costo,
-                nuevoSaldo
-        );
-
-        return Respuesta.lista(new Respuesta("resultadoEmulacion", dto));
-
-    } catch (ObligatorioException ex) {
-        return Respuesta.lista(new Respuesta("errorEmulacion", ex.getMessage()));
+    private Respuesta puestosRespuesta() {
+        List<Puesto> lista = Fachada.getInstancia().getPuestos();
+        List<puestoDTO> puestosDto = new ArrayList<>();
+        for (Puesto p : lista) {
+            puestosDto.add(new puestoDTO(p));
+        }
+        return new Respuesta("puestos", puestosDto);
     }
-}
-
-   
-
-  private Respuesta puestosRespuesta() {
-    List<Puesto> lista = Fachada.getInstancia().getPuestos();
-    List<puestoDTO> puestosDto = new ArrayList<>();
-    for (Puesto p : lista) {
-        puestosDto.add(new puestoDTO(p));
-    }
-    return new Respuesta("puestos", puestosDto);
-}
-
-
-
-
-
-
-
-
-  
-
    
 }
