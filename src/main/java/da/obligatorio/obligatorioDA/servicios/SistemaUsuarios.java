@@ -33,16 +33,22 @@ public class SistemaUsuarios {
 
     //Login
     public Administrador loginAdmin(String cedula, String contrasenia) throws ObligatorioException{
+        Sesion sesion = null;
         Administrador usuario = (Administrador) login(cedula, contrasenia,administradores);
         if(usuario!=null){
+            sesion = new Sesion(usuario);
+            sesiones.add(sesion);
             return usuario;
         }        
         throw new ObligatorioException("Usuario y/o contraseña incorrectos");
     }
 
     public Propietario loginPropietario(String cedula, String contrasenia) throws ObligatorioException{
+      Sesion sesion = null;
       Propietario usuario = (Propietario) login(cedula, contrasenia,propietarios);
         if(usuario!=null){
+            sesion = new Sesion(usuario);
+            sesiones.add(sesion);
             return usuario;
         }        
         throw new ObligatorioException("Usuario y/o contraseña incorrectos");

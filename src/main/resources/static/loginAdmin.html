@@ -35,9 +35,13 @@
          window.location.href = urlDestino;
     }
 
-     async function excepcionDeAplicacion(text){
+    async function excepcionDeAplicacion(text){
             await mostrarMensaje(text);
-      }
+    }
+
+    async function mostrar_error(mensaje) {
+        await mostrarMensaje(mensaje);
+    }  
 
    
    
