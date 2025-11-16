@@ -44,5 +44,6 @@ public abstract class EstadoPropietario {
     public abstract void validarIngresarSistema() throws ObligatorioException;
     public abstract void validarPuedeTransitar() throws ObligatorioException;
     public abstract void validarAsignarBonificacion() throws ObligatorioException;
+    public boolean aceptaNotificaciones() { return false; }
 
 }

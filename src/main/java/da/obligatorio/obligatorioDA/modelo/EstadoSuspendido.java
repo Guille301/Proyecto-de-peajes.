@@ -14,7 +14,7 @@ public class EstadoSuspendido extends EstadoPropietario {
     }
 
     @Override public void validarIngresarSistema() { }
-
     @Override public void validarAsignarBonificacion() { }
+    @Override public boolean aceptaNotificaciones() {return true; }
 
 }

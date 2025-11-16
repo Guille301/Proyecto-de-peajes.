@@ -63,7 +63,7 @@ public class ObligatorioDaApplication {
         propietario1.setCedula("2001");
         propietario1.setSaldo(150.0);
         propietario1.setEstadoPropietario(habilitado);
-        propietario1.setNotificaciones((new Notificacion(1, new Date(), "Bienvenido Juan")));
+        propietario1.agregarNotificaciones((new Notificacion(1, new Date(), "Bienvenido Juan")));
 
         Propietario propietario2 = new Propietario();
         propietario2.setId(2);
@@ -72,7 +72,7 @@ public class ObligatorioDaApplication {
         propietario2.setCedula("2002");
         propietario2.setSaldo(200.0);
         propietario2.setEstadoPropietario(deshabilitado);
-        propietario2.setNotificaciones((new Notificacion(2, new Date(), "Bienvenida María")));
+        propietario2.agregarNotificaciones((new Notificacion(2, new Date(), "Bienvenida María")));
 
         Propietario propietario3 = new Propietario();
         propietario3.setId(3);
@@ -81,7 +81,7 @@ public class ObligatorioDaApplication {
         propietario3.setCedula("2003");
         propietario3.setSaldo(50.0);
         propietario3.setEstadoPropietario(habilitado);
-        propietario3.setNotificaciones((new Notificacion(3, new Date(), "Saldo bajo Carlos")));
+        propietario3.agregarNotificaciones((new Notificacion(3, new Date(), "Saldo bajo Carlos")));
 
         Propietario propietario4 = new Propietario();
         propietario4.setId(4); 
@@ -90,7 +90,7 @@ public class ObligatorioDaApplication {
         propietario4.setCedula("2004");
         propietario4.setSaldo(300.0);
         propietario4.setEstadoPropietario(habilitado);
-        propietario4.setNotificaciones((new Notificacion(4, new Date(), "Promoción disponible")));
+        propietario4.agregarNotificaciones((new Notificacion(4, new Date(), "Promoción disponible")));
 
         Propietario propietario5 = new Propietario();
         propietario5.setId(5);
@@ -99,7 +99,7 @@ public class ObligatorioDaApplication {
         propietario5.setCedula("2005");
         propietario5.setSaldo(75.0);
         propietario5.setEstadoPropietario(habilitado);
-        propietario5.setNotificaciones((new Notificacion(5, new Date(), "Recarga recomendada")));
+        propietario5.agregarNotificaciones((new Notificacion(5, new Date(), "Recarga recomendada")));
 
         // agregar propietarios a fachada
         f.agregarPropietario(propietario1);

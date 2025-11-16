@@ -101,8 +101,10 @@ public class SistemaPropietario {
         Date ahora = new Date();
         String mensaje = ahora  + " Pasaste por el puesto " + puesto.getId() + " con el vehículo " + vehiculo.getMatricula();
         Notificacion notificacion = new Notificacion(0, ahora, mensaje);
-        propietario.setNotificaciones(notificacion);
-        Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_TRANSITO);
+        if (propietario.getEstadoPropietario().aceptaNotificaciones()) { 
+            propietario.agregarNotificaciones(notificacion);
+            Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_TRANSITO);
+        }
     }
 
     //Metodos con exceptions
@@ -157,7 +159,9 @@ public class SistemaPropietario {
         Date ahora = new Date();
         String mensaje = ahora  + "Se ha cambiado tu estado en el sistema. Tu estado actual es " + nuevoEstado.getNombre(); 
         Notificacion notificacion = new Notificacion(0, ahora, mensaje);
-        propietario.setNotificaciones(notificacion);
-        Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_CAMBIO_ESTADO);
+        if (propietario.getEstadoPropietario().aceptaNotificaciones()) {
+            propietario.agregarNotificaciones(notificacion);
+            Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_CAMBIO_ESTADO);
+        }
     }
 }

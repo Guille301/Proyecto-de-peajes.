@@ -86,7 +86,7 @@ public class Propietario extends Usuario {
         return listaNotificaciones;
     }
     //Corregido
-    public void setNotificaciones(Notificacion n) {
+    public void agregarNotificaciones(Notificacion n) {
         listaNotificaciones.add(n);
     }
 

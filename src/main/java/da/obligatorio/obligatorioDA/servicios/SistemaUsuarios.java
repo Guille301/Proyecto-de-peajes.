@@ -46,8 +46,8 @@ public class SistemaUsuarios {
     public Propietario loginPropietario(String cedula, String contrasenia) throws ObligatorioException{
       Sesion sesion = null;
       Propietario usuario = (Propietario) login(cedula, contrasenia,propietarios);
-      Fachada.getInstancia().validarEstadoIngresarSistema(usuario);
         if(usuario!=null){
+            Fachada.getInstancia().validarEstadoIngresarSistema(usuario);
             sesion = new Sesion(usuario);
             sesiones.add(sesion);
             return usuario;

@@ -9,5 +9,6 @@ public class EstadoHabilitado extends EstadoPropietario {
     @Override public void validarPuedeTransitar() { }
     @Override public void validarIngresarSistema() { }
     @Override public void validarAsignarBonificacion() { }
+    @Override public boolean aceptaNotificaciones() {return true; }
 
 }
