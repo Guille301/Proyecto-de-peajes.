@@ -101,7 +101,7 @@ public class SistemaPropietario {
         Date ahora = new Date();
         String mensaje = ahora  + " Pasaste por el puesto " + puesto.getId() + " con el vehículo " + vehiculo.getMatricula();
         Notificacion notificacion = new Notificacion(0, ahora, mensaje);
-        if (propietario.getEstadoPropietario().aceptaNotificaciones()) { 
+        if (propietario.getEstadoPropietario().validacionesPenalizado()) { 
             propietario.agregarNotificaciones(notificacion);
             Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_TRANSITO);
         }
@@ -159,7 +159,7 @@ public class SistemaPropietario {
         Date ahora = new Date();
         String mensaje = ahora  + "Se ha cambiado tu estado en el sistema. Tu estado actual es " + nuevoEstado.getNombre(); 
         Notificacion notificacion = new Notificacion(0, ahora, mensaje);
-        if (propietario.getEstadoPropietario().aceptaNotificaciones()) {
+        if (propietario.getEstadoPropietario().validacionesPenalizado()) {
             propietario.agregarNotificaciones(notificacion);
             Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_CAMBIO_ESTADO);
         }

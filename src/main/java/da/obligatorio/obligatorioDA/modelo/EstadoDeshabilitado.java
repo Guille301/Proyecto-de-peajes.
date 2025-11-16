@@ -20,6 +20,6 @@ public class EstadoDeshabilitado extends EstadoPropietario {
         throw new ObligatorioException("El propietario está Deshabilitado: no se le pueden asignar bonificaciones.");
     }
 
-    @Override public boolean aceptaNotificaciones() {return true; }
+    @Override public boolean validacionesPenalizado() {return true; }
 
 }

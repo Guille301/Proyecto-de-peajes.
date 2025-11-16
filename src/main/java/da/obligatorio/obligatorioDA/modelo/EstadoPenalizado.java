@@ -11,6 +11,6 @@ public class EstadoPenalizado extends EstadoPropietario {
     @Override public void validarPuedeTransitar() { }
     @Override public void validarIngresarSistema() { }
     @Override public void validarAsignarBonificacion() { }
-    @Override public boolean aceptaNotificaciones() {return false; }
+    @Override public boolean validacionesPenalizado() {return false; }
 
 }
