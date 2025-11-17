@@ -10,6 +10,7 @@
 
     <!-- Igual que en Agenda / Emular -->
     <script src="vistaWeb.js"></script>
+     <script src="sse.js"></script>
 </head>
 <body class="page-asignar-bonificacion">
     <!-- Igual que en Agenda / Emular -->
@@ -110,6 +111,7 @@
     <script>
         // Se llama automáticamente al cargar la página
         urlIniciarVista = "/asignarBonificacion/vistaConectada";
+        urlRegistrarSSE   = "/asignarBonificacion/registrarSSE";
 
         // ======= Referencias a elementos =======
         const divBonificacionesDefinidas = document.getElementById('divBonificacionesDefinidas');
@@ -189,6 +191,7 @@
         // Respuesta "bonificaciones" -> lista de bonificacionDefinidaDTO
         function mostrar_bonificaciones(bonificaciones) {
             let html = '<select id="selectBonificacionDefinida">';
+                 html += '<option value="">-- Seleccione una bonificación --</option>';
             if (bonificaciones && bonificaciones.length > 0) {
                 for (const b of bonificaciones) {
                     html += `<option value="${b.nombre}">${b.nombre}</option>`;
@@ -256,6 +259,14 @@
         // Excepción genérica
         async function excepcionDeAplicacion(text) {
             await mostrarMensaje(text);
+        }
+
+          function procesarMensajeSSE(mensaje) {
+            procesarResultadosSubmit(mensaje); 
+        }
+
+        function conexionSSECerrada(event) {
+            console.log("SSE cerrado", event);
         }
     </script>
 </body>

@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="style.css">
     <script src="vistaWeb.js"></script>
+     <script src="sse.js"></script>
 </head>
 <body class="page-emular">
 
@@ -165,6 +166,15 @@
 
         async function excepcionDeAplicacion(text) {
             await mostrarMensaje(text);
+        }
+
+
+          function procesarMensajeSSE(mensaje) {
+            procesarResultadosSubmit(mensaje); 
+        }
+
+        function conexionSSECerrada(event) {
+            console.log("SSE cerrado", event);
         }
     </script>
 

@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDate;
 import java.util.Date;
+
 import da.obligatorio.obligatorioDA.servicios.Fachada;
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
@@ -14,17 +15,16 @@ import da.obligatorio.obligatorioDA.modelo.EstadoDeshabilitado;
 import da.obligatorio.obligatorioDA.modelo.EstadoHabilitado;
 import da.obligatorio.obligatorioDA.modelo.EstadoPenalizado;
 import da.obligatorio.obligatorioDA.modelo.Notificacion;
-import da.obligatorio.obligatorioDA.modelo.Platinum;
-import da.obligatorio.obligatorioDA.modelo.Premium;
-import da.obligatorio.obligatorioDA.modelo.Promocion;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Tarifa;
+import da.obligatorio.obligatorioDA.modelo.Trabajadores;
 import da.obligatorio.obligatorioDA.modelo.Transito;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.modelo.EstadoPropietario;
-import da.obligatorio.obligatorioDA.modelo.Fidelidad;
+import da.obligatorio.obligatorioDA.modelo.Frecuentes;
 import da.obligatorio.obligatorioDA.modelo.EstadoSuspendido;
+import da.obligatorio.obligatorioDA.modelo.Exonerados;
 
 @SpringBootApplication
 public class ObligatorioDaApplication {
@@ -165,60 +165,60 @@ public class ObligatorioDaApplication {
 // ========= BONIFICACIONES =========
 
 // Estrategias de bonificación (pueden reutilizarse, no guardan estado)
-CriterioAsignacionBonificacion critFidelidad = new Fidelidad();
-CriterioAsignacionBonificacion critPromocion = new Promocion();
-CriterioAsignacionBonificacion critPremium   = new Premium();
-CriterioAsignacionBonificacion critPlatinum  = new Platinum();
+CriterioAsignacionBonificacion critFrecuentes = new Frecuentes();
+CriterioAsignacionBonificacion critTrabajadores = new Trabajadores();
+CriterioAsignacionBonificacion critExonerados   = new Exonerados();
+
 
 // -- Bonificaciones y cobros simples --
 Bonificacion b1 = new Bonificacion(
         1,
         propietario1,
-        "Fidelidad",
+        "Frecuentes",
         puesto1,
         LocalDate.of(2024, 1, 15),
         10.0,               // si ya no usás “monto fijo”, podés poner 0.0
-        critFidelidad
+        critFrecuentes
 );
 
 Bonificacion b2 = new Bonificacion(
         2,
         propietario2,
-        "Promoción",
+        "Trabajadores",
         puesto2,
         LocalDate.of(2024, 1, 10),
         20.0,
-        critPromocion
+        critTrabajadores
 );
 
 Bonificacion b3 = new Bonificacion(
         3,
         propietario3,
-        "Premium",
+        "Frecuentes",
         puesto3,
         LocalDate.of(2024, 1, 10),
         20.0,
-        critPremium
+        critFrecuentes
 );
 
 Bonificacion b4 = new Bonificacion(
         4,
         propietario4,
-        "Promoción",        // si querés usar “Promo” cambialo también en tests / UI
+        "Exonerados",        
         puesto3,
         LocalDate.now(),
         5.0,
-        critPromocion
+        critExonerados
 );
 
 Bonificacion b5 = new Bonificacion(
         5,
         propietario5,
-        "Platinum",
+        "Trabajadores",
         puesto2,
         LocalDate.now(),
         5.0,
-        critPlatinum
+        critTrabajadores
 );
 
 // Registrar bonificaciones en la fachada (no te olvides de b4 y b5)

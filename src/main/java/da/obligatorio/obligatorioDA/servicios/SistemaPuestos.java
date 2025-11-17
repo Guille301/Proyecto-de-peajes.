@@ -48,6 +48,12 @@ public class SistemaPuestos {
     }
 
     public Transito emularTransito(int idPuesto, String matricula, Date fechaHora) throws ObligatorioException {
+
+         if(fechaHora == null) {
+            throw new ObligatorioException("La fecha y hora no pueden ser nulas.");
+        }
+    
+
         Fachada fachada = Fachada.getInstancia();
         
         Puesto puesto = fachada.obtenerPuestoPorId(idPuesto);
@@ -55,7 +61,8 @@ public class SistemaPuestos {
         Propietario propietario = fachada.obtenerPropietarioPorVehiculoObligatorio(vehiculo);
 
         fachada.validarEstadoPoderTransitar(propietario);
-    
+
+       
         Transito transito = new Transito(0, puesto, vehiculo, fechaHora);
         double costo = transito.costoTransitoEmulacion();
         

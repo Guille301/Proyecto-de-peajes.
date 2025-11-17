@@ -27,7 +27,7 @@ public class Fachada extends Observable {
 
 
     public enum eventos {
-        NOTIFICACION_TRANSITO, NOTIFICACION_CAMBIO_ESTADO
+        NOTIFICACION_TRANSITO, NOTIFICACION_CAMBIO_ESTADO, NOTIFICACION_SALDO_INSUFICIENTE
     }
   
     private Fachada()  {
@@ -197,5 +197,9 @@ public class Fachada extends Observable {
 
     public void registrarNotificacionesEstado(Propietario propietario, EstadoPropietario nuevoEstado) {
         sistemaPropietario.registrarNotificacionesEstado(propietario, nuevoEstado);
+    }
+
+     public void registrarNotificacionesSaldoInsuficiente(Propietario propietario, Double nuevoSaldo) {
+        sistemaPropietario.registrarNotificacionesSaldoInsuficiente(propietario, nuevoSaldo);
     }
 }

@@ -4,14 +4,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import da.obligatorio.obligatorioDA.dtos.BonificacionAsignadaDTO;
 import da.obligatorio.obligatorioDA.dtos.bonificacionDefinidaDTO;
@@ -23,11 +26,27 @@ import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
+import da.obligatorio.obligatorioDA.utils.ConexionNavegador;
 
 @RestController
 @RequestMapping("/asignarBonificacion")
 @Scope("session")
 public class ControladorAsignarBonificacion {
+
+    private final ConexionNavegador conexionNavegador;
+
+
+    @Autowired
+    public ControladorAsignarBonificacion(@Autowired ConexionNavegador conexionNavegador) {
+        this.conexionNavegador = conexionNavegador;
+    }
+
+     
+  @GetMapping(value = "/registrarSSE", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+  public SseEmitter registrarSSE() {
+    conexionNavegador.conectarSSE();
+    return conexionNavegador.getConexionSSE();
+  }
 
     @GetMapping("/vistaConectada")
     public List<Respuesta> inicializarVista(@SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
@@ -42,6 +61,8 @@ public class ControladorAsignarBonificacion {
         try {            
             Bonificacion bonificacion = Fachada.getInstancia().asignarBonificacion(cedula, idPuesto, nombreBonificacion);
             BonificacionAsignadaDTO dto = new BonificacionAsignadaDTO(bonificacion.getPuestos().getNombre(),bonificacion.getNombre(), bonificacion.getFechaAsignacion());
+
+             conexionNavegador.enviarJSON( Respuesta.lista(new Respuesta("resultadoAsignacionBonificacion", dto)));
             
             return Respuesta.lista(new Respuesta("resultadoAsignacionBonificacion", dto));
 
@@ -92,4 +113,6 @@ public class ControladorAsignarBonificacion {
         }
         return new Respuesta("bonificaciones", bonificacionesDto);
     }
+
+       
 }

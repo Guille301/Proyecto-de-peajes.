@@ -20,12 +20,7 @@ public class propietarioAsignarBonifDTO {
 
         if (p.getListBonificaciones() != null) {
             for (Bonificacion b : p.getListBonificaciones()) {
-                bonificaciones.add( new BonificacionAsignadaDTO(
-                        b.getPuestos().getNombre(),
-                        b.getNombre(),
-                        b.getFechaAsignacion()
-                    )
-                );
+                bonificaciones.add( new BonificacionAsignadaDTO(b.getPuestos().getNombre(),b.getNombre(),b.getFechaAsignacion()));
             }
         }
     }
