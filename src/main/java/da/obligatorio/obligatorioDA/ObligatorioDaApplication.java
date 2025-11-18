@@ -71,7 +71,7 @@ public class ObligatorioDaApplication {
         propietario2.setNombreCompleto("María Gomez");
         propietario2.setCedula("2002");
         propietario2.setSaldo(200.0);
-        propietario2.setEstadoPropietario(deshabilitado);
+        propietario2.setEstadoPropietario(habilitado);
         propietario2.agregarNotificaciones((new Notificacion(2, new Date(), "Bienvenida María")));
 
         Propietario propietario3 = new Propietario();
@@ -159,6 +159,9 @@ public class ObligatorioDaApplication {
         puesto2.agrgarTarifaPuesto(t2);
         puesto3.agrgarTarifaPuesto(t3);
 
+        Tarifa t4 = new Tarifa(4, 55.0, catAuto); 
+        puesto2.agrgarTarifaPuesto(t4);
+
 
         
 
@@ -204,7 +207,7 @@ Bonificacion b3 = new Bonificacion(
 Bonificacion b4 = new Bonificacion(
         4,
         propietario4,
-        "Exonerados",        
+        "Exonerados",
         puesto3,
         LocalDate.now(),
         5.0,
@@ -261,13 +264,17 @@ vehiculo3.agregarTransito(tr3);
 vehiculo4.agregarTransito(tr4);
 vehiculo5.agregarTransito(tr5);
 
-// asignar tránsitos a puestos
+
+// asignar tránsitos a puestos (UNA sola vez en el puesto correcto)
 puesto1.agregarTransitoPuesto(tr1);
-puesto1.agregarTransitoPuesto(tr2);
+
+puesto2.agregarTransitoPuesto(tr2);
 puesto2.agregarTransitoPuesto(tr3);
 puesto2.agregarTransitoPuesto(tr5);
+
 puesto3.agregarTransitoPuesto(tr4);
-puesto2.agregarTransitoPuesto(tr2);
+
+
 
 
 

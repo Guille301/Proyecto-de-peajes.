@@ -123,7 +123,16 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
             Respuesta Saldo  = new Respuesta("saldoPropietario",usuarioSesion.getSaldo());
             Respuesta Trans  = transitosRealizados(usuarioSesion);
             Respuesta Notifs = notificacionesPropietario(usuarioSesion);
+            
             conexionNavegador.enviarJSON( Respuesta.lista(Saldo, Trans, Notifs));
+            
+        }
+
+        if(evento.equals(Fachada.eventos.NOTIFICACION_BONIFICACION_ASIGNADA)){
+        
+            Respuesta Bonif =  bonficacionesPropietario(usuarioSesion);
+            conexionNavegador.enviarJSON( Respuesta.lista(Bonif));
+
         }
     }
 

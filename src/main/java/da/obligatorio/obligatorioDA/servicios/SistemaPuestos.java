@@ -71,6 +71,11 @@ public class SistemaPuestos {
         puesto.agregarTransitoPuesto(transito);
         fachada.registrarNotificacionesTransito(propietario, puesto, vehiculo);
 
+        if(propietario.getSaldo() < costo) {
+            fachada.registrarNotificacionesSaldoInsuficiente(propietario, propietario.getSaldo());
+
+        }
+
         return transito;
     }
 

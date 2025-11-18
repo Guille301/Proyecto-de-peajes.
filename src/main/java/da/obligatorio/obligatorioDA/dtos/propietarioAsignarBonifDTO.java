@@ -17,6 +17,7 @@ public class propietarioAsignarBonifDTO {
         this.cedula = p.getCedula();
         this.nombreCompleto = p.getNombreCompleto();
         this.estado = p.getEstadoPropietario().getNombre();
+       
 
         if (p.getListBonificaciones() != null) {
             for (Bonificacion b : p.getListBonificaciones()) {

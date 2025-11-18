@@ -97,7 +97,7 @@ public class ControladorEmularTransito  implements Observador {
             double costo = transito.costoTransitoEmulacion();
             double nuevoSaldo = propietario.getSaldo();
             Bonificacion bonificacionAplicada = puesto.obtenerBonificacionPara(propietario);
-            Fachada.getInstancia().registrarNotificacionesSaldoInsuficiente(propietario, nuevoSaldo);
+            
 
             emularTransitoDTO dto = new emularTransitoDTO(
                     propietario,

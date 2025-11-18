@@ -7,10 +7,9 @@ import java.util.List;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 
 public class Propietario extends Usuario {
-    private int id;
+    
     private String nombreCompleto;
     private double saldo;
-    private String cedula;
     private EstadoPropietario estadoPropietario;
     private List<Notificacion> listaNotificaciones;
     private List<Vehiculo> listVehiculos;
@@ -26,10 +25,9 @@ public class Propietario extends Usuario {
                        String cedula, EstadoPropietario estadoPropietario,
                        List<Notificacion> listaNotificaciones, List<Vehiculo> listVehiculos,
                        List<Bonificacion> listBonificaciones) {
-        this.id = id;
+         
         this.nombreCompleto = nombreCompleto;
         this.saldo = saldo;
-        this.cedula = cedula;
         this.estadoPropietario = estadoPropietario;
         this.listaNotificaciones = listaNotificaciones;
         this.listVehiculos = listVehiculos;
@@ -37,18 +35,12 @@ public class Propietario extends Usuario {
     }
 
     public Propietario(int id, String nombreCompleto, String cedula, String contrasena) {
-        super(cedula, contrasena);
-        this.id = id;
+        super(id,cedula, contrasena);
+       
         this.nombreCompleto = nombreCompleto;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNombreCompleto() {
         return nombreCompleto;
@@ -66,13 +58,7 @@ public class Propietario extends Usuario {
         this.saldo = saldo;
     }
 
-    public String getCedula() {
-        return cedula;
-    }
 
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
 
     public EstadoPropietario getEstadoPropietario() {
         return estadoPropietario;

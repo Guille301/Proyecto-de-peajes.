@@ -2,7 +2,9 @@ package da.obligatorio.obligatorioDA.controladores;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -61,8 +63,9 @@ public class ControladorAsignarBonificacion {
         try {            
             Bonificacion bonificacion = Fachada.getInstancia().asignarBonificacion(cedula, idPuesto, nombreBonificacion);
             BonificacionAsignadaDTO dto = new BonificacionAsignadaDTO(bonificacion.getPuestos().getNombre(),bonificacion.getNombre(), bonificacion.getFechaAsignacion());
+            
 
-             conexionNavegador.enviarJSON( Respuesta.lista(new Respuesta("resultadoAsignacionBonificacion", dto)));
+            
             
             return Respuesta.lista(new Respuesta("resultadoAsignacionBonificacion", dto));
 
@@ -108,8 +111,13 @@ public class ControladorAsignarBonificacion {
     private Respuesta bonificacionesRespuesta() {
         List<Bonificacion> lista = Fachada.getInstancia().getBonificaciones();
         List<bonificacionDefinidaDTO> bonificacionesDto = new ArrayList<>();
+         Set<String> nombresYaAgregados = new HashSet<>();
+
         for (Bonificacion b : lista) {
+              if (nombresYaAgregados.add(b.getNombre())) {
+            // solo entra la PRIMERA vez que ve ese nombre
             bonificacionesDto.add(new bonificacionDefinidaDTO(b));
+        }
         }
         return new Respuesta("bonificaciones", bonificacionesDto);
     }

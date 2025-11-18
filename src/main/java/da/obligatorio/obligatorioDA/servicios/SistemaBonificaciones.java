@@ -95,8 +95,12 @@ public class SistemaBonificaciones {
         propietario.setBonificaciones(asignada);   
         puesto.agregarBonificacionPuesto(asignada);
         agregarBonificacion(asignada);
+        Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_BONIFICACION_ASIGNADA);
 
         return asignada;
     }
+
+
+
 
 }
