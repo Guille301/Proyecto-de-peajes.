@@ -152,13 +152,13 @@ public class SistemaPropietario {
 
 
     //Notificacion saldo insuficiente
-     public void registrarNotificacionesSaldoInsuficiente(Propietario propietario,  Double saldo) {
+     public void registrarNotificacionesSaldoInsuficiente(Propietario propietario,  Double costo) {
         Date ahora = new Date();
-        String mensaje = ahora  + " Tu saldo actual es de  " + saldo + "  Te recomendamos hacer una recarga" ;
+        String mensaje = ahora  + " Tu saldo actual es de  " + propietario.getSaldo() + "  Te recomendamos hacer una recarga" ;
         Notificacion notificacion = new Notificacion(0, ahora, mensaje);
             
 
-            if(saldo == 0) {
+            if(propietario.getSaldo() < costo) {
                 propietario.agregarNotificaciones(notificacion);
                 Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_SALDO_INSUFICIENTE);
             }

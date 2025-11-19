@@ -1,5 +1,6 @@
 package da.obligatorio.obligatorioDA.servicios;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.CriterioAsignacionBonificacion;
 import da.obligatorio.obligatorioDA.modelo.Exonerados;
 import da.obligatorio.obligatorioDA.modelo.Frecuentes;
+import da.obligatorio.obligatorioDA.modelo.Notificacion;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 
@@ -99,6 +101,9 @@ public class SistemaBonificaciones {
         propietario.setBonificaciones(asignada);   
         puesto.agregarBonificacionPuesto(asignada);
         agregarBonificacion(asignada);
+
+
+          
         Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_BONIFICACION_ASIGNADA);
 
         return asignada;

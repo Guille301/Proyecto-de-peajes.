@@ -189,8 +189,8 @@ public class Fachada extends Observable {
         sistemaPropietario.registrarNotificacionesEstado(propietario, nuevoEstado);
     }
 
-     public void registrarNotificacionesSaldoInsuficiente(Propietario propietario, Double nuevoSaldo) {
-        sistemaPropietario.registrarNotificacionesSaldoInsuficiente(propietario, nuevoSaldo);
+     public void registrarNotificacionesSaldoInsuficiente(Propietario propietario, Double costo) {
+        sistemaPropietario.registrarNotificacionesSaldoInsuficiente(propietario, costo);
     }
 
    
