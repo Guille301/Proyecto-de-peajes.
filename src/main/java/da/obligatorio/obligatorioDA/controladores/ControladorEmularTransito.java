@@ -91,7 +91,6 @@ public class ControladorEmularTransito  implements Observador {
             Vehiculo vehiculo = transito.getVehiculo();
             Propietario propietario = vehiculo.getPropietario();
             this.usuarioSesion = propietario;
-            Fachada.getInstancia().agregarObservador(this);
             Puesto puesto = transito.getPuesto();
 
             double costo = transito.costoTransitoEmulacion();
