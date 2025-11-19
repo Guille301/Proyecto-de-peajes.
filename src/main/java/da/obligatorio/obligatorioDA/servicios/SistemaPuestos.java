@@ -65,7 +65,7 @@ public class SistemaPuestos {
         Transito transito = new Transito(0, puesto, vehiculo, fechaHora);
         double costo = transito.costoTransitoEmulacion();
         
-        propietario.debitarPorTransito(costo);        
+        propietario.debitarPorTransito(costo);
         vehiculo.agregarTransito(transito);
         puesto.agregarTransitoPuesto(transito);
         fachada.registrarNotificacionesTransito(propietario, puesto, vehiculo);

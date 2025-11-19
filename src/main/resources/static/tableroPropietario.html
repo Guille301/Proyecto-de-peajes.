@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,94 +11,90 @@
 <body>
     <script src="utilesVista.js"></script>
 
-<main>
-
-    <section>
-        <h2>Resumen del propietario</h2>
-        <div>
-            <p>Nombre completo</p>
-            <label id="nombreCompleto"> </label>
-        </div>
-
-        <div>
-            <p>Estado</p>
-            <label id="estadoPropietario"> </label>
-        </div>
-
-        <div>
-            <p>Saldo</p>
-            <label id="saldoPropietario"> </label>
-        </div>
-
-
-    </section>
-
-    <section>
-        <h2>Bonificaciones asignadas</h2>
-        <div id="bonificacionesPropietario" ></div>  
-    </section>
-
-    <section>
-        <h2>Vehiculos registrados</h2>
-        <div id="vehiculosConTransito" ></div>  
-    </section>
-
-    <section>
-        <h2>Transitos realizados</h2>
-        <div id="transitosRealizados" ></div>  
-    </section>
-      
+    <div class="layout-admin">
      
- <section>
-    <h2>Notificaciones</h2>
-    <button type="button" onclick="borrarNotificaciones()">Borrar notificaciones</button>
-    <div id="notificacionesPropietario"></div>
-</section>
 
-  
-</main>
+        <main class="content-admin">
+            <!-- CONTENEDOR BLANCO IGUAL QUE EMULAR -->
+            <div class="container">
 
-            
-			
+                <section>
+                    <h2>Resumen del propietario</h2>
+                    <div>
+                        <p>Nombre completo</p>
+                        <label id="nombreCompleto"></label>
+                    </div>
 
+                    <div>
+                        <p>Estado</p>
+                        <label id="estadoPropietario"></label>
+                    </div>
 
+                    <div>
+                        <p>Saldo</p>
+                        <label id="saldoPropietario"></label>
+                    </div>
+                </section>
 
-<script>
-		urlIniciarVista="/tablero/resumenDelPropietario";
+                <section>
+                    <h2>Bonificaciones asignadas</h2>
+                    <div id="bonificacionesPropietario"></div>
+                </section>
+
+                <section>
+                    <h2>Vehículos registrados</h2>
+                    <div id="vehiculosConTransito"></div>
+                </section>
+
+                <section>
+                    <h2>Tránsitos realizados</h2>
+                    <div id="transitosRealizados"></div>
+                </section>
+
+                <section>
+                    <h2>Notificaciones</h2>
+                    <button type="button" onclick="borrarNotificaciones()">
+                        Borrar notificaciones
+                    </button>
+                    <div id="notificacionesPropietario"></div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        urlIniciarVista = "/tablero/resumenDelPropietario";
         urlRegistroSSE  = "/tablero/registrarSSE";
-       
 
-    	const spnNombreCompleto = document.getElementById("nombreCompleto");
-        const spnEstado = document.getElementById("estadoPropietario");
-        const spnSaldo = document.getElementById("saldoPropietario");
+        const spnNombreCompleto       = document.getElementById("nombreCompleto");
+        const spnEstado               = document.getElementById("estadoPropietario");
+        const spnSaldo                = document.getElementById("saldoPropietario");
         const divVehiculosConTransito = document.getElementById("vehiculosConTransito");
         const divbonificacionesPropietario = document.getElementById("bonificacionesPropietario");
-        const divtransitosRealizados = document.getElementById("transitosRealizados"); 
-        const divNotificaciones = document.getElementById("notificacionesPropietario");
+        const divtransitosRealizados  = document.getElementById("transitosRealizados");
+        const divNotificaciones       = document.getElementById("notificacionesPropietario");
 
-       
-		
         function cargarContenido(pagina) {
-			document.getElementById('contenidoFrame').src = pagina;
-		}
-			
-		function mostrar_usuarioNoAutenticado(urlDestino){
-			window.location.href = urlDestino;
-		}
-			
-	    function mostrar_nombreCompleto(nombreCompleto){
-			spnNombreCompleto.innerHTML = nombreCompleto.toUpperCase();
-		}
+            document.getElementById('contenidoFrame').src = pagina;
+        }
+
+        function mostrar_usuarioNoAutenticado(urlDestino){
+            window.location.href = urlDestino;
+        }
+
+        function mostrar_nombreCompleto(nombreCompleto){
+            spnNombreCompleto.innerHTML = nombreCompleto.toUpperCase();
+        }
 
         function mostrar_estadoPropietario(estadoPropietario){
             spnEstado.innerHTML = estadoPropietario.toUpperCase();
-		}
+        }
 
         function mostrar_saldoPropietario(saldoPropietario){
             spnSaldo.innerHTML = saldoPropietario.toUpperCase();
-		}
-        //Debe tener los mismos nombres en el controlador, en el nombre de la funcion y parametrosy todo.
-		
+        }
+
         function mostrar_vehiculosConTransito(vehiculosConTransito){
             divVehiculosConTransito.innerHTML = crearTablaDesdeJson(vehiculosConTransito);
         }
@@ -110,24 +106,22 @@
         function mostrar_transitosRealizados(transitosRealizados){
             divtransitosRealizados.innerHTML = crearTablaDesdeJson(transitosRealizados);
         }
-        //Notificaciones
+
         function mostrar_notificacionesPropietario(notificacionesPropietario) {
-        divNotificaciones.innerHTML = crearTablaDesdeJson(notificacionesPropietario);
+            divNotificaciones.innerHTML = crearTablaDesdeJson(notificacionesPropietario);
         }
 
         function borrarNotificaciones() {
-        submit("/tablero/borrarNotificaciones", "", "POST");
+            submit("/tablero/borrarNotificaciones", "", "POST");
         }
 
-         function procesarMensajeSSE(mensaje) {
-        procesarResultadosSubmit(mensaje); 
-    }
+        function procesarMensajeSSE(mensaje) {
+            procesarResultadosSubmit(mensaje); 
+        }
 
-    function conexionSSECerrada(event) {
-        console.log("SSE cerrado", event);
-    }
-
-        
-		</script>
+        function conexionSSECerrada(event) {
+            console.log("SSE cerrado", event);
+        }
+    </script>
 </body>
 </html>

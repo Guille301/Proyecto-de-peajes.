@@ -1,703 +1,434 @@
+/* =========================
+   VARIABLES Y BASE GLOBAL
+   ========================= */
+:root {
+  --bg: #f4f6fb;
+  --panel: #ffffff;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --primary-strong: #1d4ed8;
+  --accent: #0d6efd;
+  --border: #e5e7eb;
+  --radius: 8px;
+  --shadow-sm: 0 1px 3px rgba(15,23,42,0.06);
+  --shadow-md: 0 8px 18px rgba(15,23,42,0.06);
+  font-size: 16px;
+}
+
+html,
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: #111827;
+  box-sizing: border-box;
 }
 
-/* Override body styles for contact management pages */
-body.page-gestion-contactos {
-    display: block;
-    height: auto;
-    min-height: 100vh;
-    justify-content: initial;
-    align-items: initial;
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
+h1,
+h2,
+h3 {
+  margin: 0 0 12px 0;
+}
+
+/* =========================
+   LOGIN / PANTALLA INICIAL
+   ========================= */
+
+/* Solo centramos el contenido mediante el contenedor, no el <body> */
 .login-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  width: 320px;
+  max-width: 90%;
+  margin: 80px auto;
+  text-align: center;
 }
 
-h2 {
-    margin-bottom: 20px;
-    color: #333;
+.login-container h2 {
+  margin-bottom: 20px;
+  color: #333;
 }
 
-.form-group {
-    margin-bottom: 15px;
-    text-align: left;
+.login-container .form-group {
+  margin-bottom: 15px;
+  text-align: left;
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
+.login-container label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
 }
 
-input[type="text"], input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .btn-acceder {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .btn-acceder:hover {
-    background-color: #45a049;
+  background-color: #45a049;
 }
 
+/* Pantalla “Sistema de gestión de tránsito” */
 .welcome-container {
-    text-align: center;
-    padding: 50px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 20px auto;
+  text-align: center;
+  padding: 50px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  max-width: 600px;
+  margin: 40px auto;
 }
 
 .welcome-container h1 {
-    color: #333;
-    font-size: 2.5em;
-    margin-bottom: 20px;
+  color: #333;
+  font-size: 2.3em;
+  margin-bottom: 20px;
 }
 
 .welcome-container p {
-    color: #666;
-    font-size: 1.2em;
-    line-height: 1.6;
+  color: #666;
+  font-size: 1.1em;
+  line-height: 1.5;
 }
 
-/* Estilos del menú lateral */
+/* =========================
+   MENÚ PRINCIPAL (SIDEBAR + IFRAME)
+   ========================= */
+
 .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 180px;
-    height: 100%;
-    background: #1976d2;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    padding-top: 40px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 180px;
+  height: 100%;
+  background: #1976d2;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-top: 40px;
 }
+
 .sidebar button {
-    background: none;
-    border: none;
-    color: #fff;
-    padding: 18px 0;
-    font-size: 15.3px;
-    cursor: pointer;
-    text-align: left;
-    padding-left: 30px;
-    transition: background 0.2s;
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 18px 0;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: left;
+  padding-left: 30px;
+  transition: background 0.2s;
 }
+
 .sidebar button:hover {
-    background: #1565c0;
+  background: #1565c0;
 }
+
 .sidebar label {
-    display: block;
-    color: #fff;
-    font-size: 17px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    margin-left: 20px;
-    letter-spacing: 1px;
-    text-shadow: 1px 1px 2px #1565c0;
+  display: block;
+  color: #fff;
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  margin-left: 20px;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px #1565c0;
 }
 
-/* Estilos del contenedor principal */
 .content {
-    margin-left: 180px; /* Espacio para el sidebar */
-    width: calc(100% - 180px); /* Usar todo el ancho restante */
-    height: 100vh;
-    overflow: hidden;
-    padding: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-right: 0;
-    box-sizing: border-box;
+  margin-left: 180px;              /* espacio para el sidebar */
+  width: calc(100% - 180px);
+  height: 100vh;
+  overflow: hidden;
+  padding: 0;
 }
 
-/* Estilos específicos para el iframe */
 .content iframe {
-    width: 100% !important;
-    height: 100% !important;
-    border: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
-/* Estilos para el contenido dentro del iframe cuando es gestionContactos.html */
-/* Esto asegura que el contenido use todo el ancho disponible del iframe */
-html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    box-sizing: border-box !important;
-    overflow-x: hidden !important;
-}
-
-/* Estilos específicos para gestionContactos.html */
-.page-gestion-contactos * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.page-gestion-contactos body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    min-height: 100vh;
-}
-
-.page-gestion-contactos .container {
-    width: 80%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-
-.page-gestion-contactos h2 {
-    margin-bottom: 20px;
-    color: #333;
-    text-align: center;
-}
-
-.page-gestion-contactos .form-group {
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.page-gestion-contactos label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-    font-weight: bold;
-}
-
-.page-gestion-contactos input[type="text"],
-.page-gestion-contactos input[type="tel"],
-.page-gestion-contactos select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-.page-gestion-contactos button {
-    width: auto;
-    min-width: 200px;
-    max-width: 300px;
-    padding: 12px 24px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    display: block;
-    margin: 0 auto;
-}
-
-.page-gestion-contactos button:hover {
-    background-color: #45a049;
-}
-
-.page-gestion-contactos #contenedorAgenda {
-    margin-top: 30px;
-    width: 100%;
-}
-
-.page-gestion-contactos table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.page-gestion-contactos th, 
-.page-gestion-contactos td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: left;
-}
-
-.page-gestion-contactos th {
-    background-color: #f2f2f2;
-}
-
-/* Formulario más amplio y legible para gestionContactos.html */
-.form-large {
-    width: 100% !important;
-    box-sizing: border-box !important;
-}
-.form-large .form-group {
-    max-width: none !important;
-    margin-bottom: 20px;
-    width: 100% !important;
-}
-.form-large input[type="text"],
-.form-large input[type="tel"],
-.form-large input[type="password"],
-.form-large select,
-.form-large textarea {
-    width: 100% !important;
-    padding: 12px 14px;
-    font-size: 1.1rem;
-    height: 44px;
-    line-height: 1.2;
-    border-radius: 6px;
-    border: 1px solid #cfcfcf;
-    box-sizing: border-box !important;
-    max-width: none !important;
-}
-.form-large .btn-acceder {
-    padding: 12px 16px;
-    font-size: 1.05rem;
-    margin-top: 10px;
-}
-
-/* Estilos específicos para tipos de contacto */
-.tipos-contacto-group {
-    margin: 20px 0;
-    width: 100% !important;
-}
-.tipos-contacto-group label {
-    font-weight: bold;
-    margin-bottom: 10px;
-    display: block;
-    color: #333;
-}
-.tipo-option {
-    display: flex;
-    align-items: center;
-    margin: 8px 0;
-    padding: 8px;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-}
-.tipo-option input[type="radio"] {
-    margin-right: 10px;
-    width: auto;
-    height: auto;
-}
-.tipo-option label {
-    margin: 0;
-    font-weight: normal;
-    cursor: pointer;
-}
-
-/* Contenedor de la lista de contactos */
-.contactos-lista {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-}
-.contactos-lista h3 {
-    color: #333;
-    margin-bottom: 15px;
-    font-size: 1.3rem;
-}
-.contacto-item {
-    background-color: white;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 6px;
-    border-left: 4px solid #4CAF50;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.contacto-nombre {
-    font-weight: bold;
-    color: #333;
-    font-size: 1.1rem;
-}
-.contacto-info {
-    color: #666;
-    margin-top: 5px;
-}
-
-.phone-field {
-    /* Remove max-width constraint to allow full width */
-    max-width: none;
-}
-
-/* Contenedor de formulario de ancho completo */
-.form-container-fullwidth {
-    max-width: none;
-    width: 100%;
-    box-shadow: none;
-    padding: 20px;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-/* In page-gestion-contactos mode, make form take more width */
-body.page-gestion-contactos .form-container-fullwidth {
-    max-width: none !important;  /* Force remove width constraint */
-    margin: 0 !important;        /* Force remove auto centering */
-    width: 100% !important;      /* Force full width */
-    padding: 20px 40px !important; /* Force side padding */
-    box-sizing: border-box !important;
-}
-
-/* Estilos específicos para la página de búsqueda */
-.busqueda-form-group {
-    max-width: 400px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.busqueda-button-group {
-    max-width: 400px;
-    margin: 30px auto 0 auto;
-    text-align: center;
-}
-
-.busqueda-input {
-    width: 300px;
-}
-
-.busqueda-button {
-    width: auto;
-    padding: 12px 20px;
-}
-
-.busqueda-resumen {
-    margin-top: 40px;
-}
-
-.busqueda-resultados {
-    margin-top: 20px;
-}
-
-
-
-
+/* =========================
+   LAYOUT ADMIN (EMULAR, ASIGNAR, CAMBIAR ESTADO, TABLERO)
+   ========================= */
 
 .layout-admin {
-    display: flex;
-    min-height: 100vh;
+  display: flex;
+  min-height: 100vh;
 }
 
 .sidebar-admin {
-    width: 220px;
-    background: #0d6efd;
-    color: white;
-    padding: 20px;
+  width: 220px;
+  background: #0d6efd;
+  color: #fff;
+  padding: 20px;
 }
 
+.sidebar-header,
 .sidebar-title {
-    font-weight: bold;
-    margin-bottom: 15px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
+.sidebar-nav ul,
 .sidebar-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
+.sidebar-nav li,
 .sidebar-menu li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
+.sidebar-nav a,
 .sidebar-menu a {
-    color: white;
-    text-decoration: none;
+  color: #fff;
+  text-decoration: none;
 }
 
+.sidebar-nav a.active,
 .sidebar-menu a.active {
-    font-weight: bold;
-    text-decoration: underline;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
-.content-admin {
-    flex: 1;
-    padding: 30px;
+.content-admin,
+.admin-content {
+  flex: 1;
+  padding: 30px;
 }
 
+/* Contenedor genérico de página (tarjeta blanca centrada) */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: var(--panel);
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+}
 
-/* ========= Página Emular tránsito ========= */
+/* =========================
+   FORMULARIOS Y BOTONES
+   ========================= */
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+input[type="text"],
+input[type="datetime-local"],
+select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+  border-color: var(--primary);
+}
+
+.form-group-inline {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.form-group-inline .form-group {
+  flex: 1;
+}
+
+/* Botones genéricos (incluye buscar, asignar, cambiar estado) */
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 18px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.18);
+}
+
+button:hover {
+  background: var(--primary-strong);
+  transform: translateY(-1px);
+}
+
+/* =========================
+   BUSCADOR (Cambiar estado)
+   ========================= */
+
+.busqueda-form-group {
+  max-width: 420px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.busqueda-button-group {
+  max-width: 420px;
+  margin: 18px auto 0 auto;
+  text-align: center;
+}
+
+.busqueda-input {
+  width: 300px;
+}
+
+/* =========================
+   PANEL PROPIETARIO / TABLAS
+   ========================= */
+
+.panel-propietario {
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #f9fafb;
+}
+
+.texto-ayuda {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.tabla-bonificaciones {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.tabla-bonificaciones thead {
+  background: #eff3ff;
+}
+
+.tabla-bonificaciones th,
+.tabla-bonificaciones td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.tabla-bonificaciones tbody tr:nth-child(even) {
+  background: #fbfcfe;
+}
+
+.tabla-vacia {
+  padding: 10px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  color: var(--muted);
+}
+
+/* =========================
+   PÁGINA EMULAR TRÁNSITO
+   ========================= */
+
 body.page-emular {
-
-    display: block;
-    justify-content: initial;
-    align-items: initial;
-    height: auto;
-    min-height: 100vh;
-    margin: 0;
-    background-color: #f4f4f4;
+  background: var(--bg);
 }
 
-
-
-
-
-/* ===== SOLO PARA asignarBonificacion.html ===== */
+/* =========================
+   PÁGINA ASIGNAR BONIFICACIÓN
+   ========================= */
 
 body.page-asignar-bonificacion {
-    margin: 0;
-    padding: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-    background: #f4f6fb;
-    color: #111827;
+  background: var(--bg);
 }
-
-/* Header superior */
-
-.page-asignar-bonificacion .admin-header {
-    background: #0b4fd8;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 32px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-}
-
-.page-asignar-bonificacion .admin-logo {
-    font-weight: 700;
-    font-size: 1.1rem;
-}
-
-.page-asignar-bonificacion .admin-nav a {
-    color: #e5edff;
-    text-decoration: none;
-    margin-left: 16px;
-    font-size: 0.9rem;
-    padding: 6px 12px;
-    border-radius: 999px;
-    transition: background 0.15s, color 0.15s;
-}
-
-.page-asignar-bonificacion .admin-nav a:hover {
-    background: rgba(255,255,255,0.2);
-    color: #fff;
-}
-
-.page-asignar-bonificacion .admin-nav a.active {
-    background: #fff;
-    color: #0b4fd8;
-}
-
-/* Contenedor principal */
-
-.page-asignar-bonificacion .container {
-    max-width: 1100px;
-    margin: 24px auto;
-    padding: 24px 28px 32px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 18px rgba(15,23,42,0.08);
-}
-
-.page-asignar-bonificacion h2 {
-    margin: 0 0 12px;
-    font-size: 1.4rem;
-}
-
-/* Layout 2 columnas */
 
 .page-asignar-bonificacion .layout {
-    margin-top: 12px;
-    display: grid;
-    grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
-    gap: 24px;
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+  gap: 24px;
 }
-
-/* Columna izquierda */
 
 .page-asignar-bonificacion .col-izquierda {
-    background: #f9fafb;
-    border-radius: 10px;
-    padding: 16px 18px;
-    border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 16px 18px;
+  border: 1px solid #e5e7eb;
 }
-
-.page-asignar-bonificacion .form-group {
-    margin-bottom: 14px;
-}
-
-.page-asignar-bonificacion .form-group label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 4px;
-}
-
-.page-asignar-bonificacion select,
-.page-asignar-bonificacion input[type="text"] {
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
-    font-size: 0.9rem;
-    outline: none;
-    background: #fff;
-    transition: border-color 0.15s, box-shadow 0.15s;
-}
-
-.page-asignar-bonificacion select:focus,
-.page-asignar-bonificacion input[type="text"]:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 2px rgba(37,99,235,0.2);
-}
-
-/* Columna derecha */
 
 .page-asignar-bonificacion .col-derecha {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.page-asignar-bonificacion .form-group-inline {
-    display: flex;
-    gap: 8px;
-    align-items: flex-end;
-}
-
-.page-asignar-bonificacion .form-group-inline .form-group {
-    flex: 1;
-}
-
-/* Botones */
-
-.page-asignar-bonificacion button {
-    border: none;
-    border-radius: 999px;
-    padding: 8px 18px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    background: #2563eb;
-    color: #fff;
-    box-shadow: 0 4px 10px rgba(37,99,235,0.35);
-    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
-}
-
-.page-asignar-bonificacion button:hover {
-    background: #1d4ed8;
-    transform: translateY(-1px);
-}
-
-.page-asignar-bonificacion button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(37,99,235,0.25);
-}
-
-/* Panel propietario */
-
-.page-asignar-bonificacion .panel-propietario {
-    padding: 16px 18px 18px;
-    border-radius: 10px;
-    border: 1px solid #e5e7eb;
-    background: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .page-asignar-bonificacion .panel-propietario h3 {
-    margin: 0 0 6px;
-    font-size: 1.05rem;
+  margin-bottom: 6px;
 }
 
 .page-asignar-bonificacion .panel-propietario h4 {
-    margin: 14px 0 6px;
-    font-size: 0.98rem;
+  margin: 14px 0 6px;
 }
 
-.page-asignar-bonificacion .panel-propietario p {
-    margin: 2px 0;
-    font-size: 0.9rem;
-}
-
-.page-asignar-bonificacion .texto-ayuda {
-    margin-top: 4px;
-    font-size: 0.8rem;
-    color: #6b7280;
-}
-
-/* Tabla bonificaciones */
-
-.page-asignar-bonificacion .tabla-bonificaciones {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 6px;
-    font-size: 0.9rem;
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(15,23,42,0.08);
-}
-
-.page-asignar-bonificacion .tabla-bonificaciones thead {
-    background: #eff3ff;
-}
-
-.page-asignar-bonificacion .tabla-bonificaciones th,
-.page-asignar-bonificacion .tabla-bonificaciones td {
-    padding: 8px 10px;
-    text-align: left;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.page-asignar-bonificacion .tabla-bonificaciones th {
-    font-weight: 600;
-}
-
-.page-asignar-bonificacion .tabla-bonificaciones tbody tr:nth-child(even) {
-    background: #f9fafb;
-}
-
-.page-asignar-bonificacion .tabla-vacia {
-    margin-top: 6px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    background: #f3f4f6;
-    font-size: 0.9rem;
-    color: #6b7280;
-}
-
-/* Responsive simple */
+/* =========================
+   RESPONSIVE
+   ========================= */
 
 @media (max-width: 900px) {
-    .page-asignar-bonificacion .layout {
-        grid-template-columns: 1fr;
-    }
+  .layout-admin {
+    flex-direction: column;
+  }
+
+  .sidebar-admin {
+    width: 100%;
+  }
+
+  .form-group-inline {
+    flex-direction: column;
+  }
+
+  .page-asignar-bonificacion .layout {
+    grid-template-columns: 1fr;
+  }
 }
+
+
+
 
 

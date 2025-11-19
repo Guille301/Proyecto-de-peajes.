@@ -7,6 +7,8 @@ import java.util.List;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.CriterioAsignacionBonificacion;
+import da.obligatorio.obligatorioDA.modelo.Exonerados;
+import da.obligatorio.obligatorioDA.modelo.Frecuentes;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 
@@ -23,6 +25,8 @@ public class SistemaBonificaciones {
 
     public SistemaBonificaciones() {
         this.bonificaciones = new ArrayList<>();
+        agregarCriterioAsignacion(new Exonerados());
+
     }
 
     public SistemaBonificaciones(List<Bonificacion> bonificaciones) {

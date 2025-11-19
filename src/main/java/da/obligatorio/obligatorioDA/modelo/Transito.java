@@ -67,6 +67,8 @@ public class Transito {
         return this.puesto.obtenerTarifaPara(this.vehiculo);
     }
 
+
+
 }
 
 
