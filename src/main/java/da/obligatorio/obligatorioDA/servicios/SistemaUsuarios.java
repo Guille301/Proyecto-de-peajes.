@@ -47,7 +47,7 @@ public class SistemaUsuarios {
       Sesion sesion = null;
       Propietario usuario = (Propietario) login(cedula, contrasenia,propietarios);
         if(usuario!=null){
-            Fachada.getInstancia().validarEstadoIngresarSistema(usuario);
+            usuario.validarIngresarSistema();
             sesion = new Sesion(usuario);
             sesiones.add(sesion);
             return usuario;

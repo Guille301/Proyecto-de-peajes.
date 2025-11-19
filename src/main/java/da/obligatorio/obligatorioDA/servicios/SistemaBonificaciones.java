@@ -59,11 +59,11 @@ public class SistemaBonificaciones {
         Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorCedula(cedula);
         Puesto puesto = Fachada.getInstancia().obtenerPuestoPorId(idPuesto);
 
-        Fachada.getInstancia().validarEstadoAsignarBonificacion(propietario);
- 
         if (propietario == null) {
             throw new ObligatorioException("No existe el propietario");
         }
+
+        propietario.validarAsignarBonificacion();
         
         if (puesto == null) {
             throw new ObligatorioException("Debe especificar un puesto");

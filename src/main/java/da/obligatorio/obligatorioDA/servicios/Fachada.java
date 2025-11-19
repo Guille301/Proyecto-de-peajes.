@@ -151,19 +151,6 @@ public class Fachada extends Observable {
         return sistemaPropietario.obtenerPropietarioPorVehiculoObligatorio(vehiculo);
     }
 
-    //Estados
-    public void validarEstadoIngresarSistema(Propietario propietario) throws ObligatorioException {
-        sistemaPropietario.validarIngresarSistema(propietario);
-    }
-
-    public void validarEstadoPoderTransitar(Propietario propietario) throws ObligatorioException {
-        sistemaPropietario.validarPoderTransitar(propietario);
-    }
-
-    public void validarEstadoAsignarBonificacion(Propietario propietario) throws ObligatorioException {
-        sistemaPropietario.validarAsignarleBonificacion(propietario);
-    }
-
     public void borrarNotificacionesPropietario(Propietario propietario) {
         sistemaPropietario.borrarNotificaciones(propietario);
     }

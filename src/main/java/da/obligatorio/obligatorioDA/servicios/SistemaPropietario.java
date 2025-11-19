@@ -124,22 +124,6 @@ public class SistemaPropietario {
         return p;
     }
 
-    //Validar estado del propietario
-    public void validarIngresarSistema(Propietario propietario) throws ObligatorioException {
-        EstadoPropietario estado = propietario.getEstadoPropietario();
-        estado.validarIngresarSistema();
-    }
-
-    public void validarPoderTransitar(Propietario propietario) throws ObligatorioException {
-        EstadoPropietario estado = propietario.getEstadoPropietario();
-        estado.validarPuedeTransitar();
-    }    
-
-    public void validarAsignarleBonificacion(Propietario propietario) throws ObligatorioException {
-        EstadoPropietario estado = propietario.getEstadoPropietario();;
-        estado.validarAsignarBonificacion();
-    }    
-
     public void borrarNotificaciones(Propietario propietario) {
         propietario.borrarNotificaciones();
     }

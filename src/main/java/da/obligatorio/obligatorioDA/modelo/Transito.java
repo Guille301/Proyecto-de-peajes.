@@ -51,7 +51,7 @@ public class Transito {
     Bonificacion bonif = puesto.obtenerBonificacionPara(propietario);
 
     double descuento = 0;
-    if (bonif != null && propietario.getEstadoPropietario().validacionesPenalizado()) {
+    if (bonif != null && propietario.validarPenalizado()) {
         descuento = bonif.calcularDescuento(montoTarifa);
     }
 

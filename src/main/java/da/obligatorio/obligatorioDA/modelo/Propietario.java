@@ -140,4 +140,23 @@ public class Propietario extends Usuario {
         this.estadoPropietario = nuevoEstado;
     }
 
+    //Validaciones de propietario
+    public void validarIngresarSistema() throws ObligatorioException {
+        this.estadoPropietario.validarIngresarSistema();
+    }
+
+    public void validarPoderTransitar() throws ObligatorioException {
+        this.estadoPropietario.validarPuedeTransitar();
+    }
+
+    public void validarAsignarBonificacion() throws ObligatorioException {
+        this.estadoPropietario.validarAsignarBonificacion();
+    }
+
+    public boolean validarPenalizado() throws ObligatorioException {
+        return this.estadoPropietario.validacionesPenalizado();
+    }
+
+    
+
 }

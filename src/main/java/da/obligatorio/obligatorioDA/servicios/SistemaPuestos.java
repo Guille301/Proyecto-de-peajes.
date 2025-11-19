@@ -60,8 +60,7 @@ public class SistemaPuestos {
         Vehiculo vehiculo = fachada.obtenerVehiculoPorMatriculaObligatorio(matricula);
         Propietario propietario = fachada.obtenerPropietarioPorVehiculoObligatorio(vehiculo);
 
-        fachada.validarEstadoPoderTransitar(propietario);
-
+        propietario.validarPoderTransitar();
        
         Transito transito = new Transito(0, puesto, vehiculo, fechaHora);
         double costo = transito.costoTransitoEmulacion();
