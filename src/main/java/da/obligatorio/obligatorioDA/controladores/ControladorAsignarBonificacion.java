@@ -23,12 +23,14 @@ import da.obligatorio.obligatorioDA.dtos.bonificacionDefinidaDTO;
 import da.obligatorio.obligatorioDA.dtos.estadoPropietarioDTO;
 import da.obligatorio.obligatorioDA.dtos.propietarioAsignarBonifDTO;
 import da.obligatorio.obligatorioDA.dtos.puestoDTO;
+import da.obligatorio.obligatorioDA.dtos.vehiculosDto;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
 import da.obligatorio.obligatorioDA.modelo.EstadoPropietario;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
+import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
 import da.obligatorio.obligatorioDA.utils.ConexionNavegador;
 
@@ -78,30 +80,36 @@ public class ControladorAsignarBonificacion {
         }
     }
 
-    @PostMapping("/buscarPropietario")
-    public List<Respuesta> buscarPropietario( @RequestParam String cedula,@SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
-        try {
-            if (usuario == null) {
-                return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "loginAdmin.html"));
-            }
+@PostMapping("/buscarPropietario")
+public List<Respuesta> buscarPropietario(
+        @RequestParam String cedula,
+        @SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
 
-            if (cedula == null || cedula.isBlank()) {
-                throw new ObligatorioException("Valor ingresado inválido");
-            }
-
-            Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorCedula(cedula);
-            if (propietario == null) {
-                throw new ObligatorioException("No se encuentra un propietario con esa cédula");
-            }
-
-            propietarioAsignarBonifDTO dto = new propietarioAsignarBonifDTO(propietario);
-
-            return Respuesta.lista(new Respuesta("propietarioBusqueda", dto));
-
-        } catch (ObligatorioException e) {
-            return Respuesta.lista(new Respuesta("errorBuscador", e.getMessage()));
+    try {
+        if (usuario == null) {
+            return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "loginAdmin.html"));
         }
+
+        if (cedula == null || cedula.isBlank()) {
+            throw new ObligatorioException("Valor ingresado inválido");
+        }
+
+        Propietario propietario = Fachada.getInstancia().obtenerPropietarioPorCedula(cedula);
+        if (propietario == null) {
+            throw new ObligatorioException("No se encuentra un propietario con esa cédula");
+        }
+
+        propietarioAsignarBonifDTO dto = new propietarioAsignarBonifDTO(propietario);
+        Respuesta respProp   = new Respuesta("propietarioBusqueda", dto);
+        Respuesta respBonifs = bonificacionesDelPropietario(propietario);
+
+        return Respuesta.lista(respProp, respBonifs);
+
+    } catch (ObligatorioException e) {
+        return Respuesta.lista(new Respuesta("errorBuscador", e.getMessage()));
     }
+}
+
 
     private Respuesta puestosRespuesta() {
         List<Puesto> lista = Fachada.getInstancia().getPuestos();
@@ -120,5 +128,26 @@ public class ControladorAsignarBonificacion {
     } 
     return new Respuesta("bonificaciones", bonifDTO);
     }
+
+    private Respuesta bonificacionesDelPropietario(Propietario usuario){
+    List<Bonificacion> bonificaciones = usuario.getListBonificaciones();
+    List<BonificacionAsignadaDTO> bonifDTOs = new ArrayList<>();
+
+    if (bonificaciones != null) {
+        for (Bonificacion b : bonificaciones){
+            bonifDTOs.add(
+                new BonificacionAsignadaDTO(
+                    b.getPuestos().getNombre(),
+                    b.getNombre(),
+                    b.getFechaAsignacion()
+                )
+            );
+        }
+    }
+    return new Respuesta("bonificacionesDelPropietario", bonifDTOs);
+}
+
+
+    
 
 }

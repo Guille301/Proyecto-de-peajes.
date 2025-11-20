@@ -49,6 +49,8 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
          }
          this.usuarioSesion = usuario;
          Fachada.getInstancia().agregarObservador(this);
+
+        
          return Respuesta.lista(
              new Respuesta("nombreCompleto", usuario.getNombreCompleto()),
              new Respuesta("estadoPropietario", usuario.getEstadoPropietario().getNombre()),
@@ -97,6 +99,7 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
         for(Bonificacion tc : bonificaciones){
             bonDtos.add(new bonificacionPropietarioDto(tc));
         }
+        
         return new Respuesta("bonificacionesPropietario", bonDtos);
     }
 

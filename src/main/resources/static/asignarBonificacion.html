@@ -186,6 +186,14 @@
             divPuestosDefinidos.innerHTML = html;
         }
 
+        // Respuesta "propietarioBusqueda" -> propietarioAsignarBonifDTO
+function mostrar_propietarioBusqueda(dto) {
+    hiddenCedulaSeleccionada.value = dto.cedula;
+    lblNombrePropietario.innerText = dto.nombreCompleto;
+    lblEstadoPropietario.innerText = dto.estado;
+}
+
+
         // Respuesta "bonificaciones" -> lista de bonificacionDefinidaDTO
         function mostrar_bonificaciones(bonificaciones) {
             let html = '<select id="selectBonificacionDefinida">';
@@ -202,14 +210,11 @@
         }
 
         // Respuesta "propietarioBusqueda" -> propietarioAsignarBonifDTO
-        function mostrar_propietarioBusqueda(dto) {
-            hiddenCedulaSeleccionada.value = dto.cedula;
-            lblNombrePropietario.innerText = dto.nombreCompleto;
-            lblEstadoPropietario.innerText = dto.estado;
+ function mostrar_bonificacionesDelPropietario(lista) {
+    bonificacionesActuales = lista || [];
+    renderTablaBonificaciones();
+}
 
-            bonificacionesActuales = dto.bonificaciones || [];
-            renderTablaBonificaciones();
-        }
 
         // Respuesta "resultadoAsignacionBonificacion" -> BonificacionAsignadaDTO
         function mostrar_resultadoAsignacionBonificacion(dto) {

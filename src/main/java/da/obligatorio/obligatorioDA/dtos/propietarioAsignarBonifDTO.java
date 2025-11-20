@@ -1,6 +1,6 @@
 package da.obligatorio.obligatorioDA.dtos;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
@@ -11,19 +11,13 @@ public class propietarioAsignarBonifDTO {
     private String cedula;
     private String nombreCompleto;
     private String estado;
-    private List<BonificacionAsignadaDTO> bonificaciones = new ArrayList<>();
+    private int bonificaciones;
 
     public propietarioAsignarBonifDTO(Propietario p) {
         this.cedula = p.getCedula();
         this.nombreCompleto = p.getNombreCompleto();
         this.estado = p.getEstadoPropietario().getNombre();
-       
-
-        if (p.getListBonificaciones() != null) {
-            for (Bonificacion b : p.getListBonificaciones()) {
-                bonificaciones.add( new BonificacionAsignadaDTO(b.getPuestos().getNombre(),b.getNombre(),b.getFechaAsignacion()));
-            }
-        }
+        this.bonificaciones = p.getListBonificaciones().size();
     }
 
     public String getCedula() {
@@ -38,7 +32,7 @@ public class propietarioAsignarBonifDTO {
         return estado;
     }
 
-    public List<BonificacionAsignadaDTO> getBonificaciones() {
+    public int getBonificaciones() {
         return bonificaciones;
     }
 }

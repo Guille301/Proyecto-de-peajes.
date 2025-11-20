@@ -3,7 +3,7 @@ package da.obligatorio.obligatorioDA.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import da.obligatorio.obligatorioDA.dtos.BonificacionAsignadaDTO;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 
 public class Propietario extends Usuario {
@@ -157,6 +157,8 @@ public class Propietario extends Usuario {
     public boolean validarPenalizado() throws ObligatorioException {
         return this.estadoPropietario.validacionesPenalizado();
     }
+
+
 
     
 
