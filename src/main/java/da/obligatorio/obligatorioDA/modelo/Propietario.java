@@ -112,6 +112,7 @@ public class Propietario extends Usuario {
         for (Vehiculo v : this.listVehiculos) {
             transitosPropietario.addAll(v.getListaTransito());
         }
+        transitosPropietario.sort((a, b) -> b.getFechaYHora().compareTo(a.getFechaYHora()));
         return transitosPropietario;
     }
 
