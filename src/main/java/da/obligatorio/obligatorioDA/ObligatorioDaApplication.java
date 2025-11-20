@@ -205,8 +205,8 @@ f.agregarBonificacion(b2);
 
 
 // Asociar bonificaciones a propietarios
-propietario1.agregarBonificacionPropietario(b1);
-propietario3.agregarBonificacionPropietario(b3);
+//propietario1.agregarBonificacionPropietario(b1);
+//propietario3.agregarBonificacionPropietario(b3);
 
 
 // Asociar bonificaciones a puestos
