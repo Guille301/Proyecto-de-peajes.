@@ -37,6 +37,34 @@ public class Transito {
        return monto; 
    }
 
+   public double montoPagado(){
+    double monto = 0;
+    try {
+        monto = this.costoTransitoEmulacion();
+    } catch (ObligatorioException e) {
+       return 0;
+    }
+    return monto;
+   }
+
+
+ public double descuentoBonif() {
+    try {
+        Tarifa tarifa = this.tarifaDelTransito();
+        if (tarifa == null) {
+            return 0;
+        }
+
+        double montoTarifa  = tarifa.getMonto();
+        double montoPagado  = this.costoTransitoEmulacion();
+        double descuento    = montoTarifa - montoPagado;
+
+        return  descuento;
+    } catch (ObligatorioException e) {
+        return 0;
+    }
+}
+
 
 
    public double costoTransitoEmulacion() throws ObligatorioException {

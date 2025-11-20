@@ -101,7 +101,7 @@ public class SistemaBonificaciones {
         Bonificacion asignada = new Bonificacion(  0,propietario, nombreBonificacion, puesto,fechaAsignacion,0, criterio);
         propietario.setBonificaciones(asignada);   
         puesto.agregarBonificacionPuesto(asignada);
-        agregarBonificacion(asignada);
+    
         Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_BONIFICACION_ASIGNADA);
 
         return asignada;

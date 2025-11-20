@@ -18,8 +18,8 @@ public class transitosRealizadosDto {
         this.categoria = transito.getVehiculo().getCategoriaVehiculo().getNombre();
         this.montoTarifa = transito.tarifaDelTransito().getMonto();
         this.nombreBonificacion = transito.bonificacionDelTransito(transito.getVehiculo().getPropietario()).getNombre();
-        this.montoBonificacion = transito.bonificacionDelTransito(transito.getVehiculo().getPropietario()).getMontoDescuento();
-        this.montoPagado = transito.costoTransito(transito.getVehiculo());
+        this.montoBonificacion = transito.descuentoBonif();
+        this.montoPagado = transito.montoPagado();
         this.fechaYHora = transito.getFechaYHora().toString();
     }
 
@@ -39,7 +39,7 @@ public class transitosRealizadosDto {
         return montoTarifa;
     }
 
-    public String getnombreBonificacion() {
+    public String getombreBonificacion() {
         return nombreBonificacion;
     }
 
