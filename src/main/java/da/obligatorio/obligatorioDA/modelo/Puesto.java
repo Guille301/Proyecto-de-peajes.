@@ -76,22 +76,6 @@ public class Puesto {
         this.listBonificacion.add(nuevaBonificacion);
     }
 
-    //Traer la bonificacion para aplicar en el transito
-    public Bonificacion obtenerBonificacion(Transito transito){
-
-        if(listBonificacion == null){
-            return null;
-        }
-
-        for (Bonificacion bonificacion : listBonificacion) {
-            if(bonificacion.getPropietario().equals(transito.getVehiculo().getPropietario())){
-                return bonificacion;
-            }
-        }
-        return null;
-
-    }
-
     //Corregido
     public void setBonificacion(Bonificacion b) {
        listBonificacion.add(b);
@@ -110,15 +94,14 @@ public class Puesto {
         return null;
     }
 
-    public Bonificacion obtenerBonificacionPara(Propietario propietario) {
-        if (listBonificacion == null) {
-            return null;
-        }
+    public Bonificacion obtenerBonificacionPara(Propietario p) {
+        if (listBonificacion == null) return Bonificacion.sinBonificacion();
         for (Bonificacion b : listBonificacion) {
-            if (b.getPropietario().equals(propietario)) { 
+            if (b.getPropietario() != null && b.getPropietario().getId() == p.getId()) {
                 return b;
             }
         }
-        return null;
+        return Bonificacion.sinBonificacion();
     }
+
 }
