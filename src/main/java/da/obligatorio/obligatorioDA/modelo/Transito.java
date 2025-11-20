@@ -58,8 +58,8 @@ public class Transito {
         return montoTarifa - descuento;
     }
 
-    public Bonificacion bonificacionDelTransito() { 
-        return this.puesto.obtenerBonificacion(this); 
+    public Bonificacion bonificacionDelTransito(Propietario propietario) { 
+        return this.puesto.obtenerBonificacionPara(propietario); 
     }
 
 

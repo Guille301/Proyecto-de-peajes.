@@ -17,8 +17,8 @@ public class transitosRealizadosDto {
         this.matricula = transito.getVehiculo().getMatricula();
         this.categoria = transito.getVehiculo().getCategoriaVehiculo().getNombre();
         this.montoTarifa = transito.tarifaDelTransito().getMonto();
-        this.Bonificacion = transito.bonificacionDelTransito().getNombre();
-        this.montoBonificacion = transito.bonificacionDelTransito().getMontoDescuento();
+        this.Bonificacion = transito.bonificacionDelTransito(transito.getVehiculo().getPropietario()).getNombre();
+        this.montoBonificacion = transito.bonificacionDelTransito(transito.getVehiculo().getPropietario()).getMontoDescuento();
         this.montoPagado = transito.costoTransito(transito.getVehiculo());
         this.fechaYHora = transito.getFechaYHora().toString();
     }

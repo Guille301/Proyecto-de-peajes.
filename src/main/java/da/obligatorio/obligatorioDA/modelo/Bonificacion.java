@@ -83,4 +83,12 @@ public class Bonificacion {
         if (criterio == null) return 0;
         return criterio.calcularDescuento(montoTarifa, propietario, puestos);
     }
+
+    public static Bonificacion sinBonificacion() {
+        Bonificacion b = new Bonificacion();
+        b.setNombre("Sin bonificación");
+        b.setMontoDescuento(0);
+        return b;
+    }
+
 }

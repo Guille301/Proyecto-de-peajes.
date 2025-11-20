@@ -74,6 +74,7 @@ public class Propietario extends Usuario {
     //Corregido
     public void agregarNotificaciones(Notificacion n) {
         listaNotificaciones.add(n);
+        listaNotificaciones.sort((a, b) -> b.getFechaYHora().compareTo(a.getFechaYHora()));
     }
 
     public List<Vehiculo> getListVehiculos() {

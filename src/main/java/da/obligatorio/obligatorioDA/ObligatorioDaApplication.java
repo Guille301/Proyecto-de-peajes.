@@ -61,7 +61,7 @@ public class ObligatorioDaApplication {
         propietario1.setNombreCompleto("Juan Perez");
         propietario1.setContrasenia("123456");
         propietario1.setCedula("2001");
-        propietario1.setSaldo(150.0);
+        propietario1.setSaldo(1500.0);
         propietario1.setEstadoPropietario(habilitado);
         propietario1.agregarNotificaciones((new Notificacion(1, new Date(), "Bienvenido Juan")));
 
@@ -81,7 +81,7 @@ public class ObligatorioDaApplication {
         propietario3.setContrasenia("123456");
         propietario3.setNombreCompleto("Carlos Ruiz");
         propietario3.setCedula("2003");
-        propietario3.setSaldo(50.0);
+        propietario3.setSaldo(5000.0);
         propietario3.setEstadoPropietario(habilitado);
         propietario3.agregarNotificaciones((new Notificacion(3, new Date(), "Bienvenido Carlos")));
 
@@ -116,11 +116,14 @@ public class ObligatorioDaApplication {
         Vehiculo vehiculo1 = new Vehiculo(1, "ABC-101", "Fiesta", "Rojo", catAuto, propietario1, null);
         Vehiculo vehiculo6 = new Vehiculo(6, "SDG-505", "Seagull", "Blanco", catAuto, propietario2, null);
         Vehiculo vehiculo3 = new Vehiculo(3, "CDE-303", "Tornado", "Blanco", catMoto, propietario3, null);
+        Vehiculo vehiculoMoto = new Vehiculo(3, "AAA-000", "Ninja", "Negra", catMoto, propietario2, null);
+
 
         // asignar vehiculos a sus propietarios (listas simples)
         propietario1.agregarVehiculoPropietario(vehiculo1);
         propietario2.agregarVehiculoPropietario(vehiculo6);
         propietario3.agregarVehiculoPropietario(vehiculo3);
+        propietario2.agregarVehiculoPropietario(vehiculoMoto);
 
 
         // -- Puestos (3) --
@@ -207,12 +210,8 @@ propietario3.agregarBonificacionPropietario(b3);
 
 
 // Asociar bonificaciones a puestos
-puesto1.agregarBonificacionPuesto(b1);
-
-
-// si realmente querés que b3 aplique también en puesto2, dejá esta:
+puesto1.agregarBonificacionPuesto(b2);
 puesto2.agregarBonificacionPuesto(b3);
-
 
 
 
