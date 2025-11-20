@@ -93,15 +93,23 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
         return new Respuesta("vehiculosConTransito", vehDtos);
     }
 
-    private Respuesta bonficacionesPropietario(Propietario usuario){
-    List<Bonificacion> bonificaciones = usuario.getListBonificaciones();
-        List<bonificacionPropietarioDto> bonDtos = new ArrayList<>();
-        for(Bonificacion tc : bonificaciones){
-            bonDtos.add(new bonificacionPropietarioDto(tc));
+   private Respuesta bonficacionesPropietario(Propietario usuario){
+    // recargo el propietario desde el sistema usando la cédula
+    Propietario actualizado = Fachada.getInstancia()
+                                     .obtenerPropietarioPorCedula(usuario.getCedula());
+
+    List<Bonificacion> bonificaciones = actualizado.getListBonificaciones();
+    List<bonificacionPropietarioDto> bonDtos = new ArrayList<>();
+
+    if (bonificaciones != null) {
+        for (Bonificacion b : bonificaciones){
+            bonDtos.add(new bonificacionPropietarioDto(b));
         }
-        
-        return new Respuesta("bonificacionesPropietario", bonDtos);
     }
+
+    return new Respuesta("bonificacionesPropietario", bonDtos);
+}
+
 
     private Respuesta notificacionesPropietario(Propietario usuario) {
         var lista = usuario.getListaNotificaciones();
@@ -137,6 +145,12 @@ private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(Co
             conexionNavegador.enviarJSON( Respuesta.lista(Bonif));
 
         }
+
+        if (evento.equals(Fachada.eventos.NOTIFICACION_CAMBIO_ESTADO)) {
+        Respuesta estado = new Respuesta("estadoPropietario", usuarioSesion.getEstadoPropietario().getNombre());
+        Respuesta Notifs = notificacionesPropietario(usuarioSesion);
+        conexionNavegador.enviarJSON(Respuesta.lista(estado, Notifs));
+    }
     }
 
 

@@ -146,7 +146,7 @@ public class ControladorEmularTransito  implements Observador {
      @Override
     public void actualizar(Object evento, Observable origen) {
         if (evento.equals(Fachada.eventos.NOTIFICACION_SALDO_INSUFICIENTE)) {
-            Respuesta saldo  = new Respuesta("saldoActual",usuarioSesion.getSaldo());
+            Respuesta saldo  = new Respuesta("saldoPropietario",usuarioSesion.getSaldo());
             Respuesta Notifs = notificacionesPropietario(usuarioSesion);
             conexionNavegador.enviarJSON( Respuesta.lista(saldo, Notifs));
             

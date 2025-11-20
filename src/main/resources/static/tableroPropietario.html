@@ -91,9 +91,9 @@
             spnEstado.innerHTML = estadoPropietario.toUpperCase();
         }
 
-        function mostrar_saldoPropietario(saldoPropietario){
-            spnSaldo.innerHTML = saldoPropietario.toUpperCase();
-        }
+       function mostrar_saldoPropietario(saldoPropietario){
+        spnSaldo.innerHTML = String(saldoPropietario);
+}
 
         function mostrar_vehiculosConTransito(vehiculosConTransito){
             divVehiculosConTransito.innerHTML = crearTablaDesdeJson(vehiculosConTransito);
@@ -111,6 +111,9 @@
         function mostrar_notificacionesPropietario(notificacionesPropietario) {
             divNotificaciones.innerHTML = crearTablaDesdeJson(notificacionesPropietario);
         }
+
+
+
 
         function borrarNotificaciones() {
             submit("/tablero/borrarNotificaciones", "", "POST");

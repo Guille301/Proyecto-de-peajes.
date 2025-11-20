@@ -32,28 +32,20 @@ import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.modelo.Vehiculo;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
-import da.obligatorio.obligatorioDA.utils.ConexionNavegador;
+
 
 @RestController
 @RequestMapping("/asignarBonificacion")
 @Scope("session")
 public class ControladorAsignarBonificacion {
 
-    private final ConexionNavegador conexionNavegador;
+   
     private List<Bonificacion> bonificacionCache = new ArrayList<>();
 
 
-    @Autowired
-    public ControladorAsignarBonificacion(@Autowired ConexionNavegador conexionNavegador) {
-        this.conexionNavegador = conexionNavegador;
-    }
 
      
-  @GetMapping(value = "/registrarSSE", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-  public SseEmitter registrarSSE() {
-    conexionNavegador.conectarSSE();
-    return conexionNavegador.getConexionSSE();
-  }
+
 
     @GetMapping("/vistaConectada")
     public List<Respuesta> inicializarVista(@SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {

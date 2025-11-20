@@ -168,7 +168,7 @@ public class Fachada extends Observable {
         return sistemaPropietario.buscarPropietarioPorCedula(cedula);
     }
 
-    public Propietario getPropietarioPorId(int id) throws ObligatorioException {
+    public Propietario getPropietarioPorId(int id)  {
         return sistemaPropietario.obtenerPropietarioPorId(id);
     }
   

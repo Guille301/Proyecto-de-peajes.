@@ -96,9 +96,21 @@ public class ControladorCambiarEstado implements Observador {
   }
 
   @PostMapping("/cambiarEstadoPropietario")
-  public List<Respuesta> cambiarEstadoPropietario(@RequestParam int idPropietario,@RequestParam int posMostrarEstados) throws ObligatorioException {
+  public List<Respuesta> cambiarEstadoPropietario(@RequestParam String idPropietario,@RequestParam int posMostrarEstados) throws ObligatorioException {
     try{
-      Propietario propietario = Fachada.getInstancia().getPropietarioPorId(idPropietario);
+
+       if (idPropietario == null || idPropietario.isBlank()) {
+    throw new ObligatorioException("Debe seleccionar un propietario");
+}
+
+         int idProp = Integer.parseInt(idPropietario);
+
+      
+      Propietario propietario = Fachada.getInstancia().getPropietarioPorId(idProp);
+        
+      if(propietario == null){
+        throw new ObligatorioException("Propietario inexistente");
+      }
       EstadoPropietario nuevoEstado = estadosCache.get(posMostrarEstados);
       propietario.cambiarEstado(nuevoEstado);
       Fachada.getInstancia().registrarNotificacionesEstado(propietario, nuevoEstado);
@@ -125,7 +137,7 @@ public class ControladorCambiarEstado implements Observador {
   @Override
   public void actualizar(Object evento, Observable origen) {
     if (evento.equals(Fachada.eventos.NOTIFICACION_CAMBIO_ESTADO)) {
-            Respuesta estadoActual  = new Respuesta("estadoActual",usuarioSesion.getEstadoPropietario().getNombre());
+            Respuesta estadoActual  = new Respuesta("estadoPropietario",usuarioSesion.getEstadoPropietario().getNombre());
             Respuesta Notifs = notificacionesPropietario(usuarioSesion);
             conexionNavegador.enviarJSON( Respuesta.lista(estadoActual, Notifs));
     }

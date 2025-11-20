@@ -10,7 +10,7 @@
 
     <!-- Igual que en Agenda / Emular -->
     <script src="vistaWeb.js"></script>
-     <script src="sse.js"></script>
+
 </head>
 <body class="page-asignar-bonificacion">
     <!-- Igual que en Agenda / Emular -->
@@ -264,13 +264,7 @@ function mostrar_propietarioBusqueda(dto) {
             await mostrarMensaje(text);
         }
 
-          function procesarMensajeSSE(mensaje) {
-            procesarResultadosSubmit(mensaje); 
-        }
-
-        function conexionSSECerrada(event) {
-            console.log("SSE cerrado", event);
-        }
+       
 
     function irEmularTransito() {
         window.location.href = "emularTransito.html";
