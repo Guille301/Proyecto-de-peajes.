@@ -65,14 +65,16 @@ public class ObligatorioDaApplication {
         propietario1.setEstadoPropietario(habilitado);
         propietario1.agregarNotificaciones((new Notificacion(1, new Date(), "Bienvenido Juan")));
 
-        Propietario propietario2 = new Propietario();
+
+         Propietario propietario2 = new Propietario();
         propietario2.setId(2);
-        propietario2.setContrasenia("123456");
-        propietario2.setNombreCompleto("María Gomez");
-        propietario2.setCedula("2002");
-        propietario2.setSaldo(200.0);
+        propietario2.setContrasenia("123");
+        propietario2.setNombreCompleto("Usuario Propietario");
+        propietario2.setCedula("23456789");
+        propietario2.setSaldo(2000.0);
         propietario2.setEstadoPropietario(habilitado);
-        propietario2.agregarNotificaciones((new Notificacion(2, new Date(), "Bienvenida María")));
+        propietario2.agregarNotificaciones((new Notificacion(3, new Date(), "Saldo bajo Carlos")));
+    
 
         Propietario propietario3 = new Propietario();
         propietario3.setId(3);
@@ -83,60 +85,43 @@ public class ObligatorioDaApplication {
         propietario3.setEstadoPropietario(habilitado);
         propietario3.agregarNotificaciones((new Notificacion(3, new Date(), "Saldo bajo Carlos")));
 
-        Propietario propietario4 = new Propietario();
-        propietario4.setId(4); 
-        propietario4.setContrasenia("123456");
-        propietario4.setNombreCompleto("Lucía Fernández");
-        propietario4.setCedula("2004");
-        propietario4.setSaldo(300.0);
-        propietario4.setEstadoPropietario(habilitado);
-        propietario4.agregarNotificaciones((new Notificacion(4, new Date(), "Promoción disponible")));
+       
 
-        Propietario propietario5 = new Propietario();
-        propietario5.setId(5);
-        propietario5.setContrasenia("123456");
-        propietario5.setNombreCompleto("Diego López");
-        propietario5.setCedula("2005");
-        propietario5.setSaldo(75.0);
-        propietario5.setEstadoPropietario(habilitado);
-        propietario5.agregarNotificaciones((new Notificacion(5, new Date(), "Recarga recomendada")));
+
 
         // agregar propietarios a fachada
         f.agregarPropietario(propietario1);
-        f.agregarPropietario(propietario2);
         f.agregarPropietario(propietario3);
-        f.agregarPropietario(propietario4);
-        f.agregarPropietario(propietario5);
+        f.agregarPropietario(propietario2);
+
 
         f.agregar(propietario1);
-        f.agregar(propietario2);
         f.agregar(propietario3);
-        f.agregar(propietario4);
-        f.agregar(propietario5);
+        f.agregar(propietario2);
+   
 
 
     // ========= ADMINISTRADOR =========
     Administrador admin = new Administrador(1, "Juan", "a", "a");
+    Administrador admi2 = new Administrador(2, "Usuario Administrador", "1234567", "123");
     f.agregar(admin);
+    f.agregar(admi2);
+
+
 
     // ========= VEHÍCULOS =========
     // Ojo: pasamos new ArrayList<>() para listaTransito
 
         // -- Vehiculos (5) --
         Vehiculo vehiculo1 = new Vehiculo(1, "ABC-101", "Fiesta", "Rojo", catAuto, propietario1, null);
-        Vehiculo vehiculo2 = new Vehiculo(2, "BCD-202", "Civic", "Azul", catAuto, propietario2, null);
         Vehiculo vehiculo3 = new Vehiculo(3, "CDE-303", "Tornado", "Blanco", catMoto, propietario3, null);
-        Vehiculo vehiculo4 = new Vehiculo(4, "DEF-404", "Corolla", "Gris", catAuto, propietario4, null);
-        Vehiculo vehiculo5 = new Vehiculo(5, "EFG-505", "Pulsar", "Negro", catMoto, propietario5, null);
-        Vehiculo vehiculo6 = new Vehiculo(6, "SDG-505", "Seagull", "Blanco", catAuto, propietario1, null);
+        Vehiculo vehiculo6 = new Vehiculo(6, "SDG-505", "Seagull", "Blanco", catAuto, propietario2, null);
 
         // asignar vehiculos a sus propietarios (listas simples)
         propietario1.agregarVehiculoPropietario(vehiculo1);
-        propietario1.agregarVehiculoPropietario(vehiculo6);
-        propietario2.agregarVehiculoPropietario(vehiculo2);
+        propietario2.agregarVehiculoPropietario(vehiculo6);
         propietario3.agregarVehiculoPropietario(vehiculo3);
-        propietario4.agregarVehiculoPropietario(vehiculo4);
-        propietario5.agregarVehiculoPropietario(vehiculo5);
+
 
         // -- Puestos (3) --
         Puesto puesto1 = new Puesto(1, "Puesto Centro", "Av. Principal 100", null, null, null);
@@ -159,7 +144,7 @@ public class ObligatorioDaApplication {
         puesto2.agrgarTarifaPuesto(t2);
         puesto3.agrgarTarifaPuesto(t3);
 
-        Tarifa t4 = new Tarifa(4, 55.0, catAuto); 
+        Tarifa t4 = new Tarifa(4, 55.0, catAuto);
         puesto2.agrgarTarifaPuesto(t4);
 
 
@@ -173,6 +158,17 @@ CriterioAsignacionBonificacion critTrabajadores = new Trabajadores();
 CriterioAsignacionBonificacion critExonerados   = new Exonerados();
 
 
+Bonificacion b2 = new Bonificacion(
+        3,
+        null,
+        "Trabajadores",
+        puesto1,
+        LocalDate.of(2024, 1, 15),
+        10.0,
+        critTrabajadores
+);
+
+
 // -- Bonificaciones y cobros simples --
 Bonificacion b1 = new Bonificacion(
         1,
@@ -180,99 +176,63 @@ Bonificacion b1 = new Bonificacion(
         "Frecuentes",
         puesto1,
         LocalDate.of(2024, 1, 15),
-        10.0,               // si ya no usás “monto fijo”, podés poner 0.0
+        10.0,
         critFrecuentes
 );
 
-Bonificacion b2 = new Bonificacion(
-        2,
-        propietario2,
-        "Trabajadores",
-        puesto2,
-        LocalDate.of(2024, 1, 10),
-        20.0,
-        critTrabajadores
-);
+
 
 Bonificacion b3 = new Bonificacion(
         3,
         propietario3,
-        "Frecuentes",
+        "Exonerados",
         puesto3,
         LocalDate.of(2024, 1, 10),
         20.0,
-        critFrecuentes
-);
-
-Bonificacion b4 = new Bonificacion(
-        4,
-        propietario4,
-        "Exonerados",
-        puesto3,
-        LocalDate.now(),
-        5.0,
         critExonerados
 );
 
-Bonificacion b5 = new Bonificacion(
-        5,
-        propietario5,
-        "Trabajadores",
-        puesto2,
-        LocalDate.now(),
-        5.0,
-        critTrabajadores
-);
+
+
 
 // Registrar bonificaciones en la fachada (no te olvides de b4 y b5)
 f.agregarBonificacion(b1);
-f.agregarBonificacion(b2);
 f.agregarBonificacion(b3);
-f.agregarBonificacion(b4);
-f.agregarBonificacion(b5);
+f.agregarBonificacion(b2);
+
 
 // Asociar bonificaciones a propietarios
 propietario1.agregarBonificacionPropietario(b1);
-propietario2.agregarBonificacionPropietario(b2);
 propietario3.agregarBonificacionPropietario(b3);
-propietario4.agregarBonificacionPropietario(b4);
-propietario5.agregarBonificacionPropietario(b5);
+
 
 // Asociar bonificaciones a puestos
 puesto1.agregarBonificacionPuesto(b1);
 
-puesto2.agregarBonificacionPuesto(b2);
-puesto2.agregarBonificacionPuesto(b5);
+
 // si realmente querés que b3 aplique también en puesto2, dejá esta:
 puesto2.agregarBonificacionPuesto(b3);
 
 
-puesto3.agregarBonificacionPuesto(b4);
+
 
 // ========= TRÁNSITOS =========
 
 Transito tr1 = new Transito(1, puesto1, vehiculo1, new Date());
-Transito tr2 = new Transito(2, puesto2, vehiculo2, new Date());
 Transito tr3 = new Transito(3, puesto2, vehiculo3, new Date());
-Transito tr4 = new Transito(4, puesto3, vehiculo4, new Date());
-Transito tr5 = new Transito(5, puesto2, vehiculo5, new Date());
+
 
 // asignar tránsitos a vehículos
 vehiculo1.agregarTransito(tr1);
-vehiculo2.agregarTransito(tr2);
 vehiculo3.agregarTransito(tr3);
-vehiculo4.agregarTransito(tr4);
-vehiculo5.agregarTransito(tr5);
+
 
 
 // asignar tránsitos a puestos (UNA sola vez en el puesto correcto)
 puesto1.agregarTransitoPuesto(tr1);
 
-puesto2.agregarTransitoPuesto(tr2);
 puesto2.agregarTransitoPuesto(tr3);
-puesto2.agregarTransitoPuesto(tr5);
 
-puesto3.agregarTransitoPuesto(tr4);
 
 
 

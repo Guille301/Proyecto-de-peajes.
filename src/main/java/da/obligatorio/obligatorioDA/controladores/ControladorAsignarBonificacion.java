@@ -20,11 +20,13 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import da.obligatorio.obligatorioDA.dtos.BonificacionAsignadaDTO;
 import da.obligatorio.obligatorioDA.dtos.bonificacionDefinidaDTO;
+import da.obligatorio.obligatorioDA.dtos.estadoPropietarioDTO;
 import da.obligatorio.obligatorioDA.dtos.propietarioAsignarBonifDTO;
 import da.obligatorio.obligatorioDA.dtos.puestoDTO;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Bonificacion;
+import da.obligatorio.obligatorioDA.modelo.EstadoPropietario;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
 import da.obligatorio.obligatorioDA.modelo.Puesto;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
@@ -36,6 +38,7 @@ import da.obligatorio.obligatorioDA.utils.ConexionNavegador;
 public class ControladorAsignarBonificacion {
 
     private final ConexionNavegador conexionNavegador;
+    private List<Bonificacion> bonificacionCache = new ArrayList<>();
 
 
     @Autowired
@@ -55,6 +58,7 @@ public class ControladorAsignarBonificacion {
         if (usuario == null) {
             return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "loginAdmin.html"));
         }
+        this.bonificacionCache = new ArrayList<>(Fachada.getInstancia().getBonificaciones());
         return Respuesta.lista( puestosRespuesta(), bonificacionesRespuesta());
     }
 
@@ -109,18 +113,12 @@ public class ControladorAsignarBonificacion {
     }
 
     private Respuesta bonificacionesRespuesta() {
-        List<Bonificacion> lista = Fachada.getInstancia().getBonificaciones();
-        List<bonificacionDefinidaDTO> bonificacionesDto = new ArrayList<>();
-         Set<String> nombresYaAgregados = new HashSet<>();
-
-        for (Bonificacion b : lista) {
-              if (nombresYaAgregados.add(b.getNombre())) {
-            // solo entra la PRIMERA vez que ve ese nombre
-            bonificacionesDto.add(new bonificacionDefinidaDTO(b));
-        }
-        }
-        return new Respuesta("bonificaciones", bonificacionesDto);
+        
+    List<bonificacionDefinidaDTO> bonifDTO = new ArrayList<>();
+    for (Bonificacion b : bonificacionCache){
+    bonifDTO.add(new bonificacionDefinidaDTO(b));
+    } 
+    return new Respuesta("bonificaciones", bonifDTO);
     }
 
-       
 }
