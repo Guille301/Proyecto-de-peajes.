@@ -49,11 +49,15 @@ public class Transito {
     double montoTarifa = tarifa.getMonto();
     Propietario propietario = vehiculo.getPropietario();
     Bonificacion bonif = puesto.obtenerBonificacionPara(propietario);
+     
 
     double descuento = 0;
-    if (bonif != null && propietario.validarPenalizado()) {
+    if(propietario.validarPenalizado()){
+     if (bonif != null ) {
         descuento = bonif.calcularDescuento(montoTarifa);
     }
+    }
+   
 
         return montoTarifa - descuento;
     }
