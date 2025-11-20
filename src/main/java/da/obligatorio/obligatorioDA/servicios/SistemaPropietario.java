@@ -158,7 +158,7 @@ public class SistemaPropietario {
         Notificacion notificacion = new Notificacion(0, ahora, mensaje);
             
 
-            if(propietario.getSaldo() < costo) {
+            if(propietario.getSaldo() < costo && propietario.getEstadoPropietario().validacionesPenalizado()) {
                 propietario.agregarNotificaciones(notificacion);
                 Fachada.getInstancia().avisarObservadores(Fachada.eventos.NOTIFICACION_SALDO_INSUFICIENTE);
             }

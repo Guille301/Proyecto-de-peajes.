@@ -19,12 +19,10 @@
             <div class="sidebar-title">
                 Administrador
             </div>
-            <ul class="sidebar-menu">
-                <li><a href="menuAdmin.html">Menú principal</a></li>
-                <li><a href="asignarBonificacion.html" class="active">Asignar Bonificación</a></li>
-                <li><a href="emularTransito.html" class="active">cambiarEstado</a></li>
-                <li><a href="loginAdmin.html">Salir</a></li>
-            </ul>
+             <button onclick="irEmularTransito()">Emular tránsito</button>
+            <button onclick="irCambiarEstado()">Cambiar estado</button>
+            <button onclick="irAsignarBonificacion()">Asignar Bonificacion</button>
+            <button onclick="logoutAdmin()">Salir</button>
         </aside>
 
         <main class="content-admin">
@@ -178,6 +176,22 @@
         function conexionSSECerrada(event) {
             console.log("SSE cerrado", event);
         }
+
+    function irEmularTransito() {
+        window.location.href = "emularTransito.html";
+    }
+
+    function irAsignarBonificacion() {
+        window.location.href = "asignarBonificacion.html";
+    }
+
+    function irCambiarEstado() {
+        window.location.href = "cambiarEstado.html";
+    }
+
+    function logoutAdmin() {
+        submit("/acceso/logoutAdmin", null);
+    }
     </script>
 
 </body>

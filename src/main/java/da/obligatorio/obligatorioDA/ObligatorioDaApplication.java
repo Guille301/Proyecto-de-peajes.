@@ -73,7 +73,7 @@ public class ObligatorioDaApplication {
         propietario2.setCedula("23456789");
         propietario2.setSaldo(2000.0);
         propietario2.setEstadoPropietario(habilitado);
-        propietario2.agregarNotificaciones((new Notificacion(3, new Date(), "Saldo bajo Carlos")));
+        propietario2.agregarNotificaciones((new Notificacion(3, new Date(), "Bienvenido Usuario Propietario")));
     
 
         Propietario propietario3 = new Propietario();
@@ -83,7 +83,7 @@ public class ObligatorioDaApplication {
         propietario3.setCedula("2003");
         propietario3.setSaldo(50.0);
         propietario3.setEstadoPropietario(habilitado);
-        propietario3.agregarNotificaciones((new Notificacion(3, new Date(), "Saldo bajo Carlos")));
+        propietario3.agregarNotificaciones((new Notificacion(3, new Date(), "Bienvenido Carlos")));
 
        
 
@@ -114,8 +114,8 @@ public class ObligatorioDaApplication {
 
         // -- Vehiculos (5) --
         Vehiculo vehiculo1 = new Vehiculo(1, "ABC-101", "Fiesta", "Rojo", catAuto, propietario1, null);
-        Vehiculo vehiculo3 = new Vehiculo(3, "CDE-303", "Tornado", "Blanco", catMoto, propietario3, null);
         Vehiculo vehiculo6 = new Vehiculo(6, "SDG-505", "Seagull", "Blanco", catAuto, propietario2, null);
+        Vehiculo vehiculo3 = new Vehiculo(3, "CDE-303", "Tornado", "Blanco", catMoto, propietario3, null);
 
         // asignar vehiculos a sus propietarios (listas simples)
         propietario1.agregarVehiculoPropietario(vehiculo1);
