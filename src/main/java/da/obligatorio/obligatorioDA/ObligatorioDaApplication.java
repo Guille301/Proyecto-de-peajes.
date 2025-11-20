@@ -160,7 +160,7 @@ CriterioAsignacionBonificacion critExonerados   = new Exonerados();
 
 Bonificacion b2 = new Bonificacion(
         3,
-        null,
+        propietario2,
         "Trabajadores",
         puesto1,
         LocalDate.of(2024, 1, 15),
@@ -204,15 +204,13 @@ f.agregarBonificacion(b2);
 // Asociar bonificaciones a propietarios
 propietario1.agregarBonificacionPropietario(b1);
 propietario3.agregarBonificacionPropietario(b3);
+propietario2.agregarBonificacionPropietario(b2);
 
 
 // Asociar bonificaciones a puestos
 puesto1.agregarBonificacionPuesto(b1);
-
-
-// si realmente querés que b3 aplique también en puesto2, dejá esta:
+puesto1.agregarBonificacionPuesto(b2);
 puesto2.agregarBonificacionPuesto(b3);
-
 
 
 
