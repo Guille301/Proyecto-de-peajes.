@@ -1,5 +1,6 @@
 package da.obligatorio.obligatorioDA.modelo;
 
+import java.util.Date;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 
 public abstract class CriterioAsignacionBonificacion {
@@ -14,6 +15,12 @@ public abstract class CriterioAsignacionBonificacion {
         return nombre;
     }
 
-    
-    public abstract double calcularDescuento(double montoTarifa, Propietario propietario, Puesto puesto) throws ObligatorioException;
+    public abstract double calcularDescuento(
+            double montoTarifa,
+            Propietario propietario,
+            Puesto puesto,
+            Vehiculo vehiculo,
+            Date fechaTransito
+    ) throws ObligatorioException;
 }
+

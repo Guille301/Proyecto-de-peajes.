@@ -82,7 +82,7 @@ public class Transito {
     double descuento = 0;
     if(propietario.validarPenalizado()){
      if (bonif != null ) {
-        descuento = bonif.calcularDescuento(montoTarifa);
+        descuento = bonif.calcularDescuento( montoTarifa,vehiculo, this.fechaYHora);
     }
     }
    

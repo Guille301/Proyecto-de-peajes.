@@ -1,6 +1,7 @@
 package da.obligatorio.obligatorioDA.modelo;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
 
@@ -79,10 +80,18 @@ public class Bonificacion {
         return criterio;
     }
 
-    public double calcularDescuento(double montoTarifa) throws ObligatorioException {
-        if (criterio == null) return 0;
-        return criterio.calcularDescuento(montoTarifa, propietario, puestos);
-    }
+     public double calcularDescuento(double montoTarifa,
+                                Vehiculo vehiculo,
+                                Date fechaTransito) throws ObligatorioException {
+    if (criterio == null) return 0;
+    return criterio.calcularDescuento(
+            montoTarifa,
+            propietario,
+            puestos,
+            vehiculo,
+            fechaTransito
+    );
+}
 
     public static Bonificacion sinBonificacion() {
         Bonificacion b = new Bonificacion();

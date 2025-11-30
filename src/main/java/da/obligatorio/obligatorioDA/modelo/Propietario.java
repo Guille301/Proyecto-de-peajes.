@@ -1,7 +1,11 @@
 package da.obligatorio.obligatorioDA.modelo;
 
+
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 import da.obligatorio.obligatorioDA.dtos.BonificacionAsignadaDTO;
 import da.obligatorio.obligatorioDA.excepciones.ObligatorioException;
@@ -160,7 +164,33 @@ public class Propietario extends Usuario {
     }
 
 
+public long contarTransitosDelDia(Puesto puesto, Vehiculo vehiculo, Date fecha) {
 
+    if (vehiculo == null || vehiculo.getListaTransito() == null) {
+        return 0;
+    }
+
+    LocalDate diaTransito = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+    long contador = 0;
+
+    for (Transito t : vehiculo.getListaTransito()) {
+
+        
+        if (!t.getPuesto().equals(puesto)) {
+            continue;
+        }
+
+        LocalDate diaT = t.getFechaYHora().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        // mismo día
+        if (diaT.equals(diaTransito)) {
+            contador++;
+        }
+    }
+
+    return contador;
+}
     
 
 }
