@@ -44,20 +44,30 @@ public class ControladorLogin {
 
  
     // Propietario
-    @PostMapping("/loginPropietario")
-    public List<Respuesta> loginPropietario(HttpSession sesionHttp, @RequestParam String Cedula, @RequestParam String contrasenia) throws ObligatorioException {
-        Usuario unUsuario = Fachada.getInstancia().loginUsuarioPropietario(Cedula, contrasenia);
-        sesionHttp.setAttribute("usuarioPropietario", unUsuario);
-        return Respuesta.lista(new Respuesta("loginExitoso","menuPropietario.html"));
-    }
+   @PostMapping("/loginPropietario")
+public List<Respuesta> loginPropietario(HttpSession sesionHttp,@RequestParam String Cedula,@RequestParam String contrasenia) throws ObligatorioException {
+    Sesion sesion = Fachada.getInstancia().loginUsuarioPropietario(Cedula, contrasenia);
+    
+         sesionHttp.setAttribute("sesionPropietario", sesion);
+         sesionHttp.setAttribute("usuarioPropietario", (Propietario) sesion.getUsuario());
+    
+   
 
-    @PostMapping("/logoutPropietario")
-    public List<Respuesta> logout(HttpSession sesionHttp) { 
-        Propietario usuario = (Propietario) sesionHttp.getAttribute("usuarioPropietario");
-        if (usuario != null) {
-            sesionHttp.removeAttribute("usuarioPropietario");        
-        }
-        return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "index.html"));
+    return Respuesta.lista(new Respuesta("loginExitoso", "menuPropietario.html"));
+}
+
+
+   @PostMapping("/logoutPropietario")
+public List<Respuesta> logoutPropietario(HttpSession sesionHttp) {
+    Sesion sesion = (Sesion) sesionHttp.getAttribute("sesionPropietario");
+    if (sesion != null) {
+        Fachada.getInstancia().logout(sesion);   
+        
+        sesionHttp.removeAttribute("sesionPropietario");
+        sesionHttp.removeAttribute("usuarioPropietario");
     }
+    return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "index.html"));
+}
+
 
 }

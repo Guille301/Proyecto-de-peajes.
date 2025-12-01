@@ -55,11 +55,15 @@ public class Fachada extends Observable {
     }
 
     //Login
-    public Propietario loginUsuarioPropietario(String nombre, String contrasenia) throws ObligatorioException {
-        Propietario p = sistemaUsuarios.loginPropietario(nombre, contrasenia);   
-        sistemaPropietario.setPropietarioActual(p);
-        return p;
-    }
+  public Sesion loginUsuarioPropietario(String cedula, String contrasenia) throws ObligatorioException {
+    Sesion sesion = sistemaUsuarios.loginPropietario(cedula, contrasenia);
+    Propietario p = (Propietario) sesion.getUsuario();
+    sistemaPropietario.setPropietarioActual(p);
+
+    return sesion;
+}
+
+
 
     public Sesion loginAdmin(String nombre, String contrasenia) throws ObligatorioException {
         return sistemaUsuarios.loginAdmin(nombre, contrasenia);

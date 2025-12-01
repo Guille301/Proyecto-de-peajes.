@@ -109,7 +109,7 @@ public List<Respuesta> buscarPropietario(
             for (Puesto p : lista) {
                 puestosDto.add(new puestoDTO(p));
             }
-            return new Respuesta("puestos", puestosDto); 
+            return new Respuesta("puestos", puestosDto);
     }
 
     private Respuesta bonificacionesRespuesta() {

@@ -61,17 +61,33 @@ public class SistemaUsuarios {
         sesiones.remove(s);           
     }
 
-    public Propietario loginPropietario(String cedula, String contrasenia) throws ObligatorioException{
-      Sesion sesion = null;
-      Propietario usuario = (Propietario) login(cedula, contrasenia,propietarios);
-        if(usuario!=null){
-            usuario.validarIngresarSistema();
-            sesion = new Sesion(usuario);
-            sesiones.add(sesion);
-            return usuario;
-        }        
+   public Sesion loginPropietario(String cedula, String contrasenia) throws ObligatorioException {
+    Propietario usuario = (Propietario) login(cedula, contrasenia, propietarios);
+
+    if (usuario == null) {
         throw new ObligatorioException("Usuario y/o contraseña incorrectos");
     }
+    
+    usuario.validarIngresarSistema();
+    if (yaEstaLogueado(usuario)) {
+        throw new ObligatorioException("Ud ya está logueado en el sistema");
+    }
+
+    Sesion sesion = new Sesion(usuario);
+    sesiones.add(sesion);
+    return sesion;
+}
+
+private boolean yaEstaLogueado(Usuario usuario) {
+    for (Sesion s : sesiones) {
+        if (s.getUsuario().equals(usuario)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 
     public Usuario login(String cedula, String contrasena, List lista) throws ObligatorioException {
         Usuario usuario;
