@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import da.obligatorio.obligatorioDA.modelo.Administrador;
 import da.obligatorio.obligatorioDA.modelo.Propietario;
+import da.obligatorio.obligatorioDA.modelo.Sesion;
 import da.obligatorio.obligatorioDA.modelo.Usuario;
 import da.obligatorio.obligatorioDA.servicios.Fachada;
 import jakarta.servlet.http.HttpSession;
@@ -21,21 +22,26 @@ public class ControladorLogin {
 
     //Administrador
     @PostMapping("/loginAdmin")
-    public List<Respuesta> loginAdmin(HttpSession sesionHttp, @RequestParam String Cedula, @RequestParam String contrasenia) throws ObligatorioException {
-        Administrador usuarioAdmin  = Fachada.getInstancia().loginAdmin(Cedula, contrasenia);
-        sesionHttp.setAttribute("usuarioAdmin",usuarioAdmin);
+    public List<Respuesta> loginAdmin(HttpSession sesionHttp,@RequestParam String Cedula,@RequestParam String contrasenia) throws ObligatorioException {
+        Sesion sesion = Fachada.getInstancia().loginAdmin(Cedula, contrasenia);
+        sesionHttp.setAttribute("sesionAdmin", sesion);
+        sesionHttp.setAttribute("usuarioAdmin", (Administrador) sesion.getUsuario());
+
         return Respuesta.lista(new Respuesta("loginExitoso", "menuAdmin.html"));
     }
 
+
     @PostMapping("/logoutAdmin")
     public List<Respuesta> logoutAdmin(HttpSession sesionHttp) {
-        Administrador usuario = (Administrador) sesionHttp.getAttribute("usuarioAdmin");
-        if (usuario != null) {
+        Sesion sesion = (Sesion) sesionHttp.getAttribute("sesionAdmin");
+        if (sesion != null) {
+            Fachada.getInstancia().logout(sesion);
+            sesionHttp.removeAttribute("sesionAdmin");
             sesionHttp.removeAttribute("usuarioAdmin");
-            sesionHttp.invalidate();
         }
         return Respuesta.lista(new Respuesta("usuarioNoAutenticado", "index.html"));
     }
+
  
     // Propietario
     @PostMapping("/loginPropietario")
@@ -46,7 +52,7 @@ public class ControladorLogin {
     }
 
     @PostMapping("/logoutPropietario")
-    public List<Respuesta> logout(HttpSession sesionHttp) {
+    public List<Respuesta> logout(HttpSession sesionHttp) { 
         Propietario usuario = (Propietario) sesionHttp.getAttribute("usuarioPropietario");
         if (usuario != null) {
             sesionHttp.removeAttribute("usuarioPropietario");        

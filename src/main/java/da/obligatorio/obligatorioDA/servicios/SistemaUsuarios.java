@@ -32,15 +32,33 @@ public class SistemaUsuarios {
     }
 
     //Login
-    public Administrador loginAdmin(String cedula, String contrasenia) throws ObligatorioException{
+    public Sesion loginAdmin(String cedula, String contrasenia) throws ObligatorioException{
         Sesion sesion = null;
         Administrador usuario = (Administrador) login(cedula, contrasenia,administradores);
+
+        if(!esDiferente(usuario)){
+            throw new ObligatorioException("Ud ya esta logueado en el sistema");
+        }
+
         if(usuario!=null){
             sesion = new Sesion(usuario);
             sesiones.add(sesion);
-            return usuario;
+            return sesion;
         }        
         throw new ObligatorioException("Usuario y/o contraseña incorrectos");
+    }
+
+    public boolean esDiferente(Administrador admin) throws ObligatorioException{
+        for (Sesion sesion : this.sesiones) {
+            if(sesion.getUsuario().equals(admin)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void logout(Sesion s){
+        sesiones.remove(s);           
     }
 
     public Propietario loginPropietario(String cedula, String contrasenia) throws ObligatorioException{

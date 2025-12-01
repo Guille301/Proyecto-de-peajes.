@@ -61,8 +61,12 @@ public class Fachada extends Observable {
         return p;
     }
 
-    public Administrador loginAdmin(String nombre, String contrasenia) throws ObligatorioException {
+    public Sesion loginAdmin(String nombre, String contrasenia) throws ObligatorioException {
         return sistemaUsuarios.loginAdmin(nombre, contrasenia);
+    }
+
+    public void logout(Sesion s) {
+        sistemaUsuarios.logout(s);
     }
 
     // Puestos
