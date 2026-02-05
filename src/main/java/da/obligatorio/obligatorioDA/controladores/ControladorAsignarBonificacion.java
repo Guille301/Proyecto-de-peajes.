@@ -1,15 +1,9 @@
 package da.obligatorio.obligatorioDA.controladores;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,11 +36,6 @@ public class ControladorAsignarBonificacion {
    
     private List<Bonificacion> bonificacionCache = new ArrayList<>();
 
-
-
-     
-
-
     @GetMapping("/vistaConectada")
     public List<Respuesta> inicializarVista(@SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
         if (usuario == null) {
@@ -62,9 +51,6 @@ public class ControladorAsignarBonificacion {
             Bonificacion bonificacion = Fachada.getInstancia().asignarBonificacion(cedula, idPuesto, nombreBonificacion);
             BonificacionAsignadaDTO dto = new BonificacionAsignadaDTO(bonificacion.getPuestos().getNombre(),bonificacion.getNombre(), bonificacion.getFechaAsignacion());
             
-
-            
-            
             return Respuesta.lista(new Respuesta("resultadoAsignacionBonificacion", dto));
 
         } catch (ObligatorioException ex) {
@@ -72,8 +58,8 @@ public class ControladorAsignarBonificacion {
         }
     }
 
-@PostMapping("/buscarPropietario")
-public List<Respuesta> buscarPropietario(
+    @PostMapping("/buscarPropietario")
+    public List<Respuesta> buscarPropietario(
         @RequestParam String cedula,
         @SessionAttribute(name = "usuarioAdmin", required = false) Administrador usuario) {
 
@@ -138,8 +124,5 @@ public List<Respuesta> buscarPropietario(
     }
     return new Respuesta("bonificacionesDelPropietario", bonifDTOs);
 }
-
-
-    
 
 }
